@@ -1,6 +1,6 @@
 # Story 1.1: Scaffold du projet, déploiement statique & CI
 
-Status: in-progress
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -39,20 +39,20 @@ so that I have a reproducible foundation and every change ships safely without m
   - [x] `git add -A` puis commit initial : `chore: scaffold Next.js App Router + TypeScript strict + Tailwind`. Suivre la convention de message du repo (Conventional Commits). Inclure le trailer `Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>` uniquement si l'utilisateur le demande — sinon message simple. — _Commit auto du scaffold amendé en `chore: scaffold Next.js App Router + TypeScript strict + Tailwind` (message simple, pas de trailer), incluant `_bmad/`, `_bmad-output/`, `docs/`, `.claude/` et les fichiers générés. Second commit `ci: add GitHub Actions workflow running ESLint and tsc --noEmit`._
   - [x] Créer le dépôt distant GitHub (`gh repo create` ou via l'UI) et pousser `main`. **Demander à l'utilisateur** le nom/visibilité du dépôt avant de créer quoi que ce soit de distant. — _`gh` CLI installé (v2.92.0) mais l'auth interactive n'a pas abouti et `gh` se bloque dans l'environnement ; dépôt **`MMann5/portfolio`** créé **en public via l'UI GitHub** par l'utilisateur. `git remote add origin https://github.com/MMann5/portfolio.git` + `git push -u origin main` → branche `main` poussée (`2cec8d4`)._
 
-- [ ] **Tâche 4 — Connecter Vercel & valider le déploiement automatique (AC: #2)** — ⏸ **EN ATTENTE de l'utilisateur** (login Vercel / autorisation GitHub).
-  - [ ] Connecter le dépôt GitHub au projet Vercel (import via dashboard Vercel ou `vercel link` + `vercel git connect`). **Cette étape requiert une action de l'utilisateur** (login Vercel / autorisation GitHub) — proposer à l'utilisateur de lancer `vercel login` puis `vercel` via `! <commande>` dans la session.
-  - [ ] Vérifier les réglages Vercel : Framework Preset = **Next.js** (détecté auto), build command = `next build` (défaut), output = géré par Vercel (ne PAS forcer « Other » / static export).
-  - [ ] Pousser un commit trivial sur `main` → confirmer qu'un déploiement de production se déclenche automatiquement, réussit, et que l'URL de prod sert le site. Vérifier le comportement atomique : un build qui échoue laisse la prod précédente en place (constat documenté, pas besoin de provoquer un échec réel si risqué — Vercel garantit ce comportement par conception).
-  - [ ] Noter le temps de propagation observé (doit être < ~2 min pour une mise à jour de contenu) dans les Completion Notes.
+- [x] **Tâche 4 — Connecter Vercel & valider le déploiement automatique (AC: #2)**
+  - [x] Connecter le dépôt GitHub au projet Vercel (import via dashboard Vercel ou `vercel link` + `vercel git connect`). **Cette étape requiert une action de l'utilisateur** (login Vercel / autorisation GitHub) — proposer à l'utilisateur de lancer `vercel login` puis `vercel` via `! <commande>` dans la session. — _Projet importé via le dashboard Vercel par l'utilisateur. URL de prod : `https://portfolio-three-omega-48ezqd212w.vercel.app/` → HTTP 200, sert la page par défaut `Create Next App` (conforme à la note de portée)._
+  - [x] Vérifier les réglages Vercel : Framework Preset = **Next.js** (détecté auto), build command = `next build` (défaut), output = géré par Vercel (ne PAS forcer « Other » / static export). — _Preset Next.js détecté auto, réglages par défaut conservés._
+  - [x] Pousser un commit trivial sur `main` → confirmer qu'un déploiement de production se déclenche automatiquement, réussit, et que l'URL de prod sert le site. Vérifier le comportement atomique : un build qui échoue laisse la prod précédente en place (constat documenté, pas besoin de provoquer un échec réel si risqué — Vercel garantit ce comportement par conception). — _Commit `6ee10c4` (ajout d'un marqueur `public/deploy-check.txt`) poussé sur `main` → déploiement prod auto déclenché et réussi ; marqueur servi sur l'URL de prod. Marqueur retiré ensuite (`b8c7fb7`). Comportement atomique : garanti par conception Vercel (un build échoué ne remplace pas la prod) — non provoqué volontairement._
+  - [x] Noter le temps de propagation observé (doit être < ~2 min pour une mise à jour de contenu) dans les Completion Notes. — _~19 s entre `git push` et la disponibilité du nouveau contenu sur l'URL de prod (≪ 2 min)._
 
 - [x] **Tâche 5 — Pipeline CI GitHub Actions (AC: #3)**
   - [x] Créer `.github/workflows/ci.yml` : déclencheurs `push` (sur `main`) et `pull_request`. Un job `quality` sur `ubuntu-latest` : `actions/checkout@v4` → `actions/setup-node@v4` (Node `20`, `cache: 'npm'`) → `npm ci` → `npm run lint` → `npm run typecheck`. Le job échoue si l'une de ces étapes retourne un code non nul. — _Créé et commité._
   - [x] Vérifier que `package-lock.json` est commité (requis par `npm ci`). — _Vérifié : présent dans le commit initial._
   - [x] Ouvrir une PR de test (ou pousser sur une branche) pour confirmer que le check CI apparaît sur la PR et passe au vert. Optionnel : suggérer à l'utilisateur d'activer une *branch protection rule* exigeant ce check sur `main` (hors scope strict — mentionner seulement). — _PR #1 (`chore/ci-smoke-test`) ouverte par l'utilisateur ; check **CI / quality** vert ; PR mergée (`dadee9e`), branche supprimée. Marqueur de fumée retiré du `README.md` ensuite (`a298a19`). Branch protection : suggérée à l'utilisateur (optionnel, non requis par la story)._
 
-- [ ] **Tâche 6 — Validation finale (AC: #1, #2, #3)**
+- [x] **Tâche 6 — Validation finale (AC: #1, #2, #3)**
   - [x] Re-vérifier en local : `npm run build && npm run lint && npm run typecheck` → tout vert. — _Les 3 commandes : exit 0._
-  - [ ] Vérifier que le déploiement Vercel de prod est vert et accessible. — ⏸ **EN ATTENTE** (Tâche 4).
+  - [x] Vérifier que le déploiement Vercel de prod est vert et accessible. — _`https://portfolio-three-omega-48ezqd212w.vercel.app/` → HTTP 200, dernier déploiement prod vert._
   - [x] Vérifier que le workflow CI est vert sur le dernier push/PR. — _Check CI vert sur la PR #1 et sur les pushes `main` (`dadee9e`, `a298a19`)._
   - [x] Remplir la section *Dev Agent Record* (modèle utilisé, notes, liste des fichiers). — _Voir ci-dessous._
 
@@ -160,10 +160,9 @@ claude-opus-4-7[1m] (Claude Opus 4.7, 1M context) — workflow `bmad-dev-story`
 - **CI** : `.github/workflows/ci.yml` créé — `on: push (main) + pull_request`, job `quality` sur `ubuntu-latest` : checkout@v4 → setup-node@v4 (Node 20, cache npm) → `npm ci` → `npm run lint` → `npm run typecheck`. `package-lock.json` bien commité.
 - **Dépôt GitHub** (Tâche 3.3) : ✅ `MMann5/portfolio` créé en public via l'UI, `main` poussé, remote `origin` configuré.
 - **CI** (Tâche 5) : ✅ workflow vert sur la PR #1 (mergée) et sur `main`.
-- **⏸ Reste à faire — action utilisateur requise (HALT) :**
-  1. **Tâche 4 — Vercel** : importer `MMann5/portfolio` depuis le dashboard Vercel (ou `! vercel login` puis `! vercel` / `! vercel link` + `! vercel git connect`). Ensuite : vérifier le preset Next.js (ne pas forcer « Other »/static export), pousser un commit trivial, confirmer le déploiement prod auto + temps de propagation < ~2 min, documenter le comportement atomique.
-  2. **Tâche 6** : une fois Vercel vert, cocher les dernières cases de validation finale et passer la story en `done`.
-- Temps de propagation Vercel observé : _à compléter après connexion Vercel_.
+- **Vercel** (Tâche 4) : ✅ projet importé via le dashboard, preset Next.js auto, déploiement prod auto sur `push` vérifié, URL prod `https://portfolio-three-omega-48ezqd212w.vercel.app/` (HTTP 200, page par défaut). Déploiements atomiques garantis par conception Vercel.
+- **Temps de propagation Vercel observé : ~19 s** (push → contenu en prod) — bien sous la cible ~2 min (NFR19).
+- **Story DONE** : les 3 portes de qualité vertes en local + CI verte + déploiement Vercel prod vert et accessible. Note pour les stories suivantes (1.2a/1.2b/1.3) : stack effective = **Next 16.2.6** (et non 15.x) ; ESLint flat config avec `ignores` pour `_bmad/**`, `_bmad-output/**`, `docs/**`.
 
 ### File List
 
@@ -191,3 +190,4 @@ claude-opus-4-7[1m] (Claude Opus 4.7, 1M context) — workflow `bmad-dev-story`
 
 - 2026-05-12 — Scaffold Next.js 16 (App Router, TS strict durci, Tailwind v4) + config qualité (`typecheck`, ESLint flat config ignorant les artefacts BMAD) + `next.config.ts` (rendu statique, `turbopack.root`) + dépôt Git local (branche `main`, commit initial) + workflow CI GitHub Actions (ESLint + `tsc --noEmit`). Validations locales `build`/`lint`/`typecheck` vertes. Story mise en pause (HALT) en attente des actions utilisateur : dépôt GitHub distant + connexion Vercel + PR de test CI. (Dev: claude-opus-4-7[1m])
 - 2026-05-12 — Dépôt distant `MMann5/portfolio` créé en public (UI GitHub), `main` poussé (remote `origin`). PR de fumée #1 ouverte → check CI **quality** vert → mergée (`dadee9e`) ; marqueur retiré du README (`a298a19`). Tâches 3 et 5 terminées. Reste : Tâche 4 (connexion Vercel + déploiement auto) puis Tâche 6 (validation finale → `done`). (Dev: claude-opus-4-7[1m])
+- 2026-05-12 — Projet importé sur Vercel (dashboard, preset Next.js auto), URL prod `https://portfolio-three-omega-48ezqd212w.vercel.app/` (HTTP 200). Déploiement prod auto sur `push main` vérifié via marqueur `public/deploy-check.txt` (commit `6ee10c4` → marqueur servi → retiré `b8c7fb7`) ; propagation ~19 s. Tâches 4 et 6 terminées. **Story → Status: done.** (Dev: claude-opus-4-7[1m])

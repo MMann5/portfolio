@@ -1,5 +1,5 @@
 # generated: 2026-05-12
-# last_updated: 2026-05-12 (story 1.1 in-progress, epic-1 in-progress)
+# last_updated: 2026-05-12 (story 1.1 done, epic-1 in-progress)
 # project: portfolio
 # project_key: NOKEY
 # tracking_system: file-system
@@ -44,7 +44,7 @@ story_location: _bmad-output/implementation-artifacts
 development_status:
   # Epic 1: Fondations & shell bilingue déployé
   epic-1: in-progress
-  1-1-scaffold-du-projet-deploiement-statique-ci: in-progress
+  1-1-scaffold-du-projet-deploiement-statique-ci: done
   1-2a-design-system-technical-minimal-tokens-polices: backlog
   1-2b-internationalisation-fr-en-routing-par-locale-dictionnaire-type-selecteur-de-langue: backlog
   1-3-modele-de-contenu-type-shell-de-page-nav-gridsection-sectionhead-footer: backlog
