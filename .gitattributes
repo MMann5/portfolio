@@ -1,0 +1,8 @@
+# Empêche toute conversion de fin de ligne / diff texte sur les binaires
+# (notamment le PDF de CV sous `public/cv/`).
+*.pdf binary
+*.woff2 binary
+*.ico binary
+*.png binary
+*.jpg binary
+*.webp binary

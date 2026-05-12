@@ -11,7 +11,8 @@ import type { Locale } from "../config";
 //   - `Dictionary` est dérivé de `en.ts` ci-dessous.
 //   - `fr.ts` fait `… satisfies Dictionary` → toute clé manquante / en trop / mal
 //     typée dans `fr` casse `tsc --noEmit` → `npm run typecheck` rouge → CI rouge.
-// Quand 1.3 / Epic 2 ajouteront le vrai modèle de contenu, garder ce pattern.
+// Le modèle de contenu complet (toutes les sections, FR + EN) est rempli depuis la
+// Story 1.3 ; les sections de page réelles arrivent en Epic 2 sans changer ce pattern.
 
 export type Dictionary = (typeof import("./en"))["default"];
 
