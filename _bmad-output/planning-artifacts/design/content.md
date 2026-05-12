@@ -13,7 +13,7 @@
 - **Location:** Ashdod, Israel
 - **Email:** michael.mann55@gmail.com
 - **Phone:** +972 58 422 0567
-- **LinkedIn:** https://www.linkedin.com/in/michaelmann-339545149
+- **LinkedIn:** https://www.https://www.linkedin.com/in/michaelmann-339545149
 - **Languages:** French (native), Hebrew (fluent), English (professional)
 - **Status:** Available for new opportunities — Q2 2026
 
@@ -230,7 +230,7 @@ Beyond integrating LLMs into product features (chatbots, multi-agent platforms, 
 Open to senior frontend roles, technical leadership opportunities and selected freelance engagements. I respond within 24 hours.
 
 **Primary CTA:** michael.mann55@gmail.com (mailto)
-**Secondary CTA:** LinkedIn — https://www.linkedin.com/in/michaelmann-339545149
+**Secondary CTA:** LinkedIn — https://www.https://www.linkedin.com/in/michaelmann-339545149
 
 **Secondary links:**
 

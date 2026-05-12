@@ -1,6 +1,6 @@
 # Story 2.2: Sections About, Experience & Freelance Engagements
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -224,3 +224,13 @@ claude-opus-4-7[1m] (Claude Code — dev-story workflow)
 | ---------- | ------- | ---------------------------------------------------------------------------------------------------- | ------ |
 | 2026-05-12 | 0.1     | Création de la story 2.2 (context engine) : sections About / Experience / Freelance Engagements — composants `About`, `Experience`, `RoleCard`, `FreelanceEngagements`, `MissionCard` + câblage `page.tsx`. | Bob (SM) |
 | 2026-05-12 | 1.0     | Implémentation : 5 Server Components créés (`About`, `RoleCard`, `Experience`, `MissionCard`, `FreelanceEngagements`), câblage du dispatch dans `page.tsx`. typecheck + lint + build verts ; HTML pré-rendu vérifié (1 `<h1>`, 4 `<article>`, liens sortants OK). Statut → review. | Amelia (Dev) |
+| 2026-05-12 | 1.1     | Code review (3 couches : Blind Hunter, Edge Case Hunter, Acceptance Auditor). 1 décision requise (changements hero hors périmètre), 1 reporté, 4 rejetés. Voir Review Findings. | Code review |
+
+## Review Findings
+
+_Code review du 2026-05-12 — couches : Blind Hunter (adversarial), Edge Case Hunter, Acceptance Auditor. Le travail in-scope (5 nouveaux Server Components + câblage `page.tsx`) implémente fidèlement AC#1–#5 ; aucun bug critique/élevé dans le code in-scope. Les findings ci-dessous concernent surtout des changements **hors périmètre** entrés dans le commit de la story 2.2._
+
+- [x] [Review][Decision→résolu] Changements hero hors périmètre dans le commit de la story 2.2 — **Décision Mike (2026-05-12) : conserver les changements hero.** `src/components/Hero.tsx` (`<h1>` redimensionné) + `en.ts`/`fr.ts` (`hero.headline` réécrit) restent tels quels. Patches appliqués dans la foulée : (a) point final ajouté au `tail` EN (`…team leadership.`) ; le `tail` FR avait déjà son point ; (b) divergence accent EN/FR jugée acceptable (les deux font 3 mots de longueur comparable, `sm:whitespace-nowrap` conservé — pas de débordement constaté au build) ; (c) commentaire `Hero.tsx` laissé tel quel (toujours globalement exact). **Bonus demandé par Mike** : `meta.linkedin` corrigé dans `en.ts` + `fr.ts` (préfixe dupliqué `https://www.https://www.…` → `https://www.linkedin.com/in/michaelmann-339545149`) — le CTA LinkedIn du hero pointe désormais sur la bonne URL. typecheck + lint + build verts après corrections.
+- [x] [Review][Defer] Clés React dérivées du contenu dans `Experience`/`FreelanceEngagements`/`RoleCard`/`MissionCard` (`key={role.company}`, `key={m.name}`, `key={kpi.label}`, `key={t}` sur les tags) [src/components/Experience.tsx:14, src/components/FreelanceEngagements.tsx:13, src/components/RoleCard.tsx, src/components/MissionCard.tsx] — deferred, latent : aucun défaut actuel (valeurs uniques dans le dico, listes statiques) ; à revisiter si le dictionnaire introduit un jour deux entreprises/missions/labels-KPI/tags identiques au sein d'une même carte (warning React + risque de mauvaise réconciliation).
+
+_Rejetés comme bruit (4) : `leading-relaxed` redondant avec `text-body` dans `About` (inoffensif) ; `https://${mission.url}` suppose un hostname nu (comportement voulu — la story le documente) ; tableaux vides → marges orphelines (dormant, données statiques non vides) ; `sm:grid-cols-3` codé en dur pour les KPI (3 KPI par rôle — intention design)._

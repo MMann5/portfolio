@@ -43,7 +43,6 @@ export default async function Home({
         locale={locale}
         brandName={nav.brandName}
         versionBadge={nav.versionBadge}
-        availabilityShort={nav.availabilityShort}
         availabilityLabel={nav.availabilityLabel}
         ctaEmail={nav.ctaEmail}
         email={meta.email}

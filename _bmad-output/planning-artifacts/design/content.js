@@ -8,8 +8,8 @@ window.MM_CONTENT = {
     location: "Ashdod, Israel",
     email: "michael.mann55@gmail.com",
     phone: "+972 58 422 0567",
-    linkedin: "https://www.linkedin.com/in/michaelmann-339545149",
-    linkedinShort: "linkedin.com/in/michaelmann-339545149",
+    linkedin: "https://www.https://www.linkedin.com/in/michaelmann-339545149",
+    linkedinShort: "https://www.linkedin.com/in/michaelmann-339545149",
     languages: "French · Hebrew · English",
     status: "Available for new opportunities — Q2 2026",
   },
@@ -18,8 +18,7 @@ window.MM_CONTENT = {
     badge: "Available — Q2 2026",
     headline:
       "Senior frontend engineer building production SaaS for global brands.",
-    sub:
-      "Five+ years shipping React/TypeScript apps used daily by sales teams at Louis Vuitton, Dior, Tiffany & Co. and Messika — plus AI platforms serving 3,000+ companies. Currently building independent SaaS products.",
+    sub: "Five+ years shipping React/TypeScript apps used daily by sales teams at Louis Vuitton, Dior, Tiffany & Co. and Messika — plus AI platforms serving 3,000+ companies. Currently building independent SaaS products.",
     meta: [
       ["Location", "Ashdod, Israel"],
       ["Experience", "5+ years"],
@@ -122,7 +121,14 @@ window.MM_CONTENT = {
         tagline: "A CRM built for event industry professionals.",
         description:
           "Co-founded with two partners under Maqom Software Ltd (Cyprus). A focused CRM for photographers, videographers and wedding planners — multi-currency Stripe billing (EUR/USD/ILS) with IP-based geolocation, full Stripe KYC for the entity, and Google Workspace email infrastructure. PWA-first with mobile store distribution.",
-        stack: ["React 19", "Vite 7", "Tailwind v4", "Supabase", "Stripe", "PWA"],
+        stack: [
+          "React 19",
+          "Vite 7",
+          "Tailwind v4",
+          "Supabase",
+          "Stripe",
+          "PWA",
+        ],
         featured: true,
       },
       {
@@ -203,28 +209,23 @@ window.MM_CONTENT = {
   ai: {
     label: "AI & Agentic Engineering",
     heading: "Shipping with agents, not just for them.",
-    body:
-      "Beyond integrating LLMs into product features (chatbots, multi-agent platforms, AI dashboards at Limova.ai), I've made agentic workflows a core part of how I engineer software. Claude Code is my daily driver — paired with a curated MCP server stack and structured methodologies — letting me move from PRD to production with deterministic outputs at every stage.",
+    body: "Beyond integrating LLMs into product features (chatbots, multi-agent platforms, AI dashboards at Limova.ai), I've made agentic workflows a core part of how I engineer software. Claude Code is my daily driver — paired with a curated MCP server stack and structured methodologies — letting me move from PRD to production with deterministic outputs at every stage.",
     tools: [
       {
         name: "Claude Code",
-        desc:
-          "Primary agentic IDE for architecture, scaffolding, refactoring and review.",
+        desc: "Primary agentic IDE for architecture, scaffolding, refactoring and review.",
       },
       {
         name: "Claude Design",
-        desc:
-          "Design-to-code workflow for high-fidelity UI and design system iteration.",
+        desc: "Design-to-code workflow for high-fidelity UI and design system iteration.",
       },
       {
         name: "BMAD Methodology",
-        desc:
-          "Structured agentic framework for PRD, architecture and story-driven delivery.",
+        desc: "Structured agentic framework for PRD, architecture and story-driven delivery.",
       },
       {
         name: "MCP Stack",
-        desc:
-          "Context7, Playwright, Sequential Thinking, Brave Search — connected to every project.",
+        desc: "Context7, Playwright, Sequential Thinking, Brave Search — connected to every project.",
       },
     ],
   },
@@ -232,8 +233,7 @@ window.MM_CONTENT = {
   contact: {
     label: "05 — Contact",
     heading: "Let's build something lasting.",
-    sub:
-      "Open to senior frontend roles, technical leadership opportunities and selected freelance engagements. I respond within 24 hours.",
+    sub: "Open to senior frontend roles, technical leadership opportunities and selected freelance engagements. I respond within 24 hours.",
   },
 
   footer: "© 2026 Michael Mann · All rights reserved",

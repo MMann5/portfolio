@@ -16,7 +16,7 @@ const fr = {
       "Ingénieur frontend senior — applications SaaS de production pour des marques internationales.",
     email: "michael.mann55@gmail.com",
     linkedin: "https://www.linkedin.com/in/michaelmann-339545149",
-    linkedinShort: "linkedin.com/in/michaelmann-339545149",
+    linkedinShort: "https://www.linkedin.com/in/michaelmann-339545149",
     phone: "+972 58 422 0567",
     location: "Ashdod, Israël",
     languagesList: "Français · Hébreu · Anglais",
@@ -28,7 +28,6 @@ const fr = {
   nav: {
     brandName: "Michael Mann",
     versionBadge: "v2026.1",
-    availabilityShort: "disponible",
     availabilityLabel: "disponible — T2 2026",
     ctaEmail: "Me contacter",
     ctaCv: "CV",
@@ -45,7 +44,7 @@ const fr = {
     headline: {
       lead: "Développeur frontend senior, 5 ans d'expérience à construire des plateformes ",
       accent: "SaaS de production",
-      tail: " en React/TypeScript. Architecture, design systems, performance, leadership d'équipe",
+      tail: " en React/TypeScript. Architecture, design systems, performance, leadership d'équipe.",
     },
     sub: "Plus de cinq ans à livrer des applications React/TypeScript utilisées au quotidien par les équipes commerciales de Louis Vuitton, Dior, Tiffany & Co. et Messika — ainsi que des plateformes d'IA au service de plus de 3 000 entreprises. Je construis aujourd'hui mes propres produits SaaS.",
     meta: [
@@ -321,7 +320,7 @@ const fr = {
       primaryCtaLabel: "Écrivez-moi un mot.",
       respondWithin: "Je réponds sous 24 heures.",
       secondaryLinks: [
-        { label: "LinkedIn", value: "linkedin.com/in/michaelmann-339545149" },
+        { label: "LinkedIn", value: "https://www.linkedin.com/in/michaelmann-339545149" },
         { label: "Téléphone", value: "+972 58 422 0567" },
         { label: "Localisation", value: "Ashdod, Israël" },
         { label: "Langues", value: "Français · Hébreu · Anglais" },

@@ -26,7 +26,6 @@ type Props = {
   locale: Locale;
   brandName: string;
   versionBadge: string;
-  availabilityShort: string;
   availabilityLabel: string;
   /** Libellé du CTA email. */
   ctaEmail: string;
@@ -64,7 +63,6 @@ export function Nav({
   locale,
   brandName,
   versionBadge,
-  availabilityShort,
   availabilityLabel,
   ctaEmail,
   email,
@@ -110,9 +108,8 @@ export function Nav({
         href={`#${section.id}`}
         aria-current={isActive ? "true" : undefined}
         onClick={variant === "menu" ? () => setMenuOpen(false) : undefined}
-        className={`${base} rounded-sm ${FOCUS_RING} ${
-          isActive ? "text-fg" : "text-fg-subtle hover:text-fg"
-        }`}
+        className={`${base} rounded-sm ${FOCUS_RING} ${isActive ? "text-fg" : "text-fg-subtle hover:text-fg"
+          }`}
       >
         <span className="text-fg-subtle" aria-hidden="true">
           $&nbsp;
@@ -183,7 +180,6 @@ export function Nav({
 
         {/* Actions — desktop. */}
         <div className="hidden items-center gap-4 lg:flex">
-          <AvailabilityBadge text={availabilityShort} />
           {emailCta}
           {cvLink}
           {langSwitcher}
