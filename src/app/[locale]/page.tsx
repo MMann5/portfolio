@@ -5,6 +5,8 @@ import { Nav } from "@/components/Nav";
 import { GridSection } from "@/components/GridSection";
 import { SectionHead } from "@/components/SectionHead";
 import { Footer } from "@/components/Footer";
+import { Hero } from "@/components/Hero";
+import { Clients } from "@/components/Clients";
 
 // Page d'accueil — Server Component statiquement pré-rendu (`generateStaticParams` +
 // `dynamicParams = false` au root layout ; aucun `headers()`/`cookies()`/`fetch` runtime ici).
@@ -57,23 +59,31 @@ export default async function Home({
       />
 
       <main id="main-content" className="flex flex-1 flex-col">
-        {/* Hero — contenu réel : Story 2.1. Ici : ancre + ligne `$ whoami →` décorative. */}
+        {/* Hero — Story 2.1. Le composant rend le contenu intérieur de cette `GridSection`. */}
         <GridSection id="hero" idx="00" label="Hero">
-          <p className="flex flex-wrap items-center gap-3 font-mono text-label text-fg-subtle">
-            <span aria-hidden="true">$ whoami</span>
-            <span aria-hidden="true" className="text-fg-faintest">
-              →
-            </span>
-            <span>{hero.whoami}</span>
-          </p>
+          <Hero
+            headline={hero.headline}
+            sub={hero.sub}
+            meta={hero.meta}
+            whoami={hero.whoami}
+            availabilityLabel={nav.availabilityLabel}
+            email={meta.email}
+            linkedin={meta.linkedin}
+            cvPath={meta.cvPath}
+            ctaContact={hero.ctaContact}
+            ctaLinkedin={hero.ctaLinkedin}
+            ctaCv={hero.ctaCv}
+            ctaCvAriaLabel={hero.ctaCvAriaLabel}
+          />
         </GridSection>
 
-        {/* Marquee clients — animation : Epic 3 ; layout : Epic 2. Ici : ancre + libellé décoratif. */}
+        {/* Marquee clients — Story 2.1 (bande statique ; animation = Epic 3 / Story 3.1). */}
         <GridSection id="clients" label="Clients" background="alt" padded={false}>
-          <div className="flex flex-wrap items-center justify-between gap-3 px-section-x-mobile py-8 font-mono text-label text-fg-subtle sm:px-section-x">
-            <span aria-hidden="true">{clients.shippedToLabel}</span>
-            <span>{clients.viaLabel}</span>
-          </div>
+          <Clients
+            items={clients.items}
+            shippedToLabel={clients.shippedToLabel}
+            viaLabel={clients.viaLabel}
+          />
         </GridSection>
 
         {/* Sections numérotées — `SectionHead` seul ; corps de section : Story 2.x. */}

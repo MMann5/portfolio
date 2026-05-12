@@ -6,6 +6,7 @@ import type { Locale } from "@/i18n/config";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { MMLogo } from "@/components/MMLogo";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { AvailabilityBadge } from "@/components/AvailabilityBadge";
 
 // Barre de navigation persistante, style « terminal » (cf. design `Minimal.jsx` → `TMNav`).
 // Composant client (petit, above-the-fold) : scroll-spy (`aria-current`) + menu mobile.
@@ -121,16 +122,6 @@ export function Nav({
     );
   };
 
-  const availabilityBadge = (text: string) => (
-    <span className="flex items-center gap-1.5 font-mono text-label text-fg-subtle">
-      <span
-        aria-hidden="true"
-        className="size-1.5 rounded-full bg-status-available"
-      />
-      {text}
-    </span>
-  );
-
   const emailCta = (
     <a
       href={`mailto:${email}`}
@@ -192,7 +183,7 @@ export function Nav({
 
         {/* Actions — desktop. */}
         <div className="hidden items-center gap-4 lg:flex">
-          {availabilityBadge(availabilityShort)}
+          <AvailabilityBadge text={availabilityShort} />
           {emailCta}
           {cvLink}
           {langSwitcher}
@@ -224,7 +215,7 @@ export function Nav({
             ))}
           </ul>
           <div className="flex flex-wrap items-center gap-3">
-            {availabilityBadge(availabilityLabel)}
+            <AvailabilityBadge text={availabilityLabel} />
             {emailCta}
             {cvLink}
           </div>

@@ -29,13 +29,16 @@ const jetbrainsMono = JetBrains_Mono({
   preload: false,
 });
 
-// Cormorant Garamond n'a pas de version variable sur Google Fonts → poids explicites.
+// Cormorant Garamond : pas de version variable sur Google Fonts → on déclare explicitement les
+// poids ET les styles utilisés (le `400 italic` sert aux wordmarks du marquee clients — cf. token
+// `--text-marquee` ; sans `style: ["italic"]`, le navigateur synthétiserait un faux-italique).
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-cormorant",
   preload: false,
   weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
 });
 
 // Pré-rend `/en` et `/fr` au build ; `dynamicParams = false` → toute autre locale → 404.

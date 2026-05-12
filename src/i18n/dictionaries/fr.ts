@@ -55,6 +55,10 @@ const fr = {
       { label: "Focus", value: "React · TS · Supabase" },
     ],
     whoami: "michael-mann · senior-frontend-engineer · ashdod.il",
+    ctaContact: "Démarrer une conversation",
+    ctaLinkedin: "LinkedIn",
+    ctaCv: "Télécharger le CV",
+    ctaCvAriaLabel: "Télécharger le CV (PDF)",
   },
 
   // ── Bandeau clients ────────────────────────────────────────────────────────

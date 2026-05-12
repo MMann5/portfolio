@@ -63,6 +63,11 @@ const en = {
     // Ligne décorative `$ whoami → …` du design (le préfixe `$ whoami →` est ajouté
     // par le composant — décoration ASCII ; seule la valeur est du contenu).
     whoami: "michael-mann · senior-frontend-engineer · ashdod.il",
+    // Libellés des 3 CTAs du hero (copie distincte de la nav — cf. Story 2.1).
+    ctaContact: "Start a conversation",
+    ctaLinkedin: "LinkedIn",
+    ctaCv: "Download CV",
+    ctaCvAriaLabel: "Download CV (PDF)",
   },
 
   // ── Bandeau clients (marquee animé = Epic 3 ; layout = Epic 2) ─────────────
