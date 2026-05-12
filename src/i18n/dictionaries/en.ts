@@ -68,7 +68,7 @@ const en = {
   // ── Bandeau clients (marquee animé = Epic 3 ; layout = Epic 2) ─────────────
   clients: {
     shippedToLabel: "// clients.shipped_to",
-    viaLabel: "4 maisons · via Balink",
+    viaLabel: "4 houses · via Balink",
     items: [
       { name: "Louis Vuitton", note: "Catalog app · WeChat Mini Program" },
       { name: "Dior", note: "WeChat Mini Program" },

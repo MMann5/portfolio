@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Locale } from "@/i18n/config";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { MMLogo } from "@/components/MMLogo";
@@ -82,6 +82,20 @@ export function Nav({
 }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const activeSection = useActiveSection(sections.map((s) => s.id));
+
+  // Dès que le viewport atteint le palier `lg` (la barre desktop prend le relais), on ferme le
+  // menu mobile — sinon `menuOpen` / `aria-expanded="true"` restent collés sur le bouton bascule
+  // désormais masqué (`lg:hidden`), et revenir sous `lg` rouvre le panneau de façon inattendue.
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mql = window.matchMedia("(min-width: 1024px)");
+    const closeIfDesktop = () => {
+      if (mql.matches) setMenuOpen(false);
+    };
+    closeIfDesktop();
+    mql.addEventListener("change", closeIfDesktop);
+    return () => mql.removeEventListener("change", closeIfDesktop);
+  }, []);
 
   const sectionLink = (section: NavSection, variant: "bar" | "menu") => {
     const isActive = activeSection === section.id;

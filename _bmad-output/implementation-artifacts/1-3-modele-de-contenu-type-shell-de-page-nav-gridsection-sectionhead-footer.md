@@ -1,6 +1,6 @@
 # Story 1.3: Modèle de contenu typé & shell de page (Nav / GridSection / SectionHead / Footer)
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -100,6 +100,23 @@ so that I can move around the site and contact Michael from anywhere, immediatel
   - [x] Commits Conventional Commits, message simple, **sans** trailer `Co-Authored-By` (sauf demande explicite). Suggestion : `feat: add typed content model and page shell (Nav, GridSection, SectionHead, Footer)`.
   - [x] Le repo distant `MMann5/portfolio` est connecté à Vercel → un `push` sur `main` déclenche le déploiement auto (~19 s observées ; pas d'action manuelle ; aucun PR requis — `gh` CLI est installé mais non authentifié et se bloque dans cet environnement). Optionnel : vérifier en prod.
   - [x] Remplir le *Dev Agent Record* (modèle, Debug Log, Completion Notes, File List).
+
+### Review Findings
+
+_Revue de code adversariale — 2026-05-12 (3 couches : Blind Hunter, Edge Case Hunter, Acceptance Auditor). 5 patches, 6 reportés, 12 écartés (bruit / faux positifs / conformes au spec)._
+
+- [x] [Review][Patch] Mot français dans la copie EN visible — `clients.viaLabel` [src/i18n/dictionaries/en.ts] — corrigé : EN = « 4 houses · via Balink » ; `fr.ts` conserve « 4 maisons · via Balink ».
+- [x] [Review][Patch] Octet NUL dans la source [src/hooks/useActiveSection.ts] — corrigé : suppression du `SEPARATOR` ; `idsKey` = `JSON.stringify(ids)` / `JSON.parse(idsKey)`. Le fichier est de nouveau du texte UTF-8.
+- [x] [Review][Patch] Scroll-spy fragile [src/hooks/useActiveSection.ts] — corrigé : départage en parcourant `sectionIds` dans l'ordre DOM, `bestRatio = -1` (sections intersectantes au ratio 0 éligibles), et l'ancien `activeId` est conservé quand rien n'intersecte (`if (bestId !== null) setActiveId(bestId)`).
+- [x] [Review][Patch] `IntersectionObserver` utilisé sans garde [src/hooks/useActiveSection.ts] — corrigé : `if (typeof IntersectionObserver === "undefined") return;` en tête d'effet.
+- [x] [Review][Patch] Menu mobile non réinitialisé au passage ≥`lg` [src/components/Nav.tsx] — corrigé : effet `matchMedia("(min-width: 1024px)")` qui appelle `setMenuOpen(false)` au montage et sur `change`.
+- [x] [Review][Defer] Garde de complétude FR/EN aveugle aux tableaux [src/i18n/dictionaries/en.ts] — un `bullet`/`kpi`/`tag`/`clients.items` retiré dans `fr.ts` ne casse **pas** `npm run typecheck` ; l'« AC#1 : une clé manquante casse typecheck » ne tient que pour les clés d'objet. Inhérent au pattern sans `as const` exigé par le spec ; revisiter si une garantie plus forte est voulue (tuples à longueur vérifiée, ou test de parité runtime). — reporté, limitation de conception
+- [x] [Review][Defer] `scroll-mt-24` = nombre magique [src/components/GridSection.tsx:230] — pas dérivé de la hauteur réelle de la `Nav` sticky ; ancres imprécises, pire au zoom / menu mobile ouvert. Introduire un token `--nav-height`. → Epic 2/4 — reporté
+- [x] [Review][Defer] Aucune gestion du focus pour le menu mobile [src/components/Nav.tsx] — l'ouverture ne déplace pas le focus dans le panneau ; fermer via un lien de section démonte le panneau et fait tomber le focus sur `<body>` ; pas de fermeture par Échap. — reporté, l'audit clavier/ARIA exhaustif est cadré pour la Story 4.1 (note de portée 1.3)
+- [x] [Review][Defer] `GridSection padded={false}` n'inset pas le contenu au-delà des rails décoratifs (`w-gutter`) [src/components/GridSection.tsx] — le consommateur `clients` les dégage par chance ; un futur consommateur pourrait passer dessous. Envisager un plancher `sm:px-gutter`. — reporté (par design selon le JSDoc du prop, mais à durcir)
+- [x] [Review][Defer] `MMLogo` centre son `<text>` via `dominantBaseline="middle"` + un fudge `y="56%"` [src/components/MMLogo.tsx] — support historiquement instable (vieux Safari). Vérifier en QA visuelle ; envisager une marque en `<path>`. — reporté
+- [x] [Review][Defer] Tags d'`experience` repris de `content.js`, pas de `content.md` (l'autorité) — déviation littérale d'AC#1 ; choix défendable (plus spécifique). À confirmer lors de la finition de contenu — Story 2.4. — reporté
+- [x] [Review][Defer] `projectMeta: []` (projet « méthodologie ») s'élargit en `never[]` dans `typeof en` [src/i18n/dictionaries/en.ts] — y ajouter plus tard un `projectMeta` non vide casserait `typecheck` pour une raison non évidente. — reporté
 
 ## Dev Notes
 
