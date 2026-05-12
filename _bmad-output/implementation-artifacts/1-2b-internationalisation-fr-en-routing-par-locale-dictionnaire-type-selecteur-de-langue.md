@@ -1,6 +1,6 @@
 # Story 1.2b: Internationalisation FR/EN — routing par locale, dictionnaire typé & sélecteur de langue
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -61,6 +61,16 @@ so that I get the site in my language, consistently, and search engines see prop
   - [x] Commits Conventional Commits, message simple, **sans** trailer `Co-Authored-By` (sauf demande explicite). Suggestion : `feat: add FR/EN locale routing, typed dictionary and language switcher`.
   - [x] Le repo distant `MMann5/portfolio` est connecté à Vercel → un `push` sur `main` déclenche le déploiement auto (pas d'action manuelle ; aucun PR requis). Optionnel : vérifier en prod que `/` redirige et que `/fr`/`/en` rendent.
   - [x] Remplir le *Dev Agent Record* (modèle, Debug Log, Completion Notes, File List).
+
+### Review Findings
+
+_Code review du 2026-05-12 (workflow `bmad-code-review` — 3 couches : Blind Hunter / Edge Case Hunter / Acceptance Auditor). 4 `patch`, 1 `defer`, ~7 écartés comme bruit (dont l'incohérence « globals.css inchangé » + classes `text-text-*`→`text-fg-*` : réelle au commit `d858e9f` mais déjà corrigée sur `main` par `a256e6a` qui a renommé les tokens `--color-text-*`→`--color-fg-*`)._
+
+- [x] [Review][Patch] Redirection de `/` → `/<locale>/` avec slash final ⇒ double redirection (307 vers `/en/` puis 308 vers `/en` car `trailingSlash` est `false`) à chaque visite de la racine [src/proxy.ts] — corrigé : `pathname === "/" ? \`/${locale}\` : \`/${locale}${pathname}\``
+- [x] [Review][Patch] `text-fg-faint` (#666 — décoratif uniquement / sous le seuil AA, cf. note a11y de la story) utilisé pour du texte de label visible : « 404 ↗ not found » et le label mono de la page de démo — utiliser `text-fg-subtle` (#888) ou plus clair [src/app/[locale]/not-found.tsx, src/app/[locale]/page.tsx] — corrigé : `text-fg-faint` → `text-fg-subtle` sur ces deux labels (le `text-fg-faintest` de `buildLine`, purement décoratif, est laissé)
+- [x] [Review][Patch] `LanguageSwitcher` perd la query string et le fragment `#` au changement de langue (reconstruit l'URL depuis `usePathname()` seul) — impact réel quand le composant sera monté dans la `Nav` (Story 1.3) [src/components/LanguageSwitcher.tsx] — corrigé : `nextPath += window.location.search + window.location.hash` (lecture dans le handler de clic — pas de hook `useSearchParams`, donc pas de déopt du rendu statique)
+- [x] [Review][Patch] Le parseur `Accept-Language` du proxy ignore les q-values, y compris `q=0` (rejet explicite) — trier les langues correspondantes par q décroissant et écarter `q=0` [src/proxy.ts] — corrigé : parsing des q-values, tri par q décroissant, `q<=0` ignoré, `*` ignoré
+- [x] [Review][Defer] `config.matcher` du proxy n'exclut qu'une liste figée (`favicon.ico|sitemap.xml|robots.txt` + `.*\..*`) — les routes de métadonnées sans extension (`/opengraph-image`, `/icon`, `/twitter-image`) et toute future route `/api/*` seraient interceptées et redirigées en 307 ; aucune n'existe encore [src/proxy.ts] — deferred, à traiter avec la Story 4.3 (SEO) ou à l'ajout d'une route API
 
 ## Dev Notes
 
@@ -197,5 +207,6 @@ claude-opus-4-7[1m] (Claude Opus 4.7, 1M context) — workflow `bmad-create-stor
 
 ## Change Log
 
+- 2026-05-12 — Code review (workflow `bmad-code-review`, 3 couches) : 4 `patch` appliqués — `proxy.ts` (fix double-redirect `/`→`/<locale>/` ; q-values `Accept-Language` respectées), `LanguageSwitcher` (conserve query string + `#hash`), a11y (`text-fg-faint`→`text-fg-subtle` sur les labels visibles « 404 ↗ not found » et label de démo). 1 `defer` consigné dans `deferred-work.md` (exhaustivité du `config.matcher` du proxy vs routes de métadonnées sans extension / futures `/api/*`). ~7 constats écartés (dont l'incohérence « globals.css inchangé » déjà résolue sur `main`). 3 portes vertes (lint/typecheck/build), SSG `/en`+`/fr` intact. Status → done. (REVIEW: claude-opus-4-7[1m])
 - 2026-05-12 — Implémentation (workflow `bmad-dev-story`) : module i18n `src/i18n/` (config + dictionnaires EN/FR typés + garde de complétude `satisfies Dictionary` + `getDictionary` server-only), `src/proxy.ts` (redirection `/` → locale préférée cookie/`Accept-Language`), restructuration `app/` sous `[locale]/` (root layout `lang` dynamique + `generateStaticParams`/`dynamicParams=false` + `generateMetadata` canonical/hreflang/`metadataBase`), page de démo migrée en async Server Component lisant le dico, `not-found.tsx` stylé, composant `LanguageSwitcher` (cookie `NEXT_LOCALE`, a11y aria-live/focus-visible/tap≥44px). 3 portes vertes (lint/typecheck/build), SSG `/en`+`/fr`, polices intactes. Status → review. (DEV: claude-opus-4-7[1m])
 - 2026-05-12 — Story créée (workflow `bmad-create-story`) : infra i18n FR/EN — segments de locale `app/[locale]/`, `generateStaticParams` + `dynamicParams=false`, `proxy.ts` (redirection `/` → locale préférée via cookie `NEXT_LOCALE` + `Accept-Language`), `<html lang>` dynamique, `hreflang`/canonical de base, dictionnaire typé (`src/i18n/`) avec garde de complétude `satisfies Dictionary`, composant `LanguageSwitcher`, migration de la page de démo sous `[locale]/` (textes sourcés du dico). Hors scope : modèle de contenu complet de toutes les sections (1.3), shell Nav/GridSection/SectionHead/Footer (1.3), sections de page (Epic 2), SEO complet OG/JSON-LD/sitemap/robots (4.3), traductions FR exhaustives (2.4). Piège Next 16 documenté : `middleware.ts` → `proxy.ts`. (SM: claude-opus-4-7[1m])

@@ -8,16 +8,28 @@ import { locales, defaultLocale, isLocale } from "./i18n/config";
 // sinon `defaultLocale`. Ne touche pas aux pages, qui restent 100 % SSG.
 // Supporté sur Vercel ; non utilisé en `output:'export'` (qu'on n'active pas).
 
-/** Première locale supportée trouvée dans l'en-tête `Accept-Language`, sinon `defaultLocale`. */
+/**
+ * Locale supportée la mieux pondérée d'après l'en-tête `Accept-Language`
+ * (q-values respectées : tri par q décroissant, `q=0` = langue explicitement refusée),
+ * sinon `defaultLocale`.
+ */
 function localeFromAcceptLanguage(header: string | null): string {
   if (!header) return defaultLocale;
+  const matched: { locale: string; q: number }[] = [];
   for (const part of header.split(",")) {
-    const tag = part.split(";")[0]?.trim().toLowerCase();
-    if (!tag) continue;
+    const segments = part.split(";");
+    const tag = segments[0]?.trim().toLowerCase();
+    if (!tag || tag === "*") continue;
     const base = tag.split("-")[0];
-    if (base && isLocale(base)) return base;
+    if (!base || !isLocale(base)) continue;
+    const qParam = segments.slice(1).find((p) => p.trim().startsWith("q="));
+    const parsed = qParam ? Number.parseFloat(qParam.split("=")[1] ?? "") : 1;
+    const q = Number.isFinite(parsed) ? parsed : 1;
+    if (q <= 0) continue; // q=0 ⇒ langue explicitement refusée
+    matched.push({ locale: base, q });
   }
-  return defaultLocale;
+  const best = matched.sort((a, b) => b.q - a.q)[0];
+  return best ? best.locale : defaultLocale;
 }
 
 export function proxy(request: NextRequest) {
@@ -34,7 +46,9 @@ export function proxy(request: NextRequest) {
       ? cookieLocale
       : localeFromAcceptLanguage(request.headers.get("accept-language"));
 
-  request.nextUrl.pathname = `/${locale}${pathname}`;
+  // `/` → `/${locale}` (et non `/${locale}/`, qui déclencherait une 2e redirection
+  // vers `/${locale}` puisque `trailingSlash` est `false`).
+  request.nextUrl.pathname = pathname === "/" ? `/${locale}` : `/${locale}${pathname}`;
   return NextResponse.redirect(request.nextUrl);
 }
 

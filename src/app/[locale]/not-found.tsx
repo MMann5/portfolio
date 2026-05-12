@@ -7,7 +7,7 @@ import { defaultLocale } from "@/i18n/config";
 export default function NotFound() {
   return (
     <main className="flex flex-1 flex-col gap-8 bg-bg px-section-x-mobile py-section-y-mobile sm:px-section-x sm:py-section-y">
-      <p className="font-mono text-label tracking-wide text-fg-faint uppercase">
+      <p className="font-mono text-label tracking-wide text-fg-subtle uppercase">
         404 ↗ not found
       </p>
       <h1 className="max-w-3xl font-display text-display-md text-fg-strong sm:text-display-2xl">

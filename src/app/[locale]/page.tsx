@@ -28,7 +28,7 @@ export default async function Home({
 
   return (
     <main className="flex flex-1 flex-col gap-12 bg-bg px-section-x-mobile py-section-y-mobile sm:px-section-x sm:py-section-y">
-      <p className="font-mono text-label tracking-wide text-fg-faint uppercase">
+      <p className="font-mono text-label tracking-wide text-fg-subtle uppercase">
         {dict.demo.label}
       </p>
 

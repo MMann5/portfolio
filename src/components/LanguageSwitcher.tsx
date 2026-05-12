@@ -47,14 +47,16 @@ export function LanguageSwitcher({
     // 1. Persister la préférence (cookie ~1 an, lu ensuite par `proxy.ts` sur `/`).
     setLocaleCookie(next);
 
-    // 2. Calculer la nouvelle URL = chemin courant avec le segment de locale remplacé.
+    // 2. Calculer la nouvelle URL = chemin courant (segment de locale remplacé)
+    //    en conservant la query string et le fragment `#`.
     const segments = pathname.split("/");
     if (segments[1] && (locales as readonly string[]).includes(segments[1])) {
       segments[1] = next;
     } else {
       segments.splice(1, 0, next);
     }
-    const nextPath = segments.join("/") || `/${next}`;
+    const nextPath =
+      (segments.join("/") || `/${next}`) + window.location.search + window.location.hash;
 
     // 3. Annoncer le changement aux technologies d'assistance.
     setAnnouncement(changedTo.replace("{lang}", optionLabels[next]));
