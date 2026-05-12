@@ -1,0 +1,95 @@
+# generated: 2026-05-12
+# last_updated: 2026-05-12 (story 1.1 in-progress, epic-1 in-progress)
+# project: portfolio
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: _bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - Developer typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+
+generated: 2026-05-12
+last_updated: 2026-05-12
+project: portfolio
+project_key: NOKEY
+tracking_system: file-system
+story_location: _bmad-output/implementation-artifacts
+
+development_status:
+  # Epic 1: Fondations & shell bilingue déployé
+  epic-1: in-progress
+  1-1-scaffold-du-projet-deploiement-statique-ci: in-progress
+  1-2a-design-system-technical-minimal-tokens-polices: backlog
+  1-2b-internationalisation-fr-en-routing-par-locale-dictionnaire-type-selecteur-de-langue: backlog
+  1-3-modele-de-contenu-type-shell-de-page-nav-gridsection-sectionhead-footer: backlog
+  epic-1-retrospective: optional
+
+  # Epic 2: Page d'accueil — toutes les sections de contenu
+  epic-2: backlog
+  2-1-section-hero-marquee-des-marques-clientes: backlog
+  2-2-sections-about-experience-freelance-engagements: backlog
+  2-3-sections-side-projects-stack-ai-agentic-engineering: backlog
+  2-4-section-contact-contenu-fr-en-complet-cv-finition-responsive: backlog
+  epic-2-retrospective: optional
+
+  # Epic 3: Mouvement, curseur & fidélité « Technical Minimal »
+  epic-3: backlog
+  3-1-fondu-au-defilement-animation-du-marquee-respect-de-prefers-reduced-motion: backlog
+  3-2-curseur-personnalise-passe-de-fidelite-visuelle-degradation-gracieuse: backlog
+  epic-3-retrospective: optional
+
+  # Epic 4: Accessibilité, performance & SEO — prêt au lancement
+  epic-4: backlog
+  4-1-accessibilite-wcag-2-1-aa: backlog
+  4-2-budget-de-performance-core-web-vitals: backlog
+  4-3-seo-metadonnees-de-partage-assets-de-marque: backlog
+  epic-4-retrospective: optional
+
+  # Epic 5: Mesure d'audience privacy-friendly
+  epic-5: backlog
+  5-1-analytics-sans-cookie-suivi-des-cta-contact: backlog
+  epic-5-retrospective: optional
+
+  # Epic 6: Blog — infrastructure (MVP) & activation (Post-MVP)
+  epic-6: backlog
+  6-1-infrastructure-mdx-masquage-conditionnel-du-blog: backlog
+  6-2-activation-du-blog-pages-liste-article-rss-post-mvp: backlog
+  epic-6-retrospective: optional
+
+  # Epic 7: Growth — case studies, page « now »/changelog & CI durci
+  epic-7: backlog
+  7-1-pages-case-studies-page-now-changelog-post-mvp: backlog
+  7-2-ci-lighthouse-durci-post-mvp: backlog
+  epic-7-retrospective: optional
+
+  # Epic 8: Vision — hébreu (RTL) & variantes de design
+  epic-8: backlog
+  8-1-support-de-l-hebreu-3e-langue-rtl-post-mvp: backlog
+  8-2-variantes-de-design-alternatives-post-mvp: backlog
+  epic-8-retrospective: optional

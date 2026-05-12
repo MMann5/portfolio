@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Michael Mann — Senior Frontend Engineer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: #0a0a0a;
+        color: #ededed;
+        font-family: "Inter", -apple-system, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      a {
+        transition: color 0.15s, background 0.15s, border-color 0.15s, opacity 0.15s;
+      }
+      a:hover {
+        opacity: 0.85;
+      }
+      ::selection {
+        background: #d4a574;
+        color: #0a0a0a;
+      }
+      /* Custom cursor */
+      body {
+        cursor: none;
+      }
+      .mm-cursor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #d4a574;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: width 0.18s, height 0.18s, background 0.18s;
+        mix-blend-mode: difference;
+      }
+      .mm-cursor-ring {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid rgba(212, 165, 116, 0.5);
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: transform 0.22s cubic-bezier(0.2, 0.7, 0.3, 1), width 0.18s, height 0.18s, border-color 0.18s;
+      }
+      .mm-cursor-hover {
+        width: 4px;
+        height: 4px;
+      }
+      .mm-cursor-ring-hover {
+        width: 56px;
+        height: 56px;
+        border-color: rgba(212, 165, 116, 0.9);
+      }
+      @media (hover: none), (pointer: coarse) {
+        body { cursor: auto; }
+        .mm-cursor, .mm-cursor-ring { display: none; }
+      }
+
+      /* Fade-in on scroll */
+      .mm-fade {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.3, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.3, 1);
+      }
+      .mm-fade.in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+    <script src="shared/content.js"></script>
+    <script type="text/babel" src="variants/Minimal.jsx"></script>
+  </head>
+  <body>
+    <div class="mm-cursor-ring" id="cursor-ring"></div>
+    <div class="mm-cursor" id="cursor-dot"></div>
+    <div id="root"></div>
+
+    <script type="text/babel" data-presets="env,react">
+      function App() {
+        return <window.TechnicalMinimal />;
+      }
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+
+    <script>
+      // Custom cursor
+      (function () {
+        const dot = document.getElementById("cursor-dot");
+        const ring = document.getElementById("cursor-ring");
+        let x = window.innerWidth / 2,
+          y = window.innerHeight / 2;
+        let rx = x,
+          ry = y;
+        let raf;
+        document.addEventListener("mousemove", (e) => {
+          x = e.clientX;
+          y = e.clientY;
+          dot.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+        });
+        function loop() {
+          rx += (x - rx) * 0.18;
+          ry += (y - ry) * 0.18;
+          ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+          raf = requestAnimationFrame(loop);
+        }
+        loop();
+        document.addEventListener("mouseover", (e) => {
+          const t = e.target.closest("a, button, [data-cursor='hover']");
+          if (t) {
+            dot.classList.add("mm-cursor-hover");
+            ring.classList.add("mm-cursor-ring-hover");
+          }
+        });
+        document.addEventListener("mouseout", (e) => {
+          const t = e.target.closest("a, button, [data-cursor='hover']");
+          if (t) {
+            dot.classList.remove("mm-cursor-hover");
+            ring.classList.remove("mm-cursor-ring-hover");
+          }
+        });
+      })();
+
+      // Fade-in on scroll — applied to direct children of <section>s
+      (function () {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("in");
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+        );
+        // Run after React mounts
+        setTimeout(() => {
+          document
+            .querySelectorAll("section > *, article, h2, h3")
+            .forEach((el) => {
+              el.classList.add("mm-fade");
+              io.observe(el);
+            });
+        }, 200);
+      })();
+    </script>
+  </body>
+</html>

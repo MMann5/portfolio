@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(python *)",
+      "Bash(python3 *)",
+      "Bash(py \"C:/Users/Micha/Desktop/portfolio/_bmad/scripts/resolve_customization.py\" --skill \"C:/Users/Micha/Desktop/portfolio/.claude/skills/bmad-create-epics-and-stories\" --key workflow)",
+      "Bash(npm --version)",
+      "Bash(npx *)",
+      "Bash(mkdir -p ../_portfolio_tmp_bmad)",
+      "Bash(mv _bmad ../_portfolio_tmp_bmad/)",
+      "Bash(mv _bmad-output ../_portfolio_tmp_bmad/)",
+      "Read(//c/Users/Micha/Desktop/**)",
+      "Bash(mv ../_portfolio_tmp_bmad/_bmad .)",
+      "Bash(mv ../_portfolio_tmp_bmad/_bmad-output .)",
+      "Bash(rmdir ../_portfolio_tmp_bmad)",
+      "Bash(git branch *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}
