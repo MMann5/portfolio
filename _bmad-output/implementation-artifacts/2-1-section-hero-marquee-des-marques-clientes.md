@@ -1,6 +1,6 @@
 # Story 2.1: Section Hero & marquee des marques clientes
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -91,6 +91,13 @@ so that in a few seconds I see seniority, luxury brands, stack, and availability
   - [x] Commit Conventional Commits, message simple, **sans** trailer `Co-Authored-By` (sauf demande explicite). Suggestion : `feat(story-2.1): hero section + client wordmarks marquee` (+ éventuel `fix: load Cormorant Garamond italic face` si tu sépares).
   - [x] Le repo distant `MMann5/portfolio` est connecté à Vercel → un `push` sur `main` déclenche le déploiement auto (aucune action manuelle ; pas de PR requis — `gh` CLI installé mais non authentifié, se bloque dans cet environnement). Optionnel : vérifier en prod.
   - [x] Remplir le *Dev Agent Record* (modèle, Debug Log, Completion Notes, File List).
+
+### Review Findings
+
+_Code review du 2026-05-12 (commit `731a64f`) — 3 couches : Blind Hunter, Edge Case Hunter, Acceptance Auditor. Les 6 AC sont jugées satisfaites ; aucun défaut Critical/High ; aucun fichier de la liste « ne pas toucher » modifié._
+
+- [x] [Review][Patch] `whitespace-nowrap` sur le fragment doré du `<h1>` peut déborder à ~320px en FR (« SaaS de production » est plus long que « production SaaS ») — **corrigé** : passé à `text-accent sm:whitespace-nowrap` (insécable seulement ≥ `sm`, wrap naturel en mobile). [src/components/Hero.tsx]
+- [x] [Review][Defer] Le lien LinkedIn (`target="_blank"`) ne signale « ouvre un nouvel onglet » qu'avec `↗` qui est `aria-hidden` — aucun texte visually-hidden ni `aria-label` complémentaire (WCAG G201, niveau AAA-ish). [src/components/Hero.tsx — CTA LinkedIn] — deferred → cadré pour l'audit a11y exhaustif (Story 4.1) ; choix délibéré documenté dans la story (« le libellé visible LinkedIn suffit comme nom accessible »).
 
 ## Dev Notes
 
