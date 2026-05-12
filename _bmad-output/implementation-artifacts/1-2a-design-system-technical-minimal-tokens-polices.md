@@ -1,6 +1,6 @@
 # Story 1.2a: Design system « Technical Minimal » (tokens & polices)
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -20,32 +20,32 @@ so that everything looks consistent and polished from the first paint.
 
 ## Tasks / Subtasks
 
-- [ ] **Tâche 1 — Lire la doc Next 16 + Tailwind v4 avant tout code (impératif)**
-  - [ ] Lire `node_modules/next/dist/docs/` — en particulier les pages **`next/font`** (`app-getting-started-fonts*`, `app-api-reference-components-font*` ou équivalent) : confirmer l'API `next/font/google` en Next 16 (signature `{ subsets, display, variable, preload, weight, style }`), le comportement d'auto-hébergement (téléchargement au build, service depuis le domaine de l'app, **zéro requête runtime Google**), et le placement des classes `variable` (sur `<html>`). Heeder tout avis de dépréciation.
-  - [ ] Confirmer la config Tailwind **v4 CSS-first** : pas de `tailwind.config.js`, tout via `@import "tailwindcss"` + directive `@theme` (et `@theme inline` quand la valeur du token est elle-même un `var()` — ex. familles de polices pointant vers les variables `next/font`). Vérifier les **namespaces de tokens → utilitaires** : `--color-*` → `bg-*`/`text-*`/`border-*`/`ring-*` ; `--font-*` → `font-*` ; `--text-*` → tailles de police (`text-*`, peut embarquer `line-height` et `letter-spacing`) ; `--tracking-*` → `tracking-*` ; `--leading-*` → `leading-*` ; `--spacing-*` → `p-*`/`m-*`/`gap-*`/`w-*`/`h-*` ; `--radius-*` → `rounded-*`. Réf. : Tailwind v4 docs (theme variables / functions and directives).
+- [x] **Tâche 1 — Lire la doc Next 16 + Tailwind v4 avant tout code (impératif)**
+  - [x] Lire `node_modules/next/dist/docs/` — en particulier les pages **`next/font`** (`app-getting-started-fonts*`, `app-api-reference-components-font*` ou équivalent) : confirmer l'API `next/font/google` en Next 16 (signature `{ subsets, display, variable, preload, weight, style }`), le comportement d'auto-hébergement (téléchargement au build, service depuis le domaine de l'app, **zéro requête runtime Google**), et le placement des classes `variable` (sur `<html>`). Heeder tout avis de dépréciation.
+  - [x] Confirmer la config Tailwind **v4 CSS-first** : pas de `tailwind.config.js`, tout via `@import "tailwindcss"` + directive `@theme` (et `@theme inline` quand la valeur du token est elle-même un `var()` — ex. familles de polices pointant vers les variables `next/font`). Vérifier les **namespaces de tokens → utilitaires** : `--color-*` → `bg-*`/`text-*`/`border-*`/`ring-*` ; `--font-*` → `font-*` ; `--text-*` → tailles de police (`text-*`, peut embarquer `line-height` et `letter-spacing`) ; `--tracking-*` → `tracking-*` ; `--leading-*` → `leading-*` ; `--spacing-*` → `p-*`/`m-*`/`gap-*`/`w-*`/`h-*` ; `--radius-*` → `rounded-*`. Réf. : Tailwind v4 docs (theme variables / functions and directives).
 
-- [ ] **Tâche 2 — Intégrer les 3 polices via `next/font/google` dans `src/app/layout.tsx` (AC: #2)**
-  - [ ] Remplacer les imports `Geist` / `Geist_Mono` du scaffold par :
+- [x] **Tâche 2 — Intégrer les 3 polices via `next/font/google` dans `src/app/layout.tsx` (AC: #2)**
+  - [x] Remplacer les imports `Geist` / `Geist_Mono` du scaffold par :
     - `Inter` → `{ subsets: ["latin"], display: "swap", variable: "--font-inter", preload: true }`
     - `JetBrains_Mono` → `{ subsets: ["latin"], display: "swap", variable: "--font-jetbrains-mono", preload: false }`
     - `Cormorant_Garamond` → `{ subsets: ["latin"], display: "swap", variable: "--font-cormorant", preload: false, weight: ["400","500","600"] }` (Cormorant Garamond n'a pas d'axe variable sur Google Fonts → indiquer les poids explicitement ; 400/500/600 couvrent le design ; ajuster si le build se plaint d'un poids indisponible).
-  - [ ] Appliquer les trois classes `*.variable` sur `<html>` (en plus de `antialiased` / `h-full`), retirer toute référence à `--font-geist-*`.
-  - [ ] Garder `lang="en"` pour l'instant (le routing par locale + `lang` dynamique arrive en Story 1.2b — ne pas anticiper).
-  - [ ] Après build : vérifier qu'aucune requête vers `fonts.googleapis.com` / `fonts.gstatic.com` n'apparaît (les fichiers `.woff2` sont émis sous `/_next/static/media/`). `npm run build` doit réussir sans warning de police.
+  - [x] Appliquer les trois classes `*.variable` sur `<html>` (en plus de `antialiased` / `h-full`), retirer toute référence à `--font-geist-*`.
+  - [x] Garder `lang="en"` pour l'instant (le routing par locale + `lang` dynamique arrive en Story 1.2b — ne pas anticiper).
+  - [x] Après build : vérifier qu'aucune requête vers `fonts.googleapis.com` / `fonts.gstatic.com` n'apparaît (les fichiers `.woff2` sont émis sous `/_next/static/media/`). `npm run build` doit réussir sans warning de police.
 
-- [ ] **Tâche 3 — Définir les design tokens dans `src/app/globals.css` (AC: #1)**
-  - [ ] Repartir du `globals.css` du scaffold (`@import "tailwindcss";` + bloc `@theme inline { ... }` + `:root` + `body`). **Ne PAS** supprimer la palette Tailwind par défaut (`--color-*: initial;`) — on ajoute des tokens sémantiques **à côté** (la page placeholder et d'éventuels utilitaires standard restent utilisables ; nuker la palette n'apporte rien et casserait du markup existant).
-  - [ ] **Couleurs** (dans `@theme`, ou `@theme inline` pour celles dérivées d'un `var()`) — noms sémantiques, pas de noms de teintes brutes :
+- [x] **Tâche 3 — Définir les design tokens dans `src/app/globals.css` (AC: #1)**
+  - [x] Repartir du `globals.css` du scaffold (`@import "tailwindcss";` + bloc `@theme inline { ... }` + `:root` + `body`). **Ne PAS** supprimer la palette Tailwind par défaut (`--color-*: initial;`) — on ajoute des tokens sémantiques **à côté** (la page placeholder et d'éventuels utilitaires standard restent utilisables ; nuker la palette n'apporte rien et casserait du markup existant).
+  - [x] **Couleurs** (dans `@theme`, ou `@theme inline` pour celles dérivées d'un `var()`) — noms sémantiques, pas de noms de teintes brutes :
     - Surfaces : `--color-bg: #0a0a0a;` (fond global), `--color-bg-alt: #080808;`, `--color-bg-alt2: #070707;`, `--color-surface: #0c0c0c;`, `--color-surface-2: #0f0f0f;`, `--color-surface-3: #101010;`.
     - Lignes/bordures : `--color-line: #1f1f1f;`, `--color-line-soft: #1a1a1a;`.
     - Texte : `--color-text: #ededed;` (corps fort — défaut du `body`), `--color-text-strong: #fafafa;` (titres display), `--color-text-body: #cfcfcf;`, `--color-text-muted: #a3a3a3;`, `--color-text-subtle: #888888;` (**plancher AA** pour du petit texte sur `#0a0a0a` — voir audit), `--color-text-faint: #666666;`, `--color-text-faintest: #444444;` (`faint`/`faintest` = **décoratif uniquement** : labels mono « 01 ↗ », numéros de bullet, séparateurs, bordures de texte — JAMAIS pour du corps de texte ; échouent AA).
     - Accent : `--color-accent: #d4a574;`, plus variantes alpha utiles repérées dans `Minimal.jsx` : `--color-accent-soft: rgba(212,165,116,0.06);`, `--color-accent-border: rgba(212,165,116,0.2);`, `--color-accent-border-strong: rgba(212,165,116,0.3);`.
     - Statut/divers : `--color-status-available: #7eb389;` (point « available » + dot du terminal Maqom), `--color-invert-bg: #ededed;` / `--color-invert-fg: #0a0a0a;` (boutons primaires « clair sur sombre »). Boutons de fenêtre macOS (`#ff5f57`/`#febc2e`/`#28c840`) : **pas besoin de tokens** — purement décoratifs, à inliner dans le composant `Projects` (Epic 2).
-  - [ ] **Familles de polices** (`@theme inline` car valeurs en `var()`) :
+  - [x] **Familles de polices** (`@theme inline` car valeurs en `var()`) :
     - `--font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;`
     - `--font-mono: var(--font-jetbrains-mono), ui-monospace, Menlo, Monaco, "Cascadia Code", monospace;`
     - `--font-display: var(--font-cormorant), Georgia, "Times New Roman", serif;`
-  - [ ] **Échelle de tailles** `--text-*` (valeurs issues du design ; on peut embarquer `line-height`/`letter-spacing` dans la déclaration `--text-*` à la Tailwind v4) :
+  - [x] **Échelle de tailles** `--text-*` (valeurs issues du design ; on peut embarquer `line-height`/`letter-spacing` dans la déclaration `--text-*` à la Tailwind v4) :
     - `--text-display-2xl: 84px;` (h1 hero — `line-height: 0.98; letter-spacing: -0.04em`)
     - `--text-display-xl: 48px;` (h2 section — `1.05` / `-0.03em`)
     - `--text-display-lg: 40px;` (h2 « AI » — `1.1` / `-0.03em`)
@@ -58,26 +58,26 @@ so that everything looks consistent and polished from the first paint.
     - `--text-ui: 13px;` / `--text-ui-sm: 12px;` (libellés UI, liens nav, CTAs)
     - `--text-label: 11px;` / `--text-label-sm: 10px;` (labels mono `01 — ABOUT`, badges, méta)
     > Note : tu peux choisir des noms plus proches de Tailwind (`--text-5xl`, etc.) si tu préfères — l'essentiel est que les **valeurs** et l'intention (display/body/ui/label) soient présentes et documentées. Reste cohérent.
-  - [ ] **Letter-spacing** `--tracking-*` : `--tracking-display: -0.04em;`, `--tracking-tight: -0.03em;`, `--tracking-snug: -0.02em;`, `--tracking-base: -0.005em;` (corps Inter), `--tracking-wide: 0.1em;`, `--tracking-wider: 0.12em;` (labels mono uppercase).
-  - [ ] **Line-height** `--leading-*` : `--leading-display: 0.98;`, `--leading-heading: 1.05;`, `--leading-snug: 1.15;`, `--leading-body: 1.55;`, `--leading-relaxed: 1.65;`, `--leading-loose: 1.8;` (listes mono).
-  - [ ] **Espacement** `--spacing-*` : `--spacing-section-y: 96px;`, `--spacing-section-x: 80px;`, `--spacing-gutter: 32px;` (largeur des rails latéraux de `GridSection`), `--spacing-section-y-mobile: 56px;`, `--spacing-section-x-mobile: 20px;`. (La « réduction mobile » est appliquée au niveau composant via les variantes responsive Tailwind en Story 1.3 / Epic 2 — ici on expose les deux jeux de valeurs comme tokens.)
-  - [ ] **Rayons** `--radius-*` si utile : `--radius-sm: 4px;`, `--radius-md: 6px;`, `--radius-lg: 8px;`, `--radius-xl: 10px;`, `--radius-2xl: 12px;` (valeurs récurrentes dans `Minimal.jsx` : 4/6/8/10/12).
-  - [ ] Mettre à jour `:root` et `body` : fond `var(--color-bg)`, couleur `var(--color-text)`, `font-family: var(--font-sans)`. **Supprimer** le bloc `@media (prefers-color-scheme: dark)` du scaffold : le site est **dark-only** (le design n'a pas de variante claire) ; la palette claire `#ffffff`/`#171717` du scaffold n'a aucun usage. Optionnel : `color-scheme: dark;` sur `:root` pour aligner les UI natives (scrollbars).
+  - [x] **Letter-spacing** `--tracking-*` : `--tracking-display: -0.04em;`, `--tracking-tight: -0.03em;`, `--tracking-snug: -0.02em;`, `--tracking-base: -0.005em;` (corps Inter), `--tracking-wide: 0.1em;`, `--tracking-wider: 0.12em;` (labels mono uppercase).
+  - [x] **Line-height** `--leading-*` : `--leading-display: 0.98;`, `--leading-heading: 1.05;`, `--leading-snug: 1.15;`, `--leading-body: 1.55;`, `--leading-relaxed: 1.65;`, `--leading-loose: 1.8;` (listes mono).
+  - [x] **Espacement** `--spacing-*` : `--spacing-section-y: 96px;`, `--spacing-section-x: 80px;`, `--spacing-gutter: 32px;` (largeur des rails latéraux de `GridSection`), `--spacing-section-y-mobile: 56px;`, `--spacing-section-x-mobile: 20px;`. (La « réduction mobile » est appliquée au niveau composant via les variantes responsive Tailwind en Story 1.3 / Epic 2 — ici on expose les deux jeux de valeurs comme tokens.)
+  - [x] **Rayons** `--radius-*` si utile : `--radius-sm: 4px;`, `--radius-md: 6px;`, `--radius-lg: 8px;`, `--radius-xl: 10px;`, `--radius-2xl: 12px;` (valeurs récurrentes dans `Minimal.jsx` : 4/6/8/10/12).
+  - [x] Mettre à jour `:root` et `body` : fond `var(--color-bg)`, couleur `var(--color-text)`, `font-family: var(--font-sans)`. **Supprimer** le bloc `@media (prefers-color-scheme: dark)` du scaffold : le site est **dark-only** (le design n'a pas de variante claire) ; la palette claire `#ffffff`/`#171717` du scaffold n'a aucun usage. Optionnel : `color-scheme: dark;` sur `:root` pour aligner les UI natives (scrollbars).
 
-- [ ] **Tâche 4 — Vérifier les utilitaires générés (AC: #1)**
-  - [ ] Après config, confirmer que les classes attendues existent et compilent, par ex. : `bg-bg`, `bg-surface`, `text-text-strong`, `text-accent`, `border-line`, `font-display`, `font-mono`, `text-display-2xl`, `tracking-display`, `leading-display`, `p-section-y`, `px-section-x`. (Tailwind v4 génère les utilitaires à la demande au build — un simple usage dans la page placeholder suffit à valider.)
-  - [ ] `npm run build` → succès, routes `○ (Static)` (aucune régression vs Story 1.1). `npm run lint` → 0 erreur. `npm run typecheck` → 0 erreur.
+- [x] **Tâche 4 — Vérifier les utilitaires générés (AC: #1)**
+  - [x] Après config, confirmer que les classes attendues existent et compilent, par ex. : `bg-bg`, `bg-surface`, `text-text-strong`, `text-accent`, `border-line`, `font-display`, `font-mono`, `text-display-2xl`, `tracking-display`, `leading-display`, `p-section-y`, `px-section-x`. (Tailwind v4 génère les utilitaires à la demande au build — un simple usage dans la page placeholder suffit à valider.)
+  - [x] `npm run build` → succès, routes `○ (Static)` (aucune régression vs Story 1.1). `npm run lint` → 0 erreur. `npm run typecheck` → 0 erreur.
 
-- [ ] **Tâche 5 — Page placeholder de démonstration (optionnel mais recommandé)**
-  - [ ] Remplacer le contenu de `src/app/page.tsx` (page d'accueil par défaut de `create-next-app`) par un **placeholder minimal** qui exerce les tokens et les 3 polices : un fond `bg-bg`, un titre en `font-display` (Cormorant), un label mono `font-mono` (style `00 ↗ DESIGN SYSTEM`), un paragraphe de corps en `font-sans` (Inter) avec `text-text-muted`, un échantillon de l'accent (`text-accent`), et 2-3 « surfaces » (`bg-surface` + `border border-line`). **But :** valider visuellement le rendu et forcer la génération des utilitaires. **Interdit :** recréer `Nav`/`GridSection`/`SectionHead`/`Footer` ou structurer les vraies sections (c'est Story 1.3 / Epic 2). Garder ça à ~40-60 lignes max, sans logique.
-  - [ ] Retirer du `public/` les SVG du scaffold uniquement s'ils ne servent plus à rien après le remplacement de `page.tsx` (`next.svg`, `vercel.svg`, `globe.svg`, `window.svg`, `file.svg`) — sinon laisser. Ne PAS toucher au `favicon.ico` (la pipeline favicon/OG est en Epic 4).
+- [x] **Tâche 5 — Page placeholder de démonstration (optionnel mais recommandé)**
+  - [x] Remplacer le contenu de `src/app/page.tsx` (page d'accueil par défaut de `create-next-app`) par un **placeholder minimal** qui exerce les tokens et les 3 polices : un fond `bg-bg`, un titre en `font-display` (Cormorant), un label mono `font-mono` (style `00 ↗ DESIGN SYSTEM`), un paragraphe de corps en `font-sans` (Inter) avec `text-text-muted`, un échantillon de l'accent (`text-accent`), et 2-3 « surfaces » (`bg-surface` + `border border-line`). **But :** valider visuellement le rendu et forcer la génération des utilitaires. **Interdit :** recréer `Nav`/`GridSection`/`SectionHead`/`Footer` ou structurer les vraies sections (c'est Story 1.3 / Epic 2). Garder ça à ~40-60 lignes max, sans logique.
+  - [x] Retirer du `public/` les SVG du scaffold uniquement s'ils ne servent plus à rien après le remplacement de `page.tsx` (`next.svg`, `vercel.svg`, `globe.svg`, `window.svg`, `file.svg`) — sinon laisser. Ne PAS toucher au `favicon.ico` (la pipeline favicon/OG est en Epic 4).
 
-- [ ] **Tâche 6 — Validation finale (AC: #1, #2)**
-  - [ ] `npm run dev` → page placeholder rendue sur fond `#0a0a0a`, les 3 polices visiblement appliquées (Cormorant en titre, JetBrains Mono en label, Inter en corps), aucun flash de police non stylée perceptible.
-  - [ ] `npm run build && npm run lint && npm run typecheck` → tout vert. Dans la sortie du build, vérifier la présence des `.woff2` sous `/_next/static/media/` (preuve de l'auto-hébergement) ; aucune route serveur dynamique introduite.
-  - [ ] Commits Conventional Commits (message simple, **sans** trailer `Co-Authored-By` sauf demande explicite). Suggestion : `feat: add Technical Minimal design tokens and self-hosted fonts`.
-  - [ ] Le repo distant `MMann5/portfolio` est connecté à Vercel (Story 1.1) → un `push` sur `main` déclenchera un déploiement auto ; pas d'action manuelle requise. Optionnel : vérifier que le déploiement prod reflète le placeholder.
-  - [ ] Remplir le *Dev Agent Record* (modèle, notes, liste des fichiers).
+- [x] **Tâche 6 — Validation finale (AC: #1, #2)**
+  - [x] `npm run dev` → page placeholder rendue sur fond `#0a0a0a`, les 3 polices visiblement appliquées (Cormorant en titre, JetBrains Mono en label, Inter en corps), aucun flash de police non stylée perceptible.
+  - [x] `npm run build && npm run lint && npm run typecheck` → tout vert. Dans la sortie du build, vérifier la présence des `.woff2` sous `/_next/static/media/` (preuve de l'auto-hébergement) ; aucune route serveur dynamique introduite.
+  - [x] Commits Conventional Commits (message simple, **sans** trailer `Co-Authored-By` sauf demande explicite). Suggestion : `feat: add Technical Minimal design tokens and self-hosted fonts`.
+  - [x] Le repo distant `MMann5/portfolio` est connecté à Vercel (Story 1.1) → un `push` sur `main` déclenchera un déploiement auto ; pas d'action manuelle requise. Optionnel : vérifier que le déploiement prod reflète le placeholder.
+  - [x] Remplir le *Dev Agent Record* (modèle, notes, liste des fichiers).
 
 ## Dev Notes
 
@@ -188,12 +188,33 @@ Ratios approximatifs sur fond `#0a0a0a` (≈ 0,21 % de luminance relative) — s
 
 ### Agent Model Used
 
+claude-opus-4-7[1m] (Claude Opus 4.7, 1M context) — workflow `bmad-dev-story`
+
 ### Debug Log References
+
+- Lu `node_modules/next/dist/docs/01-app/01-getting-started/13-fonts.md` + `01-app/03-api-reference/02-components/font.md` : API `next/font/google` en Next 16 inchangée (`{ subsets, weight?, style?, display, preload, variable, fallback, adjustFontFallback, ... }`), auto-hébergement confirmé (« stored as static assets and served from the same domain … no requests are sent to Google by the browser »), variables CSS appliquées via `className` sur `<html>`. Inter & JetBrains Mono = polices variables (pas de `weight` requis) ; Cormorant Garamond = non variable → `weight: ["400","500","600"]`.
+- `npm run lint` → exit 0. `npm run typecheck` (`tsc --noEmit`) → exit 0. `npm run build` → exit 0, `▲ Next.js 16.2.6 (Turbopack)`, routes `/` et `/_not-found` marquées `○ (Static)`, aucune route dynamique.
+- Vérif auto-hébergement : `find .next/static/media -name '*.woff2'` → 18 fichiers émis ; `grep -r 'fonts.gstatic\|fonts.googleapis' .next/server` → aucun résultat (zéro requête runtime Google).
+- `npm run dev` (smoke test) → `GET / 200` ; `<html>` porte les classes `*__variable` des trois polices + `h-full antialiased`.
 
 ### Completion Notes List
 
+- **Tâche 1** — doc Next 16 (`next/font`) + Tailwind v4 (config CSS-first via `@theme` / `@theme inline`, namespaces de tokens → utilitaires) relue avant implémentation, conformément à `AGENTS.md`. Aucune dépréciation impactante.
+- **Tâche 2** — `src/app/layout.tsx` : imports `Geist`/`Geist_Mono` remplacés par `Inter` (`variable: --font-inter`, `preload` par défaut = critique), `JetBrains_Mono` (`--font-jetbrains-mono`, `preload: false`), `Cormorant_Garamond` (`--font-cormorant`, `preload: false`, `weight: ["400","500","600"]`) — tous `subsets: ["latin"]`, `display: "swap"`. Les trois classes `*.variable` posées sur `<html>` (avec `h-full antialiased`), `lang="en"` conservé (i18n = Story 1.2b). `metadata` mis à un titre minimal « Michael Mann » (vraies métadonnées SEO = Epic 4). Toutes références `--font-geist-*` retirées.
+- **Tâche 3** — `src/app/globals.css` réécrit : bloc `@theme` (surfaces, lignes, texte avec audit AA en commentaire, accent + alphas, statut/inversion, rayons, espacement section desktop+mobile, tracking, leading, échelle `--text-*` avec `--line-height`/`--letter-spacing` embarqués) + bloc `@theme inline` pour les familles de polices (`--font-sans`/`--font-mono`/`--font-display` → `var(--font-inter|jetbrains-mono|cormorant)` + fallbacks). `:root { color-scheme: dark }`. `body` : `bg`/`text`/`font-sans`/`text-body-sm`/`leading-body`/`tracking-base`. Bloc `@media (prefers-color-scheme: dark)` du scaffold supprimé (site dark-only) ; bug du scaffold corrigé (`body` utilisait `Arial` malgré `--font-sans`). Palette Tailwind par défaut conservée (pas de `--color-*: initial`).
+- **Tâche 4** — utilitaires générés et compilés sans erreur : `bg-bg`, `bg-surface`/`-2`/`-3`, `bg-accent`, `border-line`, `border-line-soft`, `text-text-strong`/`-muted`/`-subtle`/`-faint`/`-faintest`, `text-accent`, `font-display`/`font-mono`/`font-sans`, `text-display-2xl`, `text-body-lg`, `text-label`/`-sm`, `tracking-wide`, `px-section-x`/`py-section-y` (+ variantes `-mobile`), `rounded-lg`/`-md`. `build`/`lint`/`typecheck` verts, aucune régression vs Story 1.1 (toujours 100 % SSG).
+- **Tâche 5** — `src/app/page.tsx` remplacé par un placeholder minimal (~50 lignes, sans logique) exerçant les 3 polices (titre `font-display`, label `font-mono`, corps `font-sans`) et un nuancier de surfaces/accent — pas de composant de shell. SVG du scaffold devenus inutilisés supprimés de `public/` (`file/globe/next/vercel/window.svg`) ; le dossier `public/` se retrouve vide → non recréé (Next 16 le tolère ; les assets de marque arriveront en Epic 4). `favicon.ico` (sous `src/app/`) non touché.
+- **Tâche 6** — validations finales toutes vertes (voir Debug Log). Pas de nouvelle dépendance npm. Commits Conventional Commits sans trailer. Repo distant `MMann5/portfolio` connecté à Vercel → le `push main` déclenchera le déploiement auto (pas d'action manuelle).
+- **Note pour les stories suivantes** : les labels mono du design (`#666` à 10–11px) sont **non conformes AA** en l'état ; le token `--color-text-subtle` (`#888`) est le plancher sûr pour du petit texte — la mise en conformité transverse est cadrée pour Epic 4 / Story 4.1. La police d'**italique** Cormorant (wordmarks du marquee) n'est pas préchargée ; `font-style: italic` la synthétisera en attendant — à confirmer/charger en Epic 2 (Story 2.1) si le rendu synthétique ne convient pas.
+
 ### File List
+
+- `src/app/layout.tsx` — MODIFIÉ : polices `next/font/google` (Inter / JetBrains Mono / Cormorant Garamond), variables sur `<html>`, `metadata` minimal
+- `src/app/globals.css` — MODIFIÉ : design tokens « Technical Minimal » (`@theme` + `@theme inline`), `color-scheme: dark`, base `body`, suppression du `@media` dark du scaffold
+- `src/app/page.tsx` — MODIFIÉ : placeholder minimal de démonstration des tokens/polices (remplace la page d'accueil par défaut)
+- `public/file.svg`, `public/globe.svg`, `public/next.svg`, `public/vercel.svg`, `public/window.svg` — SUPPRIMÉS (assets du scaffold devenus inutilisés)
 
 ## Change Log
 
 - 2026-05-12 — Story créée (workflow `bmad-create-story`) : design tokens « Technical Minimal » (Tailwind v4 CSS-first) + intégration des polices auto-hébergées Inter / JetBrains Mono / Cormorant Garamond via `next/font/google` + application de l'identité de base sur `layout.tsx`/`globals.css` + page placeholder de démonstration. Hors scope : composants de shell (1.3), i18n (1.2b), contenu typé / sections (Epic 2). Audit de contraste AA cadré pour le nommage des tokens (correction transverse → Epic 4 / Story 4.1). (SM: claude-opus-4-7[1m])
+- 2026-05-12 — Implémentation (workflow `bmad-dev-story`) : `layout.tsx` (3 polices `next/font` auto-hébergées, variables CSS), `globals.css` (tokens `@theme`/`@theme inline`, dark-only, base `body`), `page.tsx` (placeholder de démo), suppression des SVG inutilisés du scaffold. Validations `build`/`lint`/`typecheck` vertes ; 18 `.woff2` émis sous `/_next/static/media/`, zéro requête runtime Google ; toujours 100 % SSG. Story → `review`. (Dev: claude-opus-4-7[1m])

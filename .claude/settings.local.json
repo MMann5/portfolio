@@ -16,7 +16,18 @@
       "Bash(rmdir ../_portfolio_tmp_bmad)",
       "Bash(git branch *)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(gh --version)",
+      "Bash(gh auth *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(git credential *)",
+      "Bash(git checkout *)",
+      "Bash(git fetch *)",
+      "Bash(git pull *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{time_total}s\\\\n\" https://portfolio-three-omega-48ezqd212w.vercel.app/)",
+      "Bash(curl -s https://portfolio-three-omega-48ezqd212w.vercel.app/)",
+      "Bash(git rm *)"
     ]
   }
 }
