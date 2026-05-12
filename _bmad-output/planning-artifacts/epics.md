@@ -50,26 +50,21 @@ This document provides the complete epic and story breakdown for **portfolio** (
 - **FR18 :** Le site sert un contenu correctement localisé pour les moteurs de recherche (URLs localisées, `hreflang`, `lang` du document).
 - **FR19 :** Aucun texte affiché n'est codé en dur en dehors du système de traduction (toute chaîne visible existe en FR et EN).
 
-**D. Blog (infra MVP, contenu post-MVP)**
+<!-- Section « D. Blog » (FR20–FR23) retirée le 2026-05-12 : fonctionnalité abandonnée. Les numéros FR24+ sont conservés tels quels (pas de renumérotation). -->
 
-- **FR20 :** Un éditeur (Michael) peut ajouter un article de blog en déposant un fichier de contenu (MDX) dans le dépôt, sans modifier le code de présentation.
-- **FR21 :** Le site n'affiche la section blog et son lien de navigation que lorsqu'au moins un article est publié ; tant qu'aucun article n'existe, la section et le lien restent masqués.
-- **FR22 :** *(Post-MVP)* Un visiteur peut consulter la liste des articles et lire un article individuel.
-- **FR23 :** *(Post-MVP)* Un visiteur/agrégateur peut s'abonner aux articles via un flux RSS.
-
-**E. Édition & maintenance du contenu**
+**D. Édition & maintenance du contenu**
 
 - **FR24 :** Un éditeur (Michael) peut mettre à jour tout le contenu textuel et structuré du portfolio (hero, about, experience, projets, stack, AI, contact, footer) depuis une source de contenu centralisée et typée, en FR et EN.
 - **FR25 :** Un éditeur (Michael) peut remplacer le fichier de CV téléchargeable.
 - **FR26 :** Un éditeur (Michael) peut déclencher un déploiement du site à jour via une opération de publication standard (push) ; le déploiement est automatique.
 
-**F. Découvrabilité, partage & mesure**
+**E. Découvrabilité, partage & mesure**
 
 - **FR27 :** Le site fournit des métadonnées de référencement et de partage (titre, description, OpenGraph/Twitter Card avec image, données structurées `Person`, `sitemap`, `robots`).
 - **FR28 :** Le site est indexable et pré-rendu de sorte que son contenu soit accessible aux moteurs de recherche sans exécution de JavaScript.
 - **FR29 :** Le site mesure de façon respectueuse de la vie privée les visites et les déclenchements d'appels à l'action de contact, pour suivre la conversion visite → contact.
 
-**G. Expérience visuelle & interactions**
+**F. Expérience visuelle & interactions**
 
 - **FR30 :** Un visiteur sur dispositif à pointeur fin voit un curseur personnalisé (point + anneau) ; ce curseur est désactivé sur dispositif tactile/pointeur grossier.
 - **FR31 :** Un visiteur voit les blocs de contenu apparaître en fondu à l'entrée dans le viewport au défilement.
@@ -77,7 +72,7 @@ This document provides the complete epic and story breakdown for **portfolio** (
 - **FR33 :** Le site reproduit fidèlement la direction visuelle de référence « Technical Minimal » (palette sombre + accent doré, typographies Inter/JetBrains Mono/Cormorant Garamond, grille de fond des sections, cartes style fenêtre-terminal, rangées de KPI, marquee de wordmarks).
 - **FR34 :** Le site s'affiche correctement et reste pleinement utilisable du mobile (~375px) au grand écran desktop, sans défilement horizontal parasite.
 
-**H. Accessibilité**
+**G. Accessibilité**
 
 - **FR35 :** Un visiteur peut parcourir et activer tous les éléments interactifs au clavier, avec un indicateur de focus visible, et accéder directement au contenu principal via un lien d'évitement.
 - **FR36 :** Un visiteur utilisant un lecteur d'écran obtient des libellés et une structure de document cohérents (titres hiérarchisés, repères de page, libellés des liens d'icônes, éléments décoratifs masqués de l'arbre d'accessibilité).
@@ -117,7 +112,7 @@ This document provides the complete epic and story breakdown for **portfolio** (
 
 **Maintainability**
 
-- **NFR20 :** Tout le contenu (textes, métadonnées, données structurées des sections, articles MDX) est centralisé, typé et séparé de la présentation ; ajouter/modifier du contenu ne requiert aucune modification des composants de présentation.
+- **NFR20 :** Tout le contenu (textes, métadonnées, données structurées des sections) est centralisé, typé et séparé de la présentation ; ajouter/modifier du contenu ne requiert aucune modification des composants de présentation.
 - **NFR21 :** Le contenu existe intégralement en FR et EN ; l'absence d'une traduction est détectable (échec de build ou avertissement de lint) ; aucune chaîne visible codée en dur.
 - **NFR22 :** Le code respecte TypeScript strict et passe ESLint sans erreur en CI ; un contrôle Lighthouse en CI signale les régressions perf/a11y (bloquant à terme — souhaitable en MVP).
 - **NFR23 :** Les composants sont portés fidèlement du design de référence (`Minimal.jsx`) vers React/TS + Tailwind (styles inline → classes), avec une référence visuelle permettant de vérifier la non-régression.
@@ -140,8 +135,8 @@ This document provides the complete epic and story breakdown for **portfolio** (
 - **AR2 — Rendu statique :** SSG / pré-rendu au build, aucune donnée dynamique côté serveur, pas d'API applicative, pas d'authentification, pas de base de données, pas de temps réel. Le site doit être servable comme statique.
 - **AR3 — Déploiement :** Hébergement Vercel, déploiement statique automatique sur `push`, déploiements atomiques (rollback préservé), propagation < ~2 min.
 - **AR4 — i18n routing (décidé) :** App Router avec **segments de locale (`app/[locale]/...`)** — URLs localisées explicites (`/fr`, `/en`), idiomatique App Router, compatible SSG (`generateStaticParams`), `hreflang` + `<link rel="canonical">` par locale, `<html lang>` dérivé du segment. Préférence de langue mémorisée par cookie, lue par un **middleware léger** qui redirige `/` vers la locale préférée (ou détectée via `Accept-Language`). Dictionnaire typé FR/EN unique dérivé de `content.js`/`content.md`. → impacte **Epic 1, Story 1.2b**.
-- **AR5 — Modèle de contenu :** données structurées des sections (meta, hero, clients, about, experience, projects, stack, ai, contact, footer) dans un module TS typé, séparé de la présentation ; blog en MDX dans `content/blog/`.
-- **AR6 — Démasquage du blog au build :** présence du lien de nav + section blog dérivée du dossier MDX au moment du build (≥ 1 article ⇒ visible).
+- **AR5 — Modèle de contenu :** données structurées des sections (meta, hero, clients, about, experience, projects, stack, ai, contact, footer) dans un module TS typé, séparé de la présentation.
+- **AR6 — *(retiré le 2026-05-12)* :** ~~Démasquage du blog au build~~ — fonctionnalité abandonnée ; numéro conservé pour ne pas renuméroter AR7+.
 - **AR7 — Polices :** Inter, JetBrains Mono, Cormorant Garamond auto-hébergées via `next/font`, sous-ensembles latins, `display: swap`, preload de Inter.
 - **AR8 — Images & assets :** `next/image` (AVIF/WebP), logos SVG inline quand possible, `splash*.png` optimisé ; pipeline favicon set + OG image + manifest depuis les assets fournis (`logo.svg`, `logo-dark.svg`, `logo-text.svg`, `maqom-logo-*`, `splash*.png`).
 - **AR9 — Qualité / CI :** ESLint + TypeScript strict en CI ; check Lighthouse en CI (souhaitable en MVP, bloquant en Growth) ; déploiement automatique sur push.
@@ -171,7 +166,7 @@ This document provides the complete epic and story breakdown for **portfolio** (
 - **UX-DR16 — `useScrollFadeIn` :** hook IntersectionObserver pour le fondu d'entrée des blocs (`opacity`/`transform`), apparition immédiate sous `prefers-reduced-motion`, sans layout thrashing.
 - **UX-DR17 — Responsive :** mobile-first ; breakpoints Tailwind standard ; toutes les grilles denses (Stack/Experience/AI, meta strip) reflow en 1-2 colonnes ; paddings réduits sur mobile ; tap targets ≥ 44px ; texte lisible sans zoom ; aucun scroll horizontal de ~320px aux grands écrans.
 - **UX-DR18 — Accessibilité (transverse design) :** `:focus-visible` stylé partout (jamais `outline:none` nu), skip-link « aller au contenu », ordre de tab logique, `aria-label` sur les liens d'icônes (LinkedIn, téléphone), `aria-current` sur le lien de section actif, marquee `aria-hidden` (marques présentes en texte ailleurs), annonce du changement de langue, `lang`/`dir` du `<html>` corrects.
-- **UX-DR19 — Pages article blog (Post-MVP) :** template d'article MDX avec syntax highlighting, mise en page de lecture soignée, et page liste des articles ; cohérent avec « Technical Minimal ».
+- **UX-DR19 — *(retiré le 2026-05-12)* :** ~~Pages article blog~~ — fonctionnalité abandonnée ; numéro conservé pour ne pas renuméroter UX-DR20.
 - **UX-DR20 — Variantes de design (Post-MVP / Vision) :** explorer les autres maquettes du canvas (`design-canvas (3).jsx`) comme variantes alternatives — éventuel A/B léger.
 - **UX-DR21 — Section « Freelance Engagements » + composant `MissionCard` :** section dédiée (label `03 — Freelance Engagements`) listant les missions freelance ; chaque carte = nom, intitulé, dates, durée, statut (`Completed` / `Shipped to production`), URL sortante (ex. `sayelo.ai`, `penpaloo.io`), tagline, bullets, tags techno ; structurellement proche de `RoleCard` ; `<article>` sémantique ; reflow mobile. **Renumérotation des labels de section :** `01 About · 02 Experience · 03 Freelance Engagements · 04 Side Projects · 05 Stack · 06 Contact` (issu de `content.md`).
 
@@ -197,10 +192,7 @@ This document provides the complete epic and story breakdown for **portfolio** (
 - **FR17 :** Epic 1 / Story 1.2b — sélecteur de langue visible + persistance (cookie + middleware).
 - **FR18 :** Epic 1 / Story 1.2b (`lang`, segments de locale `/fr` `/en`) + Epic 4 / Story 4.3 (`hreflang`, canonical).
 - **FR19 :** Epic 1 / Stories 1.2b, 1.3 — aucun texte en dur (check de complétude des locales).
-- **FR20 :** Epic 6 — ajout d'article MDX dans `content/blog/`.
-- **FR21 :** Epic 6 — section/nav blog masquée tant que vide (détection au build).
-- **FR22 :** *(Post-MVP)* Epic 6 — liste + lecture d'article.
-- **FR23 :** *(Post-MVP)* Epic 6 — flux RSS.
+- **FR20–FR23 :** *(retirés le 2026-05-12 — section blog abandonnée ; Epic 6 supprimée.)*
 - **FR24 :** Epic 1 (modèle de contenu typé) + Epic 2 (sections renseignées).
 - **FR25 :** Epic 2 — remplacement du fichier CV.
 - **FR26 :** Epic 1 — déploiement automatique sur `push`.
@@ -241,9 +233,7 @@ Le site atteint WCAG 2.1 AA (contrastes audités et tokens ajustés, navigation 
 Le site mesure, de façon agrégée et sans cookie (solution type Plausible, conforme RGPD sans bannière de consentement), les visites et les déclenchements des appels à l'action de contact — pour suivre la conversion visite → contact.
 **FRs covered:** FR29 · **NFRs:** NFR24, NFR25 · **ARs:** AR10
 
-### Epic 6: Blog — infrastructure (MVP) & activation (Post-MVP) `MVP + Post-MVP`
-**MVP :** Michael peut déposer un article MDX dans `content/blog/` sans toucher la présentation ; tant qu'aucun article n'existe, la section blog et son lien de navigation restent masqués (détection au build). **Post-MVP :** dès le 1ᵉʳ article publié, la section et le lien de nav apparaissent automatiquement ; page liste des articles + page article individuelle (syntax highlighting) + flux RSS régénéré au build.
-**FRs covered:** FR20, FR21 `MVP` · FR22, FR23 `Post-MVP` · **ARs:** AR6 · **UX-DR:** DR19 `Post-MVP`
+<!-- Epic 6 « Blog » retirée le 2026-05-12 : fonctionnalité abandonnée. Les numéros Epic 7/8/9 sont conservés tels quels (pas de renumérotation). -->
 
 ### Epic 7: Growth — case studies, page « now »/changelog & CI durci `Post-MVP`
 Pages case studies dédiées et approfondies (Balink anonymisé / Limova / Maqom), page « now » / changelog `v2026.x`, et CI Lighthouse durci (budget JS strict, blocage du déploiement sur régression de perf/a11y).
@@ -252,6 +242,10 @@ Pages case studies dédiées et approfondies (Balink anonymisé / Limova / Maqom
 ### Epic 8: Vision — hébreu (RTL) & variantes de design `Post-MVP`
 Ajout de l'hébreu comme 3ᵉ langue avec `dir="rtl"` (si justifié), exploration des variantes de design du canvas comme alternatives, éventuel A/B léger ; consolidation du site comme hub durable de marque personnelle.
 **FRs covered:** — (extension de FR16/FR17 i18n ; FR33 variantes visuelles) · **UX-DR:** DR20 · *(périmètre PRD — Phase 3 Vision)*
+
+### Epic 9: QA & relecture pré-lancement `MVP`
+Passe de QA transversale avant l'envoi du lien aux recruteurs : exactitude factuelle de tout le contenu (textes FR + EN, expériences, dates/durées, KPI, stack), validité de tous les liens sortants (LinkedIn — actuellement en 404 —, `maqom.co`, `mailto:`, CV), absence de fuite (repo / Balink / projets clients sous secret), parité FR/EN au niveau du contenu, smoke responsive (~375px, zéro scroll horizontal, tap ≥ 44px). Distincte des audits techniques d'Epic 4.
+**FRs covered:** — (vérification transversale de FR10/FR13/FR14/FR19/FR24/FR25/FR33/FR34) · *(ajoutée — révision 2026-05-12)*
 
 ---
 
@@ -583,47 +577,7 @@ So that I can observe the visit → contact conversion without harming visitor p
 **When** a visitor triggers one
 **Then** an aggregate event is recorded, visible in the analytics dashboard alongside page-view counts
 
-## Epic 6: Blog — infrastructure (MVP) & activation (Post-MVP)
-
-Infrastructure MDX prête dès le MVP avec section/nav masquées tant que vide ; activation complète (pages liste/article, RSS, démasquage auto) en Post-MVP.
-
-### Story 6.1: Infrastructure MDX & masquage conditionnel du blog
-
-As the owner (Michael),
-I want to add a blog post by dropping an MDX file in the repo, with the blog section and nav link staying hidden until at least one post exists,
-So that the blog infrastructure is ready without showing an empty section.
-
-**Acceptance Criteria:**
-
-**Given** an MDX pipeline for `content/blog/`
-**When** I add an MDX file with typed frontmatter (title, date, slug, locale, description)
-**Then** it is detected at build time without any change to presentation code
-
-**Given** no published article exists
-**When** the site builds and renders
-**Then** the blog section and its nav link are not shown
-
-**Given** the build-time blog detection (it counts published MDX articles in `content/blog/`)
-**When** the build runs
-**Then** the detection result (`hasPublishedPosts`) is exposed to the layout, so the blog section and nav link render only when ≥ 1 article exists — and in the MVP, with zero articles, nothing blog-related is visible anywhere
-**And** the actual blog list/article pages, syntax highlighting, RSS feed, and the auto-revealed nav link/section are out of scope here and delivered by Story 6.2 (Post-MVP)
-
-### Story 6.2: Activation du blog — pages liste/article & RSS (Post-MVP)
-
-As a visitor or a feed aggregator,
-I want to browse the article list, read individual articles, and subscribe via RSS,
-So that I can follow Michael's writing.
-
-**Acceptance Criteria:**
-
-**Given** at least one published article
-**When** I visit the blog
-**Then** I see an article list page and can open an individual article page with syntax highlighting and a clean reading layout, consistent with "Technical Minimal"
-**And** the blog nav link / section appear automatically
-
-**Given** the build
-**When** it runs
-**Then** an RSS feed (`feed.xml`) is generated / regenerated from the MDX articles, and aggregators can subscribe to it
+<!-- Epic 6 « Blog — infrastructure & activation » (stories 6.1, 6.2) retirée le 2026-05-12 : fonctionnalité abandonnée. -->
 
 ## Epic 7: Growth — case studies, page « now »/changelog & CI durci
 
@@ -686,3 +640,39 @@ So that I can iterate on the site's look and optionally run a light A/B.
 **Given** an alternative design variant from the canvas (`design-canvas (3).jsx`)
 **When** it is implemented
 **Then** it is available behind a switch mechanism, preserves all content and accessibility, and can optionally be served as a light A/B variant
+
+## Epic 9: QA & relecture pré-lancement `MVP`
+
+Avant d'envoyer le lien aux recruteurs : une passe de QA transversale qui vérifie l'exactitude factuelle de tout le contenu (textes FR + EN, expériences, dates/durées, KPI, stack), la validité de tous les liens sortants (LinkedIn — actuellement en 404 —, `maqom.co`, `mailto:`, téléchargement du CV), l'absence de fuite (liens repo / Balink / projets clients sous secret), la parité FR/EN au niveau du contenu (la garde de type est aveugle au contenu des tableaux), et un smoke responsive rapide (~375px, zéro scroll horizontal, tap targets ≥ 44px). Distincte des audits techniques d'Epic 4 (WCAG, perf/CWV, SEO) — ici, focus « exactitude & polish recruteur ».
+
+### Story 9.1: Audit de contenu, liens & polish pré-lancement
+
+As the owner (Michael),
+I want a final QA pass over every piece of visible content, every outbound link and the responsive behavior, in both FR and EN, before sharing the site with recruiters,
+So that nothing factually wrong, broken, untranslated, or embarrassing reaches a hiring audience.
+
+**Acceptance Criteria:**
+
+**Given** every outbound link on the site (nav, hero, contact, Maqom card, footer)
+**When** each is opened
+**Then** the LinkedIn link resolves to Michael's real profile (not the current `…/in/michaelmann-339545149` which 404s — replaced with the URL Michael provides), `maqom.co` opens `https://maqom.co`, every `mailto:` opens with the correct address, the CV link downloads the current PDF, and no link points to a code repository, to Balink, or to any client project under NDA/secret
+
+**Given** all visible text in both `/en` and `/fr`
+**When** it is proofread
+**Then** there is no typo, grammar slip, leftover placeholder/lorem, or untranslated English-in-French (or French-in-English) string; company names, role titles, dates, durations and KPI figures match reality; the section numbering (`01 About … 06 Contact`, AI section unnumbered) is consistent between nav and `SectionHead`; and the `<title>`/meta description/`<html lang>` are correct per locale
+
+**Given** the FR and EN dictionaries
+**When** their array contents are compared item-by-item (the build-time completeness guard is blind to array contents — cf. `deferred-work.md` review 1.3)
+**Then** both locales expose the same number of experience roles, freelance missions, project items, stack groups + items, AI tools and footer/contact links, with no entry silently missing on one side
+
+**Given** the Stack section
+**When** its three groups are reviewed
+**Then** the listed technologies are accurate, current, and ones Michael is comfortable being questioned on; nothing aspirational-only or stale is presented as part of the working stack
+
+**Given** the home page from ~375px up to large desktop, in both locales
+**When** it is smoke-tested (and at 200% zoom)
+**Then** there is no stray horizontal scroll on any section, tap targets are ≥ 44px, long values (e.g. `project_meta`) wrap cleanly, and nothing overlaps or clips — deeper WCAG/perf/SEO audits remain owned by Epic 4
+
+**Given** the production build and deployment
+**When** `npm run build` runs and the site is deployed
+**Then** the build succeeds, `/en` and `/fr` are statically prerendered, `typecheck` and `lint` pass, and the deployed URL serves the corrected content

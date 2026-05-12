@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-05-12
-last_updated: 2026-05-12 (story 2.2 code-reviewed — done; epic-2 in-progress)
+last_updated: 2026-05-12 (story 2.3 review; Epic 9 added — story 9.1 ready-for-dev; Epic 6 « Blog » retirée)
 project: portfolio
 project_key: NOKEY
 tracking_system: file-system
@@ -54,7 +54,7 @@ development_status:
   epic-2: in-progress
   2-1-section-hero-marquee-des-marques-clientes: done
   2-2-sections-about-experience-freelance-engagements: done
-  2-3-sections-side-projects-stack-ai-agentic-engineering: backlog
+  2-3-sections-side-projects-stack-ai-agentic-engineering: review
   2-4-section-contact-contenu-fr-en-complet-cv-finition-responsive: backlog
   epic-2-retrospective: optional
 
@@ -76,11 +76,7 @@ development_status:
   5-1-analytics-sans-cookie-suivi-des-cta-contact: backlog
   epic-5-retrospective: optional
 
-  # Epic 6: Blog — infrastructure (MVP) & activation (Post-MVP)
-  epic-6: backlog
-  6-1-infrastructure-mdx-masquage-conditionnel-du-blog: backlog
-  6-2-activation-du-blog-pages-liste-article-rss-post-mvp: backlog
-  epic-6-retrospective: optional
+  # Epic 6: Blog — RETIRÉE le 2026-05-12 (fonctionnalité abandonnée). Numéros Epic 7/8/9 conservés.
 
   # Epic 7: Growth — case studies, page « now »/changelog & CI durci
   epic-7: backlog
@@ -93,3 +89,8 @@ development_status:
   8-1-support-de-l-hebreu-3e-langue-rtl-post-mvp: backlog
   8-2-variantes-de-design-alternatives-post-mvp: backlog
   epic-8-retrospective: optional
+
+  # Epic 9: QA & relecture pré-lancement
+  epic-9: in-progress
+  9-1-audit-de-contenu-liens-polish-pre-lancement: ready-for-dev
+  epic-9-retrospective: optional
