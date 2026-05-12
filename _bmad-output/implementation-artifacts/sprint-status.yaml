@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-05-12
-last_updated: 2026-05-12 (story 2.1 done — code review; epic-2 in-progress)
+last_updated: 2026-05-12 (story 2.2 implemented — review; epic-2 in-progress)
 project: portfolio
 project_key: NOKEY
 tracking_system: file-system
@@ -53,7 +53,7 @@ development_status:
   # Epic 2: Page d'accueil — toutes les sections de contenu
   epic-2: in-progress
   2-1-section-hero-marquee-des-marques-clientes: done
-  2-2-sections-about-experience-freelance-engagements: backlog
+  2-2-sections-about-experience-freelance-engagements: review
   2-3-sections-side-projects-stack-ai-agentic-engineering: backlog
   2-4-section-contact-contenu-fr-en-complet-cv-finition-responsive: backlog
   epic-2-retrospective: optional

@@ -58,7 +58,7 @@ export function Hero({
           pour tenir above the fold à ~375×667 ; le fragment doré reste insécable ≥ sm
           (en mobile on laisse le wrap naturel — la traduction FR « SaaS de production »
           déborderait sinon à ~320px). */}
-      <h1 className="mt-6 max-w-5xl font-sans text-display-md font-semibold text-fg-strong sm:text-display-xl lg:text-display-2xl">
+      <h1 className="mt-6 max-w-4xl font-sans text-display-sm font-semibold text-fg-strong sm:text-display-md lg:text-display-lg">
         {headline.lead}
         <span className="text-accent sm:whitespace-nowrap">{headline.accent}</span>
         {headline.tail}

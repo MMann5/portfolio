@@ -7,6 +7,9 @@ import { SectionHead } from "@/components/SectionHead";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { Clients } from "@/components/Clients";
+import { About } from "@/components/About";
+import { Experience } from "@/components/Experience";
+import { FreelanceEngagements } from "@/components/FreelanceEngagements";
 
 // Page d'accueil — Server Component statiquement pré-rendu (`generateStaticParams` +
 // `dynamicParams = false` au root layout ; aucun `headers()`/`cookies()`/`fetch` runtime ici).
@@ -95,7 +98,14 @@ export default async function Home({
               heading={section.heading}
               sub={section.sub}
             />
-            {/* contenu de section — Epic 2 */}
+            {section.id === "about" && <About body={sections.about.body} />}
+            {section.id === "experience" && (
+              <Experience roles={sections.experience.roles} />
+            )}
+            {section.id === "freelance" && (
+              <FreelanceEngagements missions={sections.freelance.missions} />
+            )}
+            {/* projects / stack / contact : corps = Stories 2.3 / 2.4 */}
           </GridSection>
         ))}
 

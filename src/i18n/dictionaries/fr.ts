@@ -43,9 +43,9 @@ const fr = {
   hero: {
     badge: "Disponible — T2 2026",
     headline: {
-      lead: "Ingénieur frontend senior, je construis des applications ",
+      lead: "Développeur frontend senior, 5 ans d'expérience à construire des plateformes ",
       accent: "SaaS de production",
-      tail: " pour des marques internationales.",
+      tail: " en React/TypeScript. Architecture, design systems, performance, leadership d'équipe",
     },
     sub: "Plus de cinq ans à livrer des applications React/TypeScript utilisées au quotidien par les équipes commerciales de Louis Vuitton, Dior, Tiffany & Co. et Messika — ainsi que des plateformes d'IA au service de plus de 3 000 entreprises. Je construis aujourd'hui mes propres produits SaaS.",
     meta: [

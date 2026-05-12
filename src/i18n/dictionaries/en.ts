@@ -49,9 +49,9 @@ const en = {
   hero: {
     badge: "Available — Q2 2026",
     headline: {
-      lead: "Senior frontend engineer building ",
-      accent: "production SaaS",
-      tail: " for global brands.",
+      lead: "Senior Frontend Developer with 5 years of experience building ",
+      accent: "production SaaS platforms",
+      tail: " in React/TypeScript. Architecture, design systems, performance optimization, and team leadership",
     },
     sub: "Five+ years shipping React/TypeScript apps used daily by sales teams at Louis Vuitton, Dior, Tiffany & Co. and Messika — plus AI platforms serving 3,000+ companies. Currently building independent SaaS products.",
     meta: [
