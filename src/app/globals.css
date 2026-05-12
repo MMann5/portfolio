@@ -11,9 +11,13 @@
     #888888 ~5.6:1 ✅ (plancher confortable pour petit texte)
     #666666 ~3.4:1 ❌ texte courant — ✅ grand texte / UI / déco
     #555555 ~2.6:1 / #444444 ~2.0:1 → DÉCO PURE (bordures de texte, séparateurs, numéros)
-  → `--color-text-faint` (#666) et `--color-text-faintest` (#444) NE DOIVENT PAS
+  → `--color-fg-faint` (#666) et `--color-fg-faintest` (#444) NE DOIVENT PAS
     servir à du corps de texte. La mise en conformité des labels mono du design
     (actuellement #666 à 10–11px) est traitée en Epic 4 / Story 4.1.
+
+  Note de nommage : les tokens de texte sont préfixés `--color-fg-*` (et non
+  `--color-text-*`) pour ne pas cohabiter dans l'espace d'utilitaires `text-*`
+  avec l'échelle de tailles `--text-*` (qui génère aussi des utilitaires `text-*`).
 */
 
 @theme {
@@ -29,14 +33,14 @@
   --color-line: #1f1f1f;
   --color-line-soft: #1a1a1a;
 
-  /* ---- Texte (voir audit AA ci-dessus) ---- */
-  --color-text: #ededed; /* corps fort — défaut du body */
-  --color-text-strong: #fafafa; /* titres display */
-  --color-text-body: #cfcfcf; /* paragraphes, bullets */
-  --color-text-muted: #a3a3a3; /* sous-accroche, sous-titres, descriptions */
-  --color-text-subtle: #888888; /* méta mono, libellés secondaires — plancher AA petit texte */
-  --color-text-faint: #666666; /* DÉCO / grand texte uniquement : labels mono, méta uppercase */
-  --color-text-faintest: #444444; /* DÉCO PURE : numéros de bullet, séparateurs → */
+  /* ---- Texte (voir audit AA ci-dessus) — préfixe `fg` pour éviter la collision d'utilitaires avec `--text-*` ---- */
+  --color-fg: #ededed; /* corps fort — défaut du body */
+  --color-fg-strong: #fafafa; /* titres display */
+  --color-fg-body: #cfcfcf; /* paragraphes, bullets */
+  --color-fg-muted: #a3a3a3; /* sous-accroche, sous-titres, descriptions */
+  --color-fg-subtle: #888888; /* méta mono, libellés secondaires — plancher AA petit texte */
+  --color-fg-faint: #666666; /* DÉCO / grand texte uniquement : labels mono, méta uppercase */
+  --color-fg-faintest: #444444; /* DÉCO PURE : numéros de bullet, séparateurs → */
 
   /* ---- Accent doré ---- */
   --color-accent: #d4a574;
@@ -143,7 +147,7 @@
 
 body {
   background: var(--color-bg);
-  color: var(--color-text);
+  color: var(--color-fg);
   font-family: var(--font-sans);
   font-size: var(--text-body-sm);
   line-height: var(--leading-body);

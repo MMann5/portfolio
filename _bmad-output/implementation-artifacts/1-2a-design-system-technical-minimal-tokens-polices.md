@@ -1,6 +1,6 @@
 # Story 1.2a: Design system « Technical Minimal » (tokens & polices)
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -78,6 +78,26 @@ so that everything looks consistent and polished from the first paint.
   - [x] Commits Conventional Commits (message simple, **sans** trailer `Co-Authored-By` sauf demande explicite). Suggestion : `feat: add Technical Minimal design tokens and self-hosted fonts`.
   - [x] Le repo distant `MMann5/portfolio` est connecté à Vercel (Story 1.1) → un `push` sur `main` déclenchera un déploiement auto ; pas d'action manuelle requise. Optionnel : vérifier que le déploiement prod reflète le placeholder.
   - [x] Remplir le *Dev Agent Record* (modèle, notes, liste des fichiers).
+
+### Review Findings
+
+_Revue de code adversariale (Blind Hunter + Edge Case Hunter + Acceptance Auditor) — 2026-05-12._
+
+**Décisions requises (résolues) :**
+
+- [x] [Review][Decision→Patch] Espace de nommage `text-*` partagé entre `--color-text-*` et `--text-*` — **Résolu : option A** (renommage). Les tokens de texte sont renommés `--color-text-*` → `--color-fg-*` dans `globals.css` (+ commentaire de nommage), et `page.tsx` mis à jour (`text-fg-strong/-muted/-subtle/-faint/-faintest`). Plus de cohabitation `text-text-*` / `text-*`. [`src/app/globals.css`, `src/app/page.tsx`]
+- [x] [Review][Decision→Patch] Globs Bash trop larges dans `.claude/settings.local.json` — **Résolu : option A** (restriction). `git push *` → `git push origin *` ; `git rm *` et les deux `curl` épinglés à l'URL de preview supprimés ; `git *` (ajouté en cours de session) retiré ; ajout d'helpers read-only explicites (`git status/diff/log/show *`). [`.claude/settings.local.json`]
+
+**Patches appliqués :**
+
+- [x] [Review][Patch] `Inter` → `preload: true` explicite (aligné AC#2 / Tâche 2). [`src/app/layout.tsx`]
+- [x] [Review][Patch] *File List* du Dev Agent Record complétée — ajout de `.claude/settings.local.json` et `sprint-status.yaml` + note de revue. [`1-2a-...md` § File List]
+- [x] [Review][Patch] `<h1>` placeholder → palier responsive `text-display-md sm:text-display-2xl` (évite le débordement horizontal sur mobile). [`src/app/page.tsx`]
+
+**Reporté (forward-looking) :**
+
+- [x] [Review][Defer] Italique Cormorant non chargé — les wordmarks du marquee (`--text-marquee`, commenté « Cormorant italique ») seront en faux-italique tant que `style: ["italic"]` n'est pas demandé ; le commentaire « pas de version variable sur Google Fonts » est par ailleurs douteux (`variable` figure dans les poids dispos). Cadré pour Epic 2 / Story 2.1 par la story. [`src/app/layout.tsx`] — reporté
+- [x] [Review][Defer] `_global-error` rend son propre `<html>`/`<body>` hors de l'arbre du root layout → les variables `--font-*` ne s'y appliquent pas ; une page d'erreur globale stylée (si ajoutée) verrait ses polices retomber sur les fallbacks. [`src/app/layout.tsx` / `globals.css` chaînes `@theme inline`] — reporté
 
 ## Dev Notes
 
@@ -205,7 +225,7 @@ claude-opus-4-7[1m] (Claude Opus 4.7, 1M context) — workflow `bmad-dev-story`
 - **Tâche 4** — utilitaires générés et compilés sans erreur : `bg-bg`, `bg-surface`/`-2`/`-3`, `bg-accent`, `border-line`, `border-line-soft`, `text-text-strong`/`-muted`/`-subtle`/`-faint`/`-faintest`, `text-accent`, `font-display`/`font-mono`/`font-sans`, `text-display-2xl`, `text-body-lg`, `text-label`/`-sm`, `tracking-wide`, `px-section-x`/`py-section-y` (+ variantes `-mobile`), `rounded-lg`/`-md`. `build`/`lint`/`typecheck` verts, aucune régression vs Story 1.1 (toujours 100 % SSG).
 - **Tâche 5** — `src/app/page.tsx` remplacé par un placeholder minimal (~50 lignes, sans logique) exerçant les 3 polices (titre `font-display`, label `font-mono`, corps `font-sans`) et un nuancier de surfaces/accent — pas de composant de shell. SVG du scaffold devenus inutilisés supprimés de `public/` (`file/globe/next/vercel/window.svg`) ; le dossier `public/` se retrouve vide → non recréé (Next 16 le tolère ; les assets de marque arriveront en Epic 4). `favicon.ico` (sous `src/app/`) non touché.
 - **Tâche 6** — validations finales toutes vertes (voir Debug Log). Pas de nouvelle dépendance npm. Commits Conventional Commits sans trailer. Repo distant `MMann5/portfolio` connecté à Vercel → le `push main` déclenchera le déploiement auto (pas d'action manuelle).
-- **Note pour les stories suivantes** : les labels mono du design (`#666` à 10–11px) sont **non conformes AA** en l'état ; le token `--color-text-subtle` (`#888`) est le plancher sûr pour du petit texte — la mise en conformité transverse est cadrée pour Epic 4 / Story 4.1. La police d'**italique** Cormorant (wordmarks du marquee) n'est pas préchargée ; `font-style: italic` la synthétisera en attendant — à confirmer/charger en Epic 2 (Story 2.1) si le rendu synthétique ne convient pas.
+- **Note pour les stories suivantes** : les labels mono du design (`#666` à 10–11px) sont **non conformes AA** en l'état ; le token `--color-fg-subtle` (`#888`) est le plancher sûr pour du petit texte — la mise en conformité transverse est cadrée pour Epic 4 / Story 4.1. La police d'**italique** Cormorant (wordmarks du marquee) n'est pas préchargée ; `font-style: italic` la synthétisera en attendant — à confirmer/charger en Epic 2 (Story 2.1) si le rendu synthétique ne convient pas.
 
 ### File List
 
@@ -213,6 +233,10 @@ claude-opus-4-7[1m] (Claude Opus 4.7, 1M context) — workflow `bmad-dev-story`
 - `src/app/globals.css` — MODIFIÉ : design tokens « Technical Minimal » (`@theme` + `@theme inline`), `color-scheme: dark`, base `body`, suppression du `@media` dark du scaffold
 - `src/app/page.tsx` — MODIFIÉ : placeholder minimal de démonstration des tokens/polices (remplace la page d'accueil par défaut)
 - `public/file.svg`, `public/globe.svg`, `public/next.svg`, `public/vercel.svg`, `public/window.svg` — SUPPRIMÉS (assets du scaffold devenus inutilisés)
+- `.claude/settings.local.json` — MODIFIÉ : ajout de permissions Bash (gh auth, git remote/fetch/pull/checkout/credential, git push origin, helpers git read-only)
+- `_bmad-output/implementation-artifacts/sprint-status.yaml` — MODIFIÉ : statut story `1-2a` → `review` (puis `done` après revue)
+
+> Revue de code (2026-05-12) — patches appliqués : `Inter` → `preload: true` explicite ; `<h1>` placeholder → palier responsive `text-display-md sm:text-display-2xl` ; tokens de texte renommés `--color-text-*` → `--color-fg-*` (évite la collision d'utilitaires `text-*` avec l'échelle `--text-*`) — `globals.css` + `page.tsx` mis à jour en conséquence.
 
 ## Change Log
 
