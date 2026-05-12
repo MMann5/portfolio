@@ -22,39 +22,39 @@ so that I have a reproducible foundation and every change ships safely without m
 
 ## Tasks / Subtasks
 
-- [ ] **Tâche 1 — Scaffolder le projet Next.js (AC: #1)**
-  - [ ] Exécuter `npx create-next-app@latest .` dans le dossier du projet (`C:\Users\Micha\Desktop\portfolio`) avec les options : **TypeScript = oui**, **ESLint = oui**, **Tailwind CSS = oui**, **App Router = oui**, **`src/` directory = oui** (recommandé), **import alias `@/*` = oui**, **Turbopack pour `next dev` = oui**. Refuser toute option « customize default import alias » autre que `@/*`.
-  - [ ] Vérifier `package.json` : scripts `dev`, `build`, `start`, `lint` présents ; dépendances `next` (15.x), `react` / `react-dom` (19.x), `typescript` (5.x), `tailwindcss` (4.x via `@tailwindcss/postcss`), `eslint` + `eslint-config-next`.
-  - [ ] Dans `tsconfig.json`, confirmer `"strict": true` (déjà posé par le scaffold). Ajouter explicitement, si absents : `"noUncheckedIndexedAccess": true` et `"noImplicitOverride": true` (durcissement aligné NFR22 — TS strict).
-  - [ ] Ajouter un script `"typecheck": "tsc --noEmit"` à `package.json` (utilisé par la CI).
-  - [ ] Vérifier que `.gitignore` (généré par le scaffold) ignore `node_modules`, `.next`, `out`, `.vercel`, `*.log`, `.env*`.
-  - [ ] Lancer `npm run dev` → page accessible sur `http://localhost:3000`. Lancer `npm run build` → build réussit, sortie des routes marquées `○ (Static)` / `● (SSG)`, aucune route `ƒ (Dynamic)`. Lancer `npm run lint` → 0 erreur. Lancer `npm run typecheck` → 0 erreur.
+- [x] **Tâche 1 — Scaffolder le projet Next.js (AC: #1)**
+  - [x] Exécuter `npx create-next-app@latest .` dans le dossier du projet (`C:\Users\Micha\Desktop\portfolio`) avec les options : **TypeScript = oui**, **ESLint = oui**, **Tailwind CSS = oui**, **App Router = oui**, **`src/` directory = oui** (recommandé), **import alias `@/*` = oui**, **Turbopack pour `next dev` = oui**. Refuser toute option « customize default import alias » autre que `@/*`. — _Note : `_bmad/` et `_bmad-output/` déplacés temporairement hors du dossier le temps du scaffold (create-next-app refuse un dossier contenant ces répertoires), puis restaurés. Version installée : **Next.js 16.2.6** (et non 15.x — `create-next-app@latest` livre désormais Next 16 ; App Router + React 19.2 + Tailwind v4, conforme à l'intention « dernière version »). Turbopack est le bundler par défaut en Next 16 (le flag `--turbopack` est donc implicite)._
+  - [x] Vérifier `package.json` : scripts `dev`, `build`, `start`, `lint` présents ; dépendances `next` (~~15.x~~ **16.2.6**), `react` / `react-dom` (19.2.4), `typescript` (^5), `tailwindcss` (^4 via `@tailwindcss/postcss`), `eslint` (^9) + `eslint-config-next` (16.2.6). — _En Next 16, `next lint` est supprimé ; le script `lint` est `eslint` (flat config) — c'est attendu._
+  - [x] Dans `tsconfig.json`, confirmer `"strict": true` (déjà posé par le scaffold). Ajouter explicitement, si absents : `"noUncheckedIndexedAccess": true` et `"noImplicitOverride": true` (durcissement aligné NFR22 — TS strict). — _Ajoutés._
+  - [x] Ajouter un script `"typecheck": "tsc --noEmit"` à `package.json` (utilisé par la CI). — _Ajouté._
+  - [x] Vérifier que `.gitignore` (généré par le scaffold) ignore `node_modules`, `.next`, `out`, `.vercel`, `*.log`, `.env*`. — _Vérifié (tous présents : `/node_modules`, `/.next/`, `/out/`, `.vercel`, `npm-debug.log*`, `.env*`)._
+  - [x] Lancer `npm run dev` → page accessible sur `http://localhost:3000`. Lancer `npm run build` → build réussit, sortie des routes marquées `○ (Static)` / `● (SSG)`, aucune route `ƒ (Dynamic)`. Lancer `npm run lint` → 0 erreur. Lancer `npm run typecheck` → 0 erreur. — _`dev` : HTTP 200 sur `/`. `build` : succès, `/` et `/_not-found` marquées `○ (Static)`, aucune route dynamique. `lint` : 0 erreur. `typecheck` : 0 erreur._
 
-- [ ] **Tâche 2 — Garantir le rendu statique (AC: #1, #2)**
-  - [ ] Dans `next.config.ts` (ou `.mjs`), **ne PAS** activer `output: 'export'` (cela désactiverait l'optimisation `next/image` requise par AR8 ; Vercel pré-rend déjà les pages statiques). Laisser la config minimale ; ajouter un commentaire expliquant que le rendu statique est obtenu par SSG par défaut (pas de `fetch` dynamique, pas de `cookies()`/`headers()` dans les routes de pages à ce stade) et que Vercel sert ces pages depuis le CDN.
-  - [ ] S'assurer qu'aucun fichier de page n'utilise `export const dynamic = 'force-dynamic'` ni d'API dynamique de requête. (Le middleware i18n viendra en Story 1.2b — hors scope ici.)
+- [x] **Tâche 2 — Garantir le rendu statique (AC: #1, #2)**
+  - [x] Dans `next.config.ts` (ou `.mjs`), **ne PAS** activer `output: 'export'` (cela désactiverait l'optimisation `next/image` requise par AR8 ; Vercel pré-rend déjà les pages statiques). Laisser la config minimale ; ajouter un commentaire expliquant que le rendu statique est obtenu par SSG par défaut (pas de `fetch` dynamique, pas de `cookies()`/`headers()` dans les routes de pages à ce stade) et que Vercel sert ces pages depuis le CDN. — _Commentaire ajouté. `output: 'export'` non activé. Bonus : `turbopack.root` épinglé sur le dossier du projet pour neutraliser l'avertissement « multiple lockfiles » (un `package-lock.json` existe dans `$HOME`)._
+  - [x] S'assurer qu'aucun fichier de page n'utilise `export const dynamic = 'force-dynamic'` ni d'API dynamique de requête. (Le middleware i18n viendra en Story 1.2b — hors scope ici.) — _Vérifié via grep sur `src/` : aucune occurrence._
 
-- [ ] **Tâche 3 — Initialiser le dépôt Git & commit initial (AC: #1)**
-  - [ ] `git init` (le dossier n'est pas encore un dépôt Git — vérifié). Définir la branche par défaut sur `main` (`git branch -M main`).
-  - [ ] `git add -A` puis commit initial : `chore: scaffold Next.js App Router + TypeScript strict + Tailwind`. Suivre la convention de message du repo (Conventional Commits). Inclure le trailer `Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>` uniquement si l'utilisateur le demande — sinon message simple.
-  - [ ] Créer le dépôt distant GitHub (`gh repo create` ou via l'UI) et pousser `main`. **Demander à l'utilisateur** le nom/visibilité du dépôt avant de créer quoi que ce soit de distant.
+- [x] **Tâche 3 — Initialiser le dépôt Git & commit initial (AC: #1)**
+  - [x] `git init` (le dossier n'est pas encore un dépôt Git — vérifié). Définir la branche par défaut sur `main` (`git branch -M main`). — _`create-next-app` a déjà fait `git init` + un commit auto « Initial commit from Create Next App » ; branche renommée `main`._
+  - [x] `git add -A` puis commit initial : `chore: scaffold Next.js App Router + TypeScript strict + Tailwind`. Suivre la convention de message du repo (Conventional Commits). Inclure le trailer `Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>` uniquement si l'utilisateur le demande — sinon message simple. — _Commit auto du scaffold amendé en `chore: scaffold Next.js App Router + TypeScript strict + Tailwind` (message simple, pas de trailer), incluant `_bmad/`, `_bmad-output/`, `docs/`, `.claude/` et les fichiers générés. Second commit `ci: add GitHub Actions workflow running ESLint and tsc --noEmit`._
+  - [x] Créer le dépôt distant GitHub (`gh repo create` ou via l'UI) et pousser `main`. **Demander à l'utilisateur** le nom/visibilité du dépôt avant de créer quoi que ce soit de distant. — _`gh` CLI installé (v2.92.0) mais l'auth interactive n'a pas abouti et `gh` se bloque dans l'environnement ; dépôt **`MMann5/portfolio`** créé **en public via l'UI GitHub** par l'utilisateur. `git remote add origin https://github.com/MMann5/portfolio.git` + `git push -u origin main` → branche `main` poussée (`2cec8d4`)._
 
-- [ ] **Tâche 4 — Connecter Vercel & valider le déploiement automatique (AC: #2)**
+- [ ] **Tâche 4 — Connecter Vercel & valider le déploiement automatique (AC: #2)** — ⏸ **EN ATTENTE de l'utilisateur** (login Vercel / autorisation GitHub).
   - [ ] Connecter le dépôt GitHub au projet Vercel (import via dashboard Vercel ou `vercel link` + `vercel git connect`). **Cette étape requiert une action de l'utilisateur** (login Vercel / autorisation GitHub) — proposer à l'utilisateur de lancer `vercel login` puis `vercel` via `! <commande>` dans la session.
   - [ ] Vérifier les réglages Vercel : Framework Preset = **Next.js** (détecté auto), build command = `next build` (défaut), output = géré par Vercel (ne PAS forcer « Other » / static export).
   - [ ] Pousser un commit trivial sur `main` → confirmer qu'un déploiement de production se déclenche automatiquement, réussit, et que l'URL de prod sert le site. Vérifier le comportement atomique : un build qui échoue laisse la prod précédente en place (constat documenté, pas besoin de provoquer un échec réel si risqué — Vercel garantit ce comportement par conception).
   - [ ] Noter le temps de propagation observé (doit être < ~2 min pour une mise à jour de contenu) dans les Completion Notes.
 
-- [ ] **Tâche 5 — Pipeline CI GitHub Actions (AC: #3)**
-  - [ ] Créer `.github/workflows/ci.yml` : déclencheurs `push` (sur `main`) et `pull_request`. Un job `quality` sur `ubuntu-latest` : `actions/checkout@v4` → `actions/setup-node@v4` (Node `20`, `cache: 'npm'`) → `npm ci` → `npm run lint` → `npm run typecheck`. Le job échoue si l'une de ces étapes retourne un code non nul.
-  - [ ] Vérifier que `package-lock.json` est commité (requis par `npm ci`).
-  - [ ] Ouvrir une PR de test (ou pousser sur une branche) pour confirmer que le check CI apparaît sur la PR et passe au vert. Optionnel : suggérer à l'utilisateur d'activer une *branch protection rule* exigeant ce check sur `main` (hors scope strict — mentionner seulement).
+- [x] **Tâche 5 — Pipeline CI GitHub Actions (AC: #3)**
+  - [x] Créer `.github/workflows/ci.yml` : déclencheurs `push` (sur `main`) et `pull_request`. Un job `quality` sur `ubuntu-latest` : `actions/checkout@v4` → `actions/setup-node@v4` (Node `20`, `cache: 'npm'`) → `npm ci` → `npm run lint` → `npm run typecheck`. Le job échoue si l'une de ces étapes retourne un code non nul. — _Créé et commité._
+  - [x] Vérifier que `package-lock.json` est commité (requis par `npm ci`). — _Vérifié : présent dans le commit initial._
+  - [x] Ouvrir une PR de test (ou pousser sur une branche) pour confirmer que le check CI apparaît sur la PR et passe au vert. Optionnel : suggérer à l'utilisateur d'activer une *branch protection rule* exigeant ce check sur `main` (hors scope strict — mentionner seulement). — _PR #1 (`chore/ci-smoke-test`) ouverte par l'utilisateur ; check **CI / quality** vert ; PR mergée (`dadee9e`), branche supprimée. Marqueur de fumée retiré du `README.md` ensuite (`a298a19`). Branch protection : suggérée à l'utilisateur (optionnel, non requis par la story)._
 
 - [ ] **Tâche 6 — Validation finale (AC: #1, #2, #3)**
-  - [ ] Re-vérifier en local : `npm run build && npm run lint && npm run typecheck` → tout vert.
-  - [ ] Vérifier que le déploiement Vercel de prod est vert et accessible.
-  - [ ] Vérifier que le workflow CI est vert sur le dernier push/PR.
-  - [ ] Remplir la section *Dev Agent Record* (modèle utilisé, notes, liste des fichiers).
+  - [x] Re-vérifier en local : `npm run build && npm run lint && npm run typecheck` → tout vert. — _Les 3 commandes : exit 0._
+  - [ ] Vérifier que le déploiement Vercel de prod est vert et accessible. — ⏸ **EN ATTENTE** (Tâche 4).
+  - [x] Vérifier que le workflow CI est vert sur le dernier push/PR. — _Check CI vert sur la PR #1 et sur les pushes `main` (`dadee9e`, `a298a19`)._
+  - [x] Remplir la section *Dev Agent Record* (modèle utilisé, notes, liste des fichiers). — _Voir ci-dessous._
 
 ## Dev Notes
 
@@ -142,10 +142,52 @@ Aucun framework de tests applicatifs n'est requis ni installé par cette story (
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+claude-opus-4-7[1m] (Claude Opus 4.7, 1M context) — workflow `bmad-dev-story`
 
 ### Debug Log References
 
+- `npx create-next-app@latest . --ts --eslint --tailwind --app --src-dir --import-alias "@/*" --turbopack --use-npm --yes` — premier essai échoué (« directory contains files that could conflict: `_bmad/`, `_bmad-output/` »), résolu en déplaçant temporairement ces deux dossiers hors de l'arborescence puis en les restaurant après scaffold.
+- `npm run typecheck` → exit 0 ; `npm run lint` → exit 0 (après ajout des `ignores` ESLint pour `_bmad/**`, `_bmad-output/**`, `docs/**` — sinon les fichiers de design de référence `.jsx` faisaient échouer le lint) ; `npm run build` → exit 0, routes `○ (Static)`.
+- `npm run dev` (smoke test) → `GET / 200`.
+
 ### Completion Notes List
 
+- **Scaffold réalisé avec Next.js 16.2.6** (et non 15.x comme anticipé dans les Dev Notes) : `create-next-app@latest` livre désormais Next 16. Stack effective : Next 16.2.6 (App Router, Turbopack par défaut), React 19.2.4, TypeScript ^5 (`strict` + `noUncheckedIndexedAccess` + `noImplicitOverride`), Tailwind CSS v4 (`@tailwindcss/postcss`, config CSS-first), ESLint 9 (flat config) + `eslint-config-next` 16.2.6. En Next 16, `next lint` est supprimé → script `lint` = `eslint`. Aucun impact négatif sur les ACs ; à signaler aux stories suivantes (1.2a/1.2b/1.3) qui référencent « Next 15 ».
+- **Page servie** = page d'accueil par défaut de `create-next-app` (non modifiée, conformément à la note de portée).
+- **Rendu statique** confirmé : `npm run build` ne génère que des routes `○ (Static)` (`/`, `/_not-found`) ; aucune route `ƒ (Dynamic)`. `output: 'export'` volontairement **non** activé (préserve `next/image`, cf. AR8). Commentaire explicatif ajouté dans `next.config.ts`.
+- **Durcissement bonus** : `turbopack.root` épinglé sur le dossier du projet dans `next.config.ts` — il existe un `package-lock.json` parasite dans `$HOME` que Next inférait à tort comme racine du workspace.
+- **Git** : `create-next-app` a auto-`git init` + créé un commit « Initial commit from Create Next App ». Branche renommée `main` ; ce commit amendé en `chore: scaffold Next.js App Router + TypeScript strict + Tailwind` (message simple, sans trailer Co-Authored-By, conformément à la consigne de la story) en incluant `_bmad/`, `_bmad-output/`, `docs/`, `.claude/`. Puis commit `ci: add GitHub Actions workflow running ESLint and tsc --noEmit`. Historique : `b5fc7dc` puis `2cec8d4`.
+- **CI** : `.github/workflows/ci.yml` créé — `on: push (main) + pull_request`, job `quality` sur `ubuntu-latest` : checkout@v4 → setup-node@v4 (Node 20, cache npm) → `npm ci` → `npm run lint` → `npm run typecheck`. `package-lock.json` bien commité.
+- **Dépôt GitHub** (Tâche 3.3) : ✅ `MMann5/portfolio` créé en public via l'UI, `main` poussé, remote `origin` configuré.
+- **CI** (Tâche 5) : ✅ workflow vert sur la PR #1 (mergée) et sur `main`.
+- **⏸ Reste à faire — action utilisateur requise (HALT) :**
+  1. **Tâche 4 — Vercel** : importer `MMann5/portfolio` depuis le dashboard Vercel (ou `! vercel login` puis `! vercel` / `! vercel link` + `! vercel git connect`). Ensuite : vérifier le preset Next.js (ne pas forcer « Other »/static export), pousser un commit trivial, confirmer le déploiement prod auto + temps de propagation < ~2 min, documenter le comportement atomique.
+  2. **Tâche 6** : une fois Vercel vert, cocher les dernières cases de validation finale et passer la story en `done`.
+- Temps de propagation Vercel observé : _à compléter après connexion Vercel_.
+
 ### File List
+
+**Générés par `create-next-app` (puis ajustés) :**
+- `package.json` — ajout du script `"typecheck": "tsc --noEmit"`
+- `package-lock.json`
+- `tsconfig.json` — ajout `"noUncheckedIndexedAccess": true`, `"noImplicitOverride": true`
+- `next.config.ts` — commentaire « rendu statique / pas d'export », `turbopack.root`
+- `eslint.config.mjs` — ajout des `ignores` `_bmad/**`, `_bmad-output/**`, `docs/**`
+- `postcss.config.mjs`
+- `next-env.d.ts`
+- `.gitignore`
+- `README.md`
+- `AGENTS.md`, `CLAUDE.md` (référence `@AGENTS.md`)
+- `src/app/layout.tsx`
+- `src/app/page.tsx`
+- `src/app/globals.css`
+- `src/app/favicon.ico`
+- `public/*` (assets statiques du scaffold)
+
+**Créés :**
+- `.github/workflows/ci.yml`
+
+## Change Log
+
+- 2026-05-12 — Scaffold Next.js 16 (App Router, TS strict durci, Tailwind v4) + config qualité (`typecheck`, ESLint flat config ignorant les artefacts BMAD) + `next.config.ts` (rendu statique, `turbopack.root`) + dépôt Git local (branche `main`, commit initial) + workflow CI GitHub Actions (ESLint + `tsc --noEmit`). Validations locales `build`/`lint`/`typecheck` vertes. Story mise en pause (HALT) en attente des actions utilisateur : dépôt GitHub distant + connexion Vercel + PR de test CI. (Dev: claude-opus-4-7[1m])
+- 2026-05-12 — Dépôt distant `MMann5/portfolio` créé en public (UI GitHub), `main` poussé (remote `origin`). PR de fumée #1 ouverte → check CI **quality** vert → mergée (`dadee9e`) ; marqueur retiré du README (`a298a19`). Tâches 3 et 5 terminées. Reste : Tâche 4 (connexion Vercel + déploiement auto) puis Tâche 6 (validation finale → `done`). (Dev: claude-opus-4-7[1m])
