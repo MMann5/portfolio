@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-05-12
-last_updated: 2026-05-13 (story 2.3 done — code review terminée, 5 findings tous défer dans deferred-work.md)
+last_updated: 2026-05-13 (story 2.4 done — code review terminée, 8 findings tous déférés dans deferred-work.md)
 project: portfolio
 project_key: NOKEY
 tracking_system: file-system
@@ -55,7 +55,7 @@ development_status:
   2-1-section-hero-marquee-des-marques-clientes: done
   2-2-sections-about-experience-freelance-engagements: done
   2-3-sections-side-projects-stack-ai-agentic-engineering: done
-  2-4-section-contact-contenu-fr-en-complet-cv-finition-responsive: backlog
+  2-4-section-contact-contenu-fr-en-complet-cv-finition-responsive: done
   epic-2-retrospective: optional
 
   # Epic 3: Mouvement, curseur & fidélité « Technical Minimal »

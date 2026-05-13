@@ -12,6 +12,7 @@ import { Experience } from "@/components/Experience";
 import { FreelanceEngagements } from "@/components/FreelanceEngagements";
 import { Projects } from "@/components/Projects";
 import { Stack } from "@/components/Stack";
+import { Contact } from "@/components/Contact";
 import { AI } from "@/components/AI";
 
 // Page d'accueil — Server Component statiquement pré-rendu (`generateStaticParams` +
@@ -109,7 +110,17 @@ export default async function Home({
             )}
             {section.id === "projects" && <Projects items={sections.projects.items} />}
             {section.id === "stack" && <Stack groups={sections.stack.groups} />}
-            {/* contact : corps = Story 2.4 */}
+            {section.id === "contact" && (
+              <Contact
+                primaryCtaLabel={sections.contact.primaryCtaLabel}
+                respondWithin={sections.contact.respondWithin}
+                ctaCv={sections.contact.ctaCv}
+                ctaCvAriaLabel={sections.contact.ctaCvAriaLabel}
+                secondaryLinks={sections.contact.secondaryLinks}
+                email={meta.email}
+                cvPath={meta.cvPath}
+              />
+            )}
           </GridSection>
         ))}
 

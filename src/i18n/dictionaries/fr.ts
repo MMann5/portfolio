@@ -319,6 +319,8 @@ const fr = {
       body: "Ouvert aux postes de frontend senior, aux opportunités de leadership technique et à des missions freelance sélectionnées.",
       primaryCtaLabel: "Écrivez-moi un mot.",
       respondWithin: "Je réponds sous 24 heures.",
+      ctaCv: "Télécharger le CV",
+      ctaCvAriaLabel: "Télécharger le CV (PDF)",
       secondaryLinks: [
         { label: "LinkedIn", value: "https://www.linkedin.com/in/michaelmann-339545149" },
         { label: "Téléphone", value: "+972 58 422 0567" },

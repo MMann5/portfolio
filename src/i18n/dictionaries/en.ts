@@ -328,6 +328,8 @@ const en = {
       body: "Open to senior frontend roles, technical leadership opportunities and selected freelance engagements.",
       primaryCtaLabel: "Drop me a line.",
       respondWithin: "I respond within 24 hours.",
+      ctaCv: "Download CV",
+      ctaCvAriaLabel: "Download CV (PDF)",
       secondaryLinks: [
         { label: "LinkedIn", value: "https://www.linkedin.com/in/michaelmann-339545149" },
         { label: "Phone", value: "+972 58 422 0567" },
