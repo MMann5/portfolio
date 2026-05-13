@@ -32,7 +32,7 @@ export default async function Home({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const dict = await getDictionary(locale);
-  const { meta, nav, hero, clients, sections, ai, footer, langSwitcher } = dict;
+  const { meta, nav, hero, clients, sections, ai, footer, langSwitcher, a11y } = dict;
 
   // Ordre de nav = ordre d'insertion des clés de `sections` (préservé par JS).
   const sectionList = Object.values(sections);
@@ -81,6 +81,7 @@ export default async function Home({
             ctaLinkedin={hero.ctaLinkedin}
             ctaCv={hero.ctaCv}
             ctaCvAriaLabel={hero.ctaCvAriaLabel}
+            opensInNewTabLabel={a11y.opensInNewTab}
           />
         </GridSection>
 
@@ -108,9 +109,17 @@ export default async function Home({
                 <Experience roles={sections.experience.roles} />
               )}
               {section.id === "freelance" && (
-                <FreelanceEngagements missions={sections.freelance.missions} />
+                <FreelanceEngagements
+                  missions={sections.freelance.missions}
+                  opensInNewTabLabel={a11y.opensInNewTab}
+                />
               )}
-              {section.id === "projects" && <Projects items={sections.projects.items} />}
+              {section.id === "projects" && (
+                <Projects
+                  items={sections.projects.items}
+                  opensInNewTabLabel={a11y.opensInNewTab}
+                />
+              )}
               {section.id === "stack" && <Stack groups={sections.stack.groups} />}
               {section.id === "contact" && (
                 <Contact
@@ -121,6 +130,7 @@ export default async function Home({
                   secondaryLinks={sections.contact.secondaryLinks}
                   email={meta.email}
                   cvPath={meta.cvPath}
+                  opensInNewTabLabel={a11y.opensInNewTab}
                 />
               )}
             </FadeIn>

@@ -7,6 +7,12 @@ import { useEffect, useRef, useState } from "react";
 // Loaded via `next/dynamic({ ssr: false })` through `CursorMount.tsx`: no markup ends up in
 // the prerendered HTML (NFR3, AC #6), `window` is guaranteed available in the lazy
 // `useState` initializer below, and there is no hydration mismatch.
+//
+// Keyboard focus is intentionally NOT tracked by this cursor (Story 4.1 AC#7). The accent
+// focus ring (`focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`)
+// is the primary keyboard-focus indicator across the site; doubling that signal with a ring
+// translation here would be redundant and add cost for no benefit. The custom cursor is
+// deliberately mouse-only — mounted only when `(hover: hover) and (pointer: fine)` matches.
 function computeEligibility() {
   return (
     window.matchMedia("(hover: hover) and (pointer: fine)").matches &&

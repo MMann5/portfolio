@@ -13,14 +13,16 @@ import { MethodologyCard } from "@/components/MethodologyCard";
 
 type ProjectsProps = {
   items: Dictionary["sections"]["projects"]["items"];
+  /** Suffixe visually-hidden propagé à `MaqomCard` (seul item externe) — Story 4.1 AC#5. */
+  opensInNewTabLabel: Dictionary["a11y"]["opensInNewTab"];
 };
 
-export function Projects({ items }: ProjectsProps) {
+export function Projects({ items, opensInNewTabLabel }: ProjectsProps) {
   return (
     <div className="flex flex-col gap-4">
       {items.map((item, i) =>
         item.featured ? (
-          <MaqomCard key={i} item={item} />
+          <MaqomCard key={i} item={item} opensInNewTabLabel={opensInNewTabLabel} />
         ) : (
           <MethodologyCard key={i} item={item} />
         ),

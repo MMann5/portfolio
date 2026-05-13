@@ -27,6 +27,8 @@ type Props = {
   secondaryLinks: ContactSection["secondaryLinks"];
   email: Dictionary["meta"]["email"];
   cvPath: Dictionary["meta"]["cvPath"];
+  /** Suffixe visually-hidden « (opens in a new tab) / (ouvre un nouvel onglet) » — Story 4.1 AC#5. */
+  opensInNewTabLabel: Dictionary["a11y"]["opensInNewTab"];
 };
 
 // Anneau de focus (jamais d'`outline:none` nu) — 4e copie locale dans le repo (Hero,
@@ -42,6 +44,7 @@ export function Contact({
   secondaryLinks,
   email,
   cvPath,
+  opensInNewTabLabel,
 }: Props) {
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-stretch">
@@ -124,15 +127,22 @@ export function Contact({
                 >
                   {labelBlock}
                   {isLinkedIn && (
-                    <span aria-hidden="true" className="font-mono text-fg-subtle">
-                      ↗
-                    </span>
+                    <>
+                      <span aria-hidden="true" className="font-mono text-fg-subtle">
+                        ↗
+                      </span>
+                      {/* Pattern WCAG G201 : libellé visible préservé, suffixe sr-only annoncé
+                          à l'AT (Story 4.1 AC#5). */}
+                      <span className="sr-only"> {opensInNewTabLabel}</span>
+                    </>
                   )}
                 </a>
               ) : (
-                <div className="flex min-h-11 items-center justify-between gap-4 rounded-lg border border-line bg-white/[0.015] px-5 py-4">
-                  {labelBlock}
-                </div>
+                // Story 4.1 AC#6 — entrées non-cliquables (Location, Languages) : pas
+                // d'encadré ni de `min-h-11` (n'étant pas interactives, la cible tactile
+                // ≥44px n'est pas requise) → signale clairement « info statique » vs
+                // l'affordance des `<a>` LinkedIn/Phone bordés.
+                <div className="px-1 py-2">{labelBlock}</div>
               )}
             </li>
           );

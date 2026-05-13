@@ -21,9 +21,11 @@ type Props = {
   idx: number;
   /** Nombre total de missions (pour le compteur `01 / 02`). */
   total: number;
+  /** Suffixe visually-hidden « (opens in a new tab) / (ouvre un nouvel onglet) » — Story 4.1 AC#5. */
+  opensInNewTabLabel: string;
 };
 
-export function MissionCard({ mission, idx, total }: Props) {
+export function MissionCard({ mission, idx, total, opensInNewTabLabel }: Props) {
   return (
     <article className="relative rounded-xl border border-line bg-white/[0.015] p-6 sm:p-8">
       {/* Compteur décoratif. */}
@@ -70,6 +72,9 @@ export function MissionCard({ mission, idx, total }: Props) {
         >
           <span aria-hidden="true">$ open</span> {mission.url}{" "}
           <span aria-hidden="true">↗</span>
+          {/* Pattern WCAG G201 : libellé visible préservé, suffixe sr-only annoncé à l'AT
+              (Story 4.1 AC#5). */}
+          <span className="sr-only"> {opensInNewTabLabel}</span>
         </a>
       </div>
 

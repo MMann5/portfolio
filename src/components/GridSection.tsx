@@ -43,7 +43,7 @@ export function GridSection({
   return (
     <section
       id={id}
-      className={`relative scroll-mt-24 border-b border-line ${BACKGROUND_CLASS[background]} ${className}`}
+      className={`relative scroll-mt-nav-height border-b border-line ${BACKGROUND_CLASS[background]} ${className}`}
     >
       {/* Rails latéraux décoratifs (masqués en mobile pour libérer la largeur). */}
       <div

@@ -5,6 +5,7 @@ import "../globals.css";
 import { locales, isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { CursorMount } from "@/components/CursorMount";
+import { SkipLink } from "@/components/SkipLink";
 
 // Root layout, imbriqué sous `app/[locale]/` (autorisé par App Router) : c'est ici
 // qu'on rend `<html>` / `<body>`, donc c'est l'ancêtre commun obligatoire des classes
@@ -83,12 +84,16 @@ export default async function RootLayout({
 }>) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
+  const dict = await getDictionary(locale);
   return (
     <html
       lang={locale}
       className={`${inter.variable} ${jetbrainsMono.variable} ${cormorant.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        {/* Tout premier enfant focusable du body → garantit que `Tab` initial révèle
+            le skip link AVANT la `Nav` (Story 4.1 AC#2). */}
+        <SkipLink label={dict.a11y.skipToContent} />
         {children}
         <CursorMount />
       </body>

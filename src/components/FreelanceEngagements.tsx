@@ -7,13 +7,24 @@ import { MissionCard } from "@/components/MissionCard";
 
 type FreelanceEngagementsProps = {
   missions: Dictionary["sections"]["freelance"]["missions"];
+  /** Suffixe visually-hidden propagé à chaque `MissionCard` — Story 4.1 AC#5. */
+  opensInNewTabLabel: Dictionary["a11y"]["opensInNewTab"];
 };
 
-export function FreelanceEngagements({ missions }: FreelanceEngagementsProps) {
+export function FreelanceEngagements({
+  missions,
+  opensInNewTabLabel,
+}: FreelanceEngagementsProps) {
   return (
     <div className="flex flex-col gap-4">
       {missions.map((m, i) => (
-        <MissionCard key={m.name} mission={m} idx={i} total={missions.length} />
+        <MissionCard
+          key={m.name}
+          mission={m}
+          idx={i}
+          total={missions.length}
+          opensInNewTabLabel={opensInNewTabLabel}
+        />
       ))}
     </div>
   );

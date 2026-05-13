@@ -368,6 +368,12 @@ const fr = {
     french: "Français",
     changedTo: "Langue changée pour {lang}",
   },
+
+  // ── Libellés visually-hidden destinés aux technologies d'assistance (Story 4.1) ─
+  a11y: {
+    skipToContent: "Aller au contenu",
+    opensInNewTab: "(ouvre un nouvel onglet)",
+  },
 } satisfies Dictionary;
 
 export default fr;

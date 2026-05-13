@@ -67,6 +67,13 @@
   --spacing-section-x-mobile: 20px; /* idem mobile (appliqué au composant via variantes responsive) */
   --spacing-section-y-mobile: 56px;
 
+  /* Hauteur de la `Nav` sticky — consommé par `scroll-margin-top` des sections (Story 4.1
+     AC#3) pour que les ancres atterrissent sous la nav. Valeur conservatrice 72px : couvre
+     la nav desktop (~68px observée) avec une marge de 4px ; sur mobile (~52px), la marge
+     supplémentaire (~20px) est négligeable et toujours sous le viewport-top. Le préfixe
+     `--spacing-*` active automatiquement l'utilitaire Tailwind v4 `scroll-mt-nav-height`. */
+  --spacing-nav-height: 72px;
+
   /* ---- Letter-spacing ---- */
   --tracking-display: -0.04em; /* h1 hero */
   --tracking-tight: -0.03em; /* h2 section */

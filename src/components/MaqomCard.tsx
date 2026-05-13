@@ -21,7 +21,13 @@ const FOCUS_RING =
 
 type ProjectItem = Dictionary["sections"]["projects"]["items"][number];
 
-export function MaqomCard({ item }: { item: ProjectItem }) {
+type MaqomCardProps = {
+  item: ProjectItem;
+  /** Suffixe visually-hidden « (opens in a new tab) / (ouvre un nouvel onglet) » — Story 4.1 AC#5. */
+  opensInNewTabLabel: string;
+};
+
+export function MaqomCard({ item, opensInNewTabLabel }: MaqomCardProps) {
   // Cette carte n'est rendue que pour `item.featured === true` (Maqom) ⇒ `item.url` est non-`null`.
   const url = item.url ?? "";
 
@@ -104,6 +110,9 @@ export function MaqomCard({ item }: { item: ProjectItem }) {
             className={`mt-7 inline-flex min-h-11 items-center gap-2 rounded-md border border-accent-border-strong px-3.5 font-mono text-ui text-accent transition-colors hover:bg-accent-soft ${FOCUS_RING}`}
           >
             <span aria-hidden="true">$ open</span> {url} <span aria-hidden="true">→</span>
+            {/* Pattern WCAG G201 : libellé visible préservé, suffixe sr-only annoncé à l'AT
+                (Story 4.1 AC#5). */}
+            <span className="sr-only"> {opensInNewTabLabel}</span>
           </a>
         </div>
       </div>

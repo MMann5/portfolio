@@ -378,6 +378,12 @@ const en = {
     // `{lang}` est remplacé par le libellé de la langue choisie (annonce aria-live).
     changedTo: "Language changed to {lang}",
   },
+
+  // ── Libellés visually-hidden destinés aux technologies d'assistance (Story 4.1) ─
+  a11y: {
+    skipToContent: "Skip to content",
+    opensInNewTab: "(opens in a new tab)",
+  },
 };
 
 export default en;

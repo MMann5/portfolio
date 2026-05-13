@@ -20,6 +20,8 @@ type HeroProps = {
   ctaLinkedin: string;
   ctaCv: string;
   ctaCvAriaLabel: string;
+  /** Suffixe visually-hidden « (opens in a new tab) / (ouvre un nouvel onglet) » — Story 4.1 AC#5. */
+  opensInNewTabLabel: string;
 };
 
 // Anneau de focus partagé (jamais d'`outline:none` nu) — même valeur que dans `Nav`.
@@ -39,6 +41,7 @@ export function Hero({
   ctaLinkedin,
   ctaCv,
   ctaCvAriaLabel,
+  opensInNewTabLabel,
 }: HeroProps) {
   return (
     <div>
@@ -103,6 +106,9 @@ export function Hero({
           <span aria-hidden="true" className="font-mono">
             ↗
           </span>
+          {/* Pattern WCAG G201 : libellé visible préservé, suffixe sr-only annoncé à l'AT
+              (Story 4.1 AC#5). L'espace de tête garantit la séparation phonétique. */}
+          <span className="sr-only"> {opensInNewTabLabel}</span>
         </a>
         <a
           href={cvPath}

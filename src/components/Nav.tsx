@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Locale } from "@/i18n/config";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { MMLogo } from "@/components/MMLogo";
@@ -81,6 +81,8 @@ export function Nav({
 }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const activeSection = useActiveSection(sections.map((s) => s.id));
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   // Dès que le viewport atteint le palier `lg` (la barre desktop prend le relais), on ferme le
   // menu mobile — sinon `menuOpen` / `aria-expanded="true"` restent collés sur le bouton bascule
@@ -95,6 +97,26 @@ export function Nav({
     mql.addEventListener("change", closeIfDesktop);
     return () => mql.removeEventListener("change", closeIfDesktop);
   }, []);
+
+  // Pattern ARIA APG `disclosure` (Story 4.1 AC#4) : à l'ouverture du panneau mobile, déplacer
+  // le focus sur le premier élément focusable + intercepter `Escape` pour fermer et rendre
+  // le focus au bouton bascule. PAS de focus-trap cyclique : `Tab` depuis le dernier élément
+  // doit pouvoir sortir vers le reste de la page (un menu de nav n'est pas une modale).
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const firstFocusable = panelRef.current?.querySelector<HTMLElement>("a, button");
+    firstFocusable?.focus();
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMenuOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
 
   const sectionLink = (section: NavSection, variant: "bar" | "menu") => {
     const isActive = activeSection === section.id;
@@ -187,6 +209,7 @@ export function Nav({
 
         {/* Bascule du menu — mobile / tablette. */}
         <button
+          ref={toggleRef}
           type="button"
           aria-expanded={menuOpen}
           aria-controls="nav-mobile-menu"
@@ -202,6 +225,7 @@ export function Nav({
       {/* Panneau du menu — mobile / tablette. */}
       {menuOpen && (
         <div
+          ref={panelRef}
           id="nav-mobile-menu"
           className="flex flex-col gap-4 border-t border-line px-section-x-mobile py-4 sm:px-section-x lg:hidden"
         >
