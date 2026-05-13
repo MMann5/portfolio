@@ -14,6 +14,7 @@ import { Projects } from "@/components/Projects";
 import { Stack } from "@/components/Stack";
 import { Contact } from "@/components/Contact";
 import { AI } from "@/components/AI";
+import { FadeIn } from "@/components/FadeIn";
 
 // Page d'accueil — Server Component statiquement pré-rendu (`generateStaticParams` +
 // `dynamicParams = false` au root layout ; aucun `headers()`/`cookies()`/`fetch` runtime ici).
@@ -65,7 +66,7 @@ export default async function Home({
       />
 
       <main id="main-content" className="flex flex-1 flex-col">
-        {/* Hero — Story 2.1. Le composant rend le contenu intérieur de cette `GridSection`. */}
+        {/* Hero — Story 2.1. Au-dessus du fold, pas de FadeIn. */}
         <GridSection id="hero" idx="00" label="Hero">
           <Hero
             headline={hero.headline}
@@ -83,7 +84,7 @@ export default async function Home({
           />
         </GridSection>
 
-        {/* Marquee clients — Story 2.1 (bande statique ; animation = Epic 3 / Story 3.1). */}
+        {/* Marquee clients — immédiatement visible ; animation gérée par CSS (Story 3.1). Pas de FadeIn. */}
         <GridSection id="clients" label="Clients" background="alt" padded={false}>
           <Clients
             items={clients.items}
@@ -92,42 +93,46 @@ export default async function Home({
           />
         </GridSection>
 
-        {/* Sections numérotées — `SectionHead` seul ; corps de section : Story 2.x. */}
+        {/* Sections numérotées — chaque bloc (SectionHead + corps) wrappé dans FadeIn (Story 3.1). */}
         {sectionList.map((section) => (
           <GridSection key={section.id} id={section.id} idx={section.num} label={section.label}>
-            <SectionHead
-              idx={section.num}
-              label={section.label}
-              heading={section.heading}
-              sub={section.sub}
-            />
-            {section.id === "about" && <About body={sections.about.body} />}
-            {section.id === "experience" && (
-              <Experience roles={sections.experience.roles} />
-            )}
-            {section.id === "freelance" && (
-              <FreelanceEngagements missions={sections.freelance.missions} />
-            )}
-            {section.id === "projects" && <Projects items={sections.projects.items} />}
-            {section.id === "stack" && <Stack groups={sections.stack.groups} />}
-            {section.id === "contact" && (
-              <Contact
-                primaryCtaLabel={sections.contact.primaryCtaLabel}
-                respondWithin={sections.contact.respondWithin}
-                ctaCv={sections.contact.ctaCv}
-                ctaCvAriaLabel={sections.contact.ctaCvAriaLabel}
-                secondaryLinks={sections.contact.secondaryLinks}
-                email={meta.email}
-                cvPath={meta.cvPath}
+            <FadeIn>
+              <SectionHead
+                idx={section.num}
+                label={section.label}
+                heading={section.heading}
+                sub={section.sub}
               />
-            )}
+              {section.id === "about" && <About body={sections.about.body} />}
+              {section.id === "experience" && (
+                <Experience roles={sections.experience.roles} />
+              )}
+              {section.id === "freelance" && (
+                <FreelanceEngagements missions={sections.freelance.missions} />
+              )}
+              {section.id === "projects" && <Projects items={sections.projects.items} />}
+              {section.id === "stack" && <Stack groups={sections.stack.groups} />}
+              {section.id === "contact" && (
+                <Contact
+                  primaryCtaLabel={sections.contact.primaryCtaLabel}
+                  respondWithin={sections.contact.respondWithin}
+                  ctaCv={sections.contact.ctaCv}
+                  ctaCvAriaLabel={sections.contact.ctaCvAriaLabel}
+                  secondaryLinks={sections.contact.secondaryLinks}
+                  email={meta.email}
+                  cvPath={meta.cvPath}
+                />
+              )}
+            </FadeIn>
           </GridSection>
         ))}
 
         {/* AI & Agentic Engineering — section non numérotée, hors nav (fond `alt2`). */}
         <GridSection id="ai" label={ai.label} background="alt2">
-          <SectionHead label={ai.label} heading={ai.heading} sub={ai.body} />
-          <AI tools={ai.tools} />
+          <FadeIn>
+            <SectionHead label={ai.label} heading={ai.heading} sub={ai.body} />
+            <AI tools={ai.tools} />
+          </FadeIn>
         </GridSection>
       </main>
 

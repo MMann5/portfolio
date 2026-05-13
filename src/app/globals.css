@@ -141,6 +141,24 @@
   --font-display: var(--font-cormorant), Georgia, "Times New Roman", "Times", serif;
 }
 
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-33.333%); }
+}
+
+.animate-marquee {
+  --marquee-duration: 20s;
+  animation: marquee-scroll var(--marquee-duration) linear infinite;
+}
+
+@media (min-width: 640px) {
+  .animate-marquee { --marquee-duration: 32s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee { animation-play-state: paused; }
+}
+
 :root {
   color-scheme: dark;
 }
