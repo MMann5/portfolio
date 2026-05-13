@@ -13,7 +13,7 @@ inputDocuments:
 
 ## Overview
 
-This document provides the complete epic and story breakdown for **portfolio** (site vitrine personnel de Michael Mann), decomposing the requirements from the PRD, the design de référence (`design/`), and the technical decisions embedded in the PRD's *Web App Specific Requirements* / *Implementation Considerations* sections into implementable stories. Périmètre couvert : **MVP (Phase 1) + Post-MVP (Growth / Vision)**.
+This document provides the complete epic and story breakdown for **portfolio** (site vitrine personnel de Michael Mann), decomposing the requirements from the PRD, the design de référence (`design/`), and the technical decisions embedded in the PRD's *Web App Specific Requirements* / *Implementation Considerations* sections into implementable stories. Périmètre couvert : **MVP uniquement** *(Post-MVP Growth/Vision retiré le 2026-05-13 — voir notes ci-dessous)*.
 
 > ⚠️ Pas de document `Architecture.md` ni de `UX Design.md` formels — les décisions techniques et UX sont extraites du PRD et du dossier `design/` (voir *Additional Requirements* et *UX Design Requirements*).
 
@@ -62,7 +62,7 @@ This document provides the complete epic and story breakdown for **portfolio** (
 
 - **FR27 :** Le site fournit des métadonnées de référencement et de partage (titre, description, OpenGraph/Twitter Card avec image, données structurées `Person`, `sitemap`, `robots`).
 - **FR28 :** Le site est indexable et pré-rendu de sorte que son contenu soit accessible aux moteurs de recherche sans exécution de JavaScript.
-- **FR29 :** Le site mesure de façon respectueuse de la vie privée les visites et les déclenchements d'appels à l'action de contact, pour suivre la conversion visite → contact.
+- **FR29 :** *(retiré le 2026-05-13 — mesure d'audience hors scope ; numéro conservé pour ne pas renuméroter FR30+.)*
 
 **F. Expérience visuelle & interactions**
 
@@ -119,8 +119,8 @@ This document provides the complete epic and story breakdown for **portfolio** (
 
 **Privacy & Compliance**
 
-- **NFR24 :** Mesure d'audience respectueuse de la vie privée : pas de cookies de suivi, pas de PII, conforme RGPD sans bannière de consentement (ex. solution sans cookie type Plausible) ; seules les visites et déclenchements de CTA contact sont suivis, de façon agrégée.
-- **NFR25 :** Aucune donnée personnelle de visiteur n'est collectée, stockée ou transmise à des tiers en dehors de cette mesure agrégée.
+- **NFR24 :** *(retiré le 2026-05-13 — mesure d'audience hors scope ; numéro conservé.)*
+- **NFR25 :** Aucune donnée personnelle de visiteur n'est collectée, stockée ou transmise à des tiers. *(NFR24 retiré ; cette contrainte d'absence de collecte reste valable par défaut puisque le site ne fait plus aucune mesure d'audience.)*
 
 **SEO & Discoverability**
 
@@ -139,8 +139,8 @@ This document provides the complete epic and story breakdown for **portfolio** (
 - **AR6 — *(retiré le 2026-05-12)* :** ~~Démasquage du blog au build~~ — fonctionnalité abandonnée ; numéro conservé pour ne pas renuméroter AR7+.
 - **AR7 — Polices :** Inter, JetBrains Mono, Cormorant Garamond auto-hébergées via `next/font`, sous-ensembles latins, `display: swap`, preload de Inter.
 - **AR8 — Images & assets :** `next/image` (AVIF/WebP), logos SVG inline quand possible, `splash*.png` optimisé ; pipeline favicon set + OG image + manifest depuis les assets fournis (`logo.svg`, `logo-dark.svg`, `logo-text.svg`, `maqom-logo-*`, `splash*.png`).
-- **AR9 — Qualité / CI :** ESLint + TypeScript strict en CI ; check Lighthouse en CI (souhaitable en MVP, bloquant en Growth) ; déploiement automatique sur push.
-- **AR10 — Analytics :** intégration d'une solution d'analytics sans cookie / privacy-friendly (type Plausible), conforme RGPD sans bannière, suivi agrégé visites + clics CTA contact.
+- **AR9 — Qualité / CI :** ESLint + TypeScript strict en CI ; check Lighthouse en CI (advisory) ; déploiement automatique sur push.
+- **AR10 — *(retiré le 2026-05-13)* :** ~~Analytics privacy-friendly~~ — hors scope ; numéro conservé pour ne pas renuméroter AR11+.
 - **AR11 — Audit contrastes :** auditer les gris du design de référence (`#a3a3a3`, `#888` sur `#0a0a0a`) dès le portage et ajuster les tokens sous le seuil AA pour le texte courant.
 - **AR12 — Hors scope explicite :** pas de PWA installable, pas de CLI, pas de backend, pas de DB, pas d'auth, pas de temps réel ; pas de lien Balink ni vers des repos en MVP.
 
@@ -167,14 +167,14 @@ This document provides the complete epic and story breakdown for **portfolio** (
 - **UX-DR17 — Responsive :** mobile-first ; breakpoints Tailwind standard ; toutes les grilles denses (Stack/Experience/AI, meta strip) reflow en 1-2 colonnes ; paddings réduits sur mobile ; tap targets ≥ 44px ; texte lisible sans zoom ; aucun scroll horizontal de ~320px aux grands écrans.
 - **UX-DR18 — Accessibilité (transverse design) :** `:focus-visible` stylé partout (jamais `outline:none` nu), skip-link « aller au contenu », ordre de tab logique, `aria-label` sur les liens d'icônes (LinkedIn, téléphone), `aria-current` sur le lien de section actif, marquee `aria-hidden` (marques présentes en texte ailleurs), annonce du changement de langue, `lang`/`dir` du `<html>` corrects.
 - **UX-DR19 — *(retiré le 2026-05-12)* :** ~~Pages article blog~~ — fonctionnalité abandonnée ; numéro conservé pour ne pas renuméroter UX-DR20.
-- **UX-DR20 — Variantes de design (Post-MVP / Vision) :** explorer les autres maquettes du canvas (`design-canvas (3).jsx`) comme variantes alternatives — éventuel A/B léger.
+- **UX-DR20 — *(retiré le 2026-05-13)* :** ~~Variantes de design (Post-MVP / Vision)~~ — hors scope ; numéro conservé pour ne pas renuméroter UX-DR21.
 - **UX-DR21 — Section « Freelance Engagements » + composant `MissionCard` :** section dédiée (label `03 — Freelance Engagements`) listant les missions freelance ; chaque carte = nom, intitulé, dates, durée, statut (`Completed` / `Shipped to production`), URL sortante (ex. `sayelo.ai`, `penpaloo.io`), tagline, bullets, tags techno ; structurellement proche de `RoleCard` ; `<article>` sémantique ; reflow mobile. **Renumérotation des labels de section :** `01 About · 02 Experience · 03 Freelance Engagements · 04 Side Projects · 05 Stack · 06 Contact` (issu de `content.md`).
 
 ### FR Coverage Map
 
 - **FR1 :** Epic 2 — section hero (contenu).
 - **FR2 :** Epic 2 — section about.
-- **FR3 :** Epic 2 — section experience + KPI (case studies dédiées : Epic 7).
+- **FR3 :** Epic 2 — section experience + KPI.
 - **FR3a :** Epic 2, Story 2.2 — section `03 — Freelance Engagements` (`MissionCard`), missions avec liens sortants ; modèle de contenu typé (FR24) + `UX-DR21` ; entraîne la renumérotation des labels de section. *(Ajoutée au PRD — révision 2026-05-12.)*
 - **FR4 :** Epic 2 — side projects / carte terminal Maqom + lien `maqom.co`.
 - **FR5 :** Epic 2 — section stack.
@@ -198,7 +198,7 @@ This document provides the complete epic and story breakdown for **portfolio** (
 - **FR26 :** Epic 1 — déploiement automatique sur `push`.
 - **FR27 :** Epic 4 — métadonnées SEO / partage (OG, Twitter, JSON-LD, sitemap, robots).
 - **FR28 :** Epic 1 (rendu SSG) + Epic 4 (vérification crawl sans JS).
-- **FR29 :** Epic 5 — mesure privacy-friendly visites → clics contact.
+- **FR29 :** *(retiré le 2026-05-13 — mesure d'audience hors scope.)*
 - **FR30 :** Epic 3 — curseur personnalisé (pointeur fin uniquement).
 - **FR31 :** Epic 3 — fondu au défilement.
 - **FR32 :** Epic 3 — neutralisation `prefers-reduced-motion`.
@@ -229,23 +229,11 @@ Le site atteint WCAG 2.1 AA (contrastes audités et tokens ajustés, navigation 
 **FRs covered:** FR18 (hreflang/canonical), FR27, FR28 (vérification), FR34 (audit ~320px), FR35, FR36
 **NFRs:** NFR1–NFR3, NFR5, NFR7–NFR10, NFR12, NFR13, NFR16, NFR22 (Lighthouse CI), NFR26, NFR27 · **ARs:** AR8, AR11 · **UX-DR:** DR1 (audit contraste), DR18
 
-### Epic 5: Mesure d'audience privacy-friendly `MVP`
-Le site mesure, de façon agrégée et sans cookie (solution type Plausible, conforme RGPD sans bannière de consentement), les visites et les déclenchements des appels à l'action de contact — pour suivre la conversion visite → contact.
-**FRs covered:** FR29 · **NFRs:** NFR24, NFR25 · **ARs:** AR10
+<!-- Epics 5 (analytics), 6 (blog), 7 (case studies/now/CI durci), 8 (hébreu/variantes de design) retirées le 2026-05-12/2026-05-13 — hors scope. L'ancienne Epic 9 (QA & relecture pré-lancement) devient Epic 5 ci-dessous. -->
 
-<!-- Epic 6 « Blog » retirée le 2026-05-12 : fonctionnalité abandonnée. Les numéros Epic 7/8/9 sont conservés tels quels (pas de renumérotation). -->
-
-### Epic 7: Growth — case studies, page « now »/changelog & CI durci `Post-MVP`
-Pages case studies dédiées et approfondies (Balink anonymisé / Limova / Maqom), page « now » / changelog `v2026.x`, et CI Lighthouse durci (budget JS strict, blocage du déploiement sur régression de perf/a11y).
-**FRs covered:** — (extension approfondie de FR3/FR4 ; durcissement de NFR22) · *(périmètre PRD — Phase 2 Growth)*
-
-### Epic 8: Vision — hébreu (RTL) & variantes de design `Post-MVP`
-Ajout de l'hébreu comme 3ᵉ langue avec `dir="rtl"` (si justifié), exploration des variantes de design du canvas comme alternatives, éventuel A/B léger ; consolidation du site comme hub durable de marque personnelle.
-**FRs covered:** — (extension de FR16/FR17 i18n ; FR33 variantes visuelles) · **UX-DR:** DR20 · *(périmètre PRD — Phase 3 Vision)*
-
-### Epic 9: QA & relecture pré-lancement `MVP`
+### Epic 5: QA & relecture pré-lancement `MVP`
 Passe de QA transversale avant l'envoi du lien aux recruteurs : exactitude factuelle de tout le contenu (textes FR + EN, expériences, dates/durées, KPI, stack), validité de tous les liens sortants (LinkedIn — actuellement en 404 —, `maqom.co`, `mailto:`, CV), absence de fuite (repo / Balink / projets clients sous secret), parité FR/EN au niveau du contenu, smoke responsive (~375px, zéro scroll horizontal, tap ≥ 44px). Distincte des audits techniques d'Epic 4.
-**FRs covered:** — (vérification transversale de FR10/FR13/FR14/FR19/FR24/FR25/FR33/FR34) · *(ajoutée — révision 2026-05-12)*
+**FRs covered:** — (vérification transversale de FR10/FR13/FR14/FR19/FR24/FR25/FR33/FR34) · *(ajoutée — révision 2026-05-12 ; renumérotée Epic 9 → Epic 5 le 2026-05-13)*
 
 ---
 
@@ -557,95 +545,17 @@ So that the site is discoverable and looks right when shared.
 **Then** a favicon set, an OG image, and a web manifest are generated from them
 **And** a Lighthouse check runs in CI (advisory in MVP), with Performance ≥ 95 / Accessibility = 100 / Best Practices ≥ 95 / SEO ≥ 95 on the home page
 
-## Epic 5: Mesure d'audience privacy-friendly
-
-Le site mesure, de façon agrégée et sans cookie, les visites et les clics sur les CTA contact pour suivre la conversion visite → contact.
-
-### Story 5.1: Analytics sans cookie & suivi des CTA contact
-
-As the owner (Michael),
-I want privacy-friendly, cookie-less analytics that tracks visits and contact-CTA clicks,
-So that I can observe the visit → contact conversion without harming visitor privacy or needing a consent banner.
-
-**Acceptance Criteria:**
-
-**Given** a cookie-less analytics solution (Plausible-type)
-**When** it is integrated
-**Then** it loads a lightweight script, sets no tracking cookies, collects no personally identifying data, sends nothing to third parties beyond aggregate measurement, and is GDPR-compliant without a consent banner
-
-**Given** the contact CTAs (email in nav, hero, contact section)
-**When** a visitor triggers one
-**Then** an aggregate event is recorded, visible in the analytics dashboard alongside page-view counts
-
+<!-- Epic 5 « Mesure d'audience privacy-friendly » (story 5.1 — analytics sans cookie) retirée le 2026-05-13 : pas dans le scope. -->
 <!-- Epic 6 « Blog — infrastructure & activation » (stories 6.1, 6.2) retirée le 2026-05-12 : fonctionnalité abandonnée. -->
+<!-- Epic 7 « Growth — case studies, page « now »/changelog & CI durci » (stories 7.1, 7.2) retirée le 2026-05-13 : hors scope. -->
+<!-- Epic 8 « Vision — hébreu (RTL) & variantes de design » (stories 8.1, 8.2) retirée le 2026-05-13 : hors scope. -->
+<!-- L'ancienne Epic 9 (QA & relecture pré-lancement) devient Epic 5 ci-dessous. -->
 
-## Epic 7: Growth — case studies, page « now »/changelog & CI durci
-
-Extensions Post-MVP : pages case studies approfondies, page « now »/changelog, et CI Lighthouse bloquant sur régression.
-
-### Story 7.1: Pages case studies & page « now »/changelog (Post-MVP)
-
-As a visitor evaluating depth,
-I want dedicated case-study pages (Balink anonymized / Limova / Maqom) and a "now"/changelog page,
-So that I can dig deeper into specific work and see the site evolving.
-
-**Acceptance Criteria:**
-
-**Given** a case-study page template
-**When** the case studies are published
-**Then** there are dedicated pages for Balink (anonymized, respecting pro secrecy), Limova, and Maqom, each with deeper context than the home-page summary, in FR and EN
-**And** they are linked from the relevant home-page entries
-
-**Given** a "now"/changelog page
-**When** it is published
-**Then** it presents the current focus and a `v2026.x` changelog, in FR and EN
-
-### Story 7.2: CI Lighthouse durci (Post-MVP)
-
-As the owner (Michael),
-I want the CI Lighthouse check to be enforcing,
-So that a performance or accessibility regression blocks the deploy.
-
-**Acceptance Criteria:**
-
-**Given** the CI pipeline
-**When** a push or PR triggers it
-**Then** Lighthouse runs with a strict JS budget and the documented score thresholds, and the pipeline fails (blocking the deploy) on any regression below threshold
-
-## Epic 8: Vision — hébreu (RTL) & variantes de design
-
-Extensions Vision : hébreu comme 3ᵉ langue avec RTL, et variantes de design alternatives issues du canvas.
-
-### Story 8.1: Support de l'hébreu (3ᵉ langue, RTL) (Post-MVP)
-
-As a Hebrew-speaking visitor,
-I want the site available in Hebrew with proper right-to-left layout,
-So that I can read it naturally in my language.
-
-**Acceptance Criteria:**
-
-**Given** a new `he` locale
-**When** I switch to Hebrew
-**Then** all content is served in Hebrew from the typed dictionary, `<html lang="he" dir="rtl">` is set, and layouts adapt correctly to RTL with no broken or overflowing elements
-**And** `hreflang` includes the Hebrew alternate
-
-### Story 8.2: Variantes de design alternatives (Post-MVP)
-
-As the owner (Michael),
-I want to explore alternative design variants from the canvas, with a way to switch between them,
-So that I can iterate on the site's look and optionally run a light A/B.
-
-**Acceptance Criteria:**
-
-**Given** an alternative design variant from the canvas (`design-canvas (3).jsx`)
-**When** it is implemented
-**Then** it is available behind a switch mechanism, preserves all content and accessibility, and can optionally be served as a light A/B variant
-
-## Epic 9: QA & relecture pré-lancement `MVP`
+## Epic 5: QA & relecture pré-lancement `MVP`
 
 Avant d'envoyer le lien aux recruteurs : une passe de QA transversale qui vérifie l'exactitude factuelle de tout le contenu (textes FR + EN, expériences, dates/durées, KPI, stack), la validité de tous les liens sortants (LinkedIn — actuellement en 404 —, `maqom.co`, `mailto:`, téléchargement du CV), l'absence de fuite (liens repo / Balink / projets clients sous secret), la parité FR/EN au niveau du contenu (la garde de type est aveugle au contenu des tableaux), et un smoke responsive rapide (~375px, zéro scroll horizontal, tap targets ≥ 44px). Distincte des audits techniques d'Epic 4 (WCAG, perf/CWV, SEO) — ici, focus « exactitude & polish recruteur ».
 
-### Story 9.1: Audit de contenu, liens & polish pré-lancement
+### Story 5.1: Audit de contenu, liens & polish pré-lancement
 
 As the owner (Michael),
 I want a final QA pass over every piece of visible content, every outbound link and the responsive behavior, in both FR and EN, before sharing the site with recruiters,

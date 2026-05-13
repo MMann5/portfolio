@@ -55,7 +55,17 @@ export function proxy(request: NextRequest) {
 export const config = {
   // Constante littérale (analysable au build). Exclut les internes Next, les
   // fichiers de métadonnées et tout fichier à extension (`.png`, `.pdf`, …).
+  // Story 4.3 : ajout de `opengraph-image|icon|apple-icon|manifest.webmanifest`
+  // — routes Next 16 File Conventions sans extension (`/opengraph-image`,
+  // `/icon`, `/apple-icon`) qui doivent retourner 200 direct, pas un 307 vers
+  // `/<locale>/<route>` (résout dette deferred-work review 1.2b).
+  //
+  // Story 4.3 review patch P4 : chaque alternative est ancrée par
+  // `(?:[?/]|$)` pour éviter qu'un futur chemin comme `/iconography`,
+  // `/icons-set`, `/apple-icon-precomposed`, `/opengraph-image-v2` ne
+  // court-circuite aussi le proxy. Le matcher d'origine matchait par préfixe
+  // (`icon` matche `iconography`) — fuite silencieuse de locale.
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|.*\\..*).*)",
+    "/((?!_next/static|_next/image|favicon\\.ico|sitemap\\.xml|robots\\.txt|opengraph-image(?:[?/]|$)|icon(?:[?/]|$)|apple-icon(?:[?/]|$)|manifest\\.webmanifest|.*\\..*).*)",
   ],
 };

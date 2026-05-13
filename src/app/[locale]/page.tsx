@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { siteUrl } from "@/lib/site-url";
 import { Nav } from "@/components/Nav";
 import { GridSection } from "@/components/GridSection";
 import { SectionHead } from "@/components/SectionHead";
@@ -42,8 +43,52 @@ export default async function Home({
     navLabel: section.navLabel,
   }));
 
+  // JSON-LD `Person` — émis dans le HTML initial pour Google et tous les crawlers
+  // de structured data (cf. Story 4.3 AC#5). Le bloc est inline dans le Server
+  // Component (pas de hoisting `<head>` par React 19 pour les scripts sans `src`,
+  // ce qui est attendu et accepté par les crawlers).
+  //
+  // `sameAs` pointe vers l'URL LinkedIn courante du dictionnaire. Cette URL
+  // est connue 404 (cf. dette `deferred-work.md` review 9.1) — sera corrigée
+  // en Story 9.1 sans aucune modification de ce fichier (le dictionnaire
+  // restera la source de vérité).
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Michael Mann",
+    jobTitle: meta.jobTitle,
+    url: `${siteUrl}/${locale}`,
+    image: `${siteUrl}/opengraph-image`,
+    email: `mailto:${meta.email}`,
+    telephone: meta.phone,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Ashdod",
+      addressCountry: "IL",
+    },
+    sameAs: [meta.linkedin],
+    knowsLanguage: ["fr", "he", "en"],
+  };
+
   return (
     <>
+      {/* Escape XSS-safe (pattern Next 16 `json-ld.md`) : `<` → `<` empêche
+          qu'une chaîne contenant `</script>` n'échappe du JSON et n'exécute du
+          code arbitraire. U+2028 / U+2029 sont traités comme fins de ligne par
+          le parser JS dans un `<script>` inline et casseraient le JSON s'ils
+          étaient laissés en littéral (cas réel : copié-collé Word / macOS qui
+          insère ces séparateurs invisibles). Triple escape obligatoire — le
+          payload courant n'en contient pas, mais la précaution reste valable
+          pour toute évolution du dictionnaire. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd)
+            .replace(/</g, "\\u003c")
+            .replace(new RegExp("\u2028", "g"), "\\u2028")
+            .replace(new RegExp("\u2029", "g"), "\\u2029"),
+        }}
+      />
       <Nav
         locale={locale}
         brandName={nav.brandName}

@@ -14,6 +14,10 @@ const fr = {
     title: "Michael Mann",
     description:
       "Ingénieur frontend senior — applications SaaS de production pour des marques internationales.",
+    // Libellés SEO ajoutés en Story 4.3 — voir `en.ts` pour le détail de l'usage.
+    jobTitle: "Développeur frontend senior",
+    ogImageAlt:
+      "Michael Mann — Développeur frontend senior · 5+ ans · Ashdod, IL",
     email: "michael.mann55@gmail.com",
     linkedin: "https://www.linkedin.com/in/michaelmann-339545149",
     linkedinShort: "https://www.linkedin.com/in/michaelmann-339545149",

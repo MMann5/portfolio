@@ -6,6 +6,7 @@ import { locales, isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { CursorMount } from "@/components/CursorMount";
 import { SkipLink } from "@/components/SkipLink";
+import { siteUrl } from "@/lib/site-url";
 
 // Root layout, imbriqué sous `app/[locale]/` (autorisé par App Router) : c'est ici
 // qu'on rend `<html>` / `<body>`, donc c'est l'ancêtre commun obligatoire des classes
@@ -50,11 +51,8 @@ export function generateStaticParams() {
 
 export const dynamicParams = false;
 
-// URL de base pour les URLs absolues (`canonical`, `hreflang`). Finition SEO (domaine
-// custom, sitemap, robots, OG, JSON-LD) = Story 4.3.
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  "https://portfolio-three-omega-48ezqd212w.vercel.app";
+// `siteUrl` est exporté depuis `@/lib/site-url` — source de vérité unique partagée
+// avec `sitemap.ts`, `robots.ts`, `page.tsx` (JSON-LD) et `opengraph-image.tsx`.
 
 export async function generateMetadata({
   params,
@@ -64,13 +62,58 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const dict = await getDictionary(locale);
+  // Locales au format OG (`en_US` / `fr_FR`). On expose la locale active comme
+  // `openGraph.locale` et l'autre comme `alternateLocale` (cohérent avec le hreflang
+  // côté `<head>` ci-dessous). Pas de variante régionale fine (`en_GB`, `fr_CA`) :
+  // le site n'a pas de positionnement régional.
+  const localeOG = locale === "fr" ? "fr_FR" : "en_US";
+  const localeAlt = locale === "fr" ? "en_US" : "fr_FR";
+  // Titre social enrichi : `"Michael Mann — <jobTitle localisé>"`. Préféré au seul
+  // `dict.meta.title` pour Google SERP / partages sociaux (~40 chars, dans la
+  // fenêtre confortable de ~60 chars affichés). Le `title.template` reste en place
+  // pour les futures pages enfants (case studies Story 7.1) qui définiront leur
+  // propre `title`.
+  const enrichedTitle = `${dict.meta.title} — ${dict.meta.jobTitle}`;
   return {
     metadataBase: new URL(siteUrl),
-    title: dict.meta.title,
+    title: {
+      default: enrichedTitle,
+      template: `%s — Michael Mann`,
+    },
     description: dict.meta.description,
     alternates: {
       canonical: `/${locale}`,
       languages: { "x-default": "/en", en: "/en", fr: "/fr" },
+    },
+    robots: { index: true, follow: true },
+    openGraph: {
+      title: enrichedTitle,
+      description: dict.meta.description,
+      url: `/${locale}`,
+      siteName: "Michael Mann",
+      type: "website",
+      locale: localeOG,
+      alternateLocale: [localeAlt],
+      images: [
+        {
+          // URL relative : Next la résout en absolu via `metadataBase`. La route
+          // `/opengraph-image` est servie par `app/opengraph-image.tsx` (root,
+          // partagée entre `/en` et `/fr` — cf. Story 4.3 AC#4).
+          url: "/opengraph-image",
+          width: 1200,
+          height: 630,
+          alt: dict.meta.ogImageAlt,
+          type: "image/png",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: enrichedTitle,
+      description: dict.meta.description,
+      // Pas de `site`/`creator` : Mike n'a pas de compte X/Twitter public
+      // (confirmé Tâche 0 Story 4.3). À ajouter ultérieurement si nécessaire.
+      images: [{ url: "/opengraph-image", alt: dict.meta.ogImageAlt }],
     },
   };
 }

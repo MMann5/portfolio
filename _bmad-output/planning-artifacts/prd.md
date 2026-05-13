@@ -1,7 +1,7 @@
 ---
 stepsCompleted: ['step-01-init', 'step-02-discovery', 'step-02b-vision', 'step-02c-executive-summary', 'step-03-success', 'step-04-journeys', 'step-05-domain', 'step-06-innovation', 'step-07-project-type', 'step-08-scoping', 'step-09-functional', 'step-10-nonfunctional', 'step-11-polish', 'step-12-complete']
 classification:
-  projectType: 'static / pre-rendered personal-portfolio site (Next.js App Router + TypeScript + Tailwind, multilingual FR/EN, blog section)'
+  projectType: 'static / pre-rendered personal-portfolio site (Next.js App Router + TypeScript + Tailwind, multilingual FR/EN)'
   domain: 'personal branding / portfolio site (unregulated)'
   complexity: 'low'
   projectContext: 'greenfield'
@@ -34,7 +34,7 @@ documentCounts:
 
 ## Executive Summary
 
-Le portfolio de Michael Mann est un site vitrine personnel — un site Next.js (App Router) / TypeScript / Tailwind, one-page et pré-rendu, multilingue FR/EN, avec une section blog — destiné à convertir trois publics simultanément : recruteurs et hiring managers tech (rôles seniors salariés), CTO/VP Eng/fondateurs (leadership technique), et clients freelance ; tout en donnant de la crédibilité à ses produits indépendants (Maqom). Le problème résolu : un capital professionnel rare — craft frontend pour des maisons de luxe sous contraintes dures, parcours junior → lead d'équipes distribuées, et une pratique avancée de l'*agentic engineering* — aujourd'hui éparpillé entre un CV, LinkedIn et des conversations, donc illisible en 30 secondes par les bonnes personnes. Le site condense ce capital en une expérience rapide, soignée et persuasive, et sert de hub durable de marque personnelle : il fait passer une candidature de « ignoré » à « entretien », attire des missions freelance qualifiées, et accueillera à terme un corpus d'écrits faisant autorité.
+Le portfolio de Michael Mann est un site vitrine personnel — un site Next.js (App Router) / TypeScript / Tailwind, one-page et pré-rendu, multilingue FR/EN — destiné à convertir trois publics simultanément : recruteurs et hiring managers tech (rôles seniors salariés), CTO/VP Eng/fondateurs (leadership technique), et clients freelance ; tout en donnant de la crédibilité à ses produits indépendants (Maqom). Le problème résolu : un capital professionnel rare — craft frontend pour des maisons de luxe sous contraintes dures, parcours junior → lead d'équipes distribuées, et une pratique avancée de l'*agentic engineering* — aujourd'hui éparpillé entre un CV, LinkedIn et des conversations, donc illisible en 30 secondes par les bonnes personnes. Le site condense ce capital en une expérience rapide, soignée et persuasive, et sert de hub de marque personnelle : il fait passer une candidature de « ignoré » à « entretien » et attire des missions freelance qualifiées.
 
 Le moment est juste : Michael est disponible à partir du Q2 2026, et son angle *agentic engineering* est précisément le sujet où il a une longueur d'avance en 2026 — là où la concurrence montre encore un « dernier projet 2022 ».
 
@@ -46,8 +46,8 @@ Le différenciateur structurel : **le site est sa propre démonstration** — Li
 
 ## Project Classification
 
-- **Type de projet :** site web vitrine personnel — portfolio one-page **Next.js (App Router)** + TypeScript + Tailwind, pré-rendu / statique par défaut, multilingue FR/EN, section blog (contenu MDX), déploiement statique sur Vercel. Pas de backend applicatif, pas d'authentification.
-- **Domaine :** site vitrine / personal branding — non régulé. Pas de contrainte de conformité ; hygiène RGPD légère si analytics (privacy-friendly, type Plausible).
+- **Type de projet :** site web vitrine personnel — portfolio one-page **Next.js (App Router)** + TypeScript + Tailwind, pré-rendu / statique par défaut, multilingue FR/EN, déploiement statique sur Vercel. Pas de backend applicatif, pas d'authentification, pas de blog, pas d'analytics.
+- **Domaine :** site vitrine / personal branding — non régulé. Pas de contrainte de conformité ; pas d'analytics côté site (donc pas de problématique RGPD côté visiteur).
 - **Complexité du domaine :** faible (logique métier minimale). La difficulté réelle : fidélité au design « Technical Minimal », budget de performance strict, i18n propre, accessibilité.
 - **Contexte :** greenfield — aucun système existant ; artefacts de planification et design de référence (`Portfolio.html` / `Minimal.jsx` / `content.js`) déjà disponibles.
 
@@ -64,7 +64,7 @@ Le différenciateur structurel : **le site est sa propre démonstration** — Li
 
 - **Métrique nord (3-6 mois) :** hausse mesurable du **taux de réponse aux candidatures** (passage « ignoré » → « entretien ») depuis que le portfolio est en ligne et lié à chaque candidature.
 - **3 mois :** site live et lié partout (LinkedIn Featured, CV, signature email, candidatures) avant/pendant la fenêtre Q2 2026 ; ≥ 1 fil de conversation entrant qualifié (poste ou freelance) attribuable au site.
-- **12 mois :** corpus de blog démarré (≥ 3 articles, axe agentic) ; le portfolio est cité spontanément dans des échanges de recrutement ; au moins une opportunité concrète (offre, mission, ou crédibilité Maqom) traçable au site.
+- **12 mois :** le portfolio est cité spontanément dans des échanges de recrutement ; au moins une opportunité concrète (offre, mission, ou crédibilité Maqom) traçable au site.
 
 ### Technical Success
 
@@ -84,18 +84,15 @@ Synthèse (détail et seuils chiffrés : voir §§ *Web App Specific Requirement
 | Lighthouse Perf / A11y / Best Practices / SEO | ≥ 95 / 100 / ≥ 95 / ≥ 95 | Au lancement |
 | LCP (mobile, 4G simulée) | < 2,0 s | Au lancement |
 | Contacts entrants qualifiés via le site | ≥ 1 / mois | À partir de M+1 |
-| Articles de blog publiés (axe agentic) | ≥ 3 | M+12 |
 | Taux de réponse aux candidatures | En hausse vs. avant-portfolio | M+6 |
 
 ## Product Scope (synthèse)
 
-Livraison **phasée** (MVP → Growth → Vision). Le détail des phases, la stratégie MVP et les risques sont dans le § *Project Scoping & Phased Development* ; le détail technique dans le § *Web App Specific Requirements*.
+Livraison **monolithique MVP** *(scope post-MVP « Growth » et « Vision » retiré le 2026-05-13)*. Le détail technique est dans le § *Web App Specific Requirements*.
 
-**Dans la V1 (MVP) :** site one-page complet (nav, hero, clients/marquee, about, experience+KPI, **freelance engagements**, projects — Maqom en vedette avec lien `maqom.co` + carte méthodo, stack, AI & agentic, contact, footer), fidèle au design « Technical Minimal » ; i18n **FR + EN** complet ; budget perf strict + WCAG 2.1 AA ; CV téléchargeable ; SEO + métadonnées sociales + favicon/splash ; **infra blog présente mais section masquée** tant qu'aucun article ; analytics privacy-friendly légère ; déploiement statique Vercel + CI lint/types (+ Lighthouse souhaitable).
+**Dans la V1 (MVP) :** site one-page complet (nav, hero, clients/marquee, about, experience+KPI, **freelance engagements**, projects — Maqom en vedette avec lien `maqom.co` + carte méthodo, stack, AI & agentic, contact, footer), fidèle au design « Technical Minimal » ; i18n **FR + EN** complet ; budget perf strict + WCAG 2.1 AA ; CV téléchargeable ; SEO + métadonnées sociales + favicon/splash ; déploiement statique Vercel + CI lint/types (+ Lighthouse advisory).
 
-**Hors V1 (explicite) :** lien vers Balink ou vers des repos (secret pro / repos privés) ; articles de blog éditoriaux ; pages case studies dédiées ; hébreu ; CMS/auth/backend ; PWA installable ; A/B testing.
-
-**Growth :** activation du blog (≥ 1 article → démasquage section+nav, pages article MDX, RSS) ; case studies dédiées (Balink anonymisé / Limova / Maqom) ; page « now » / changelog `v2026.x` ; CI Lighthouse durci. **Vision :** hébreu (`rtl`) si justifié ; corpus d'écrits régulier ; le site comme hub de marque personnelle, point d'entrée durable des opportunités.
+**Hors scope (explicite) :** lien vers Balink ou vers des repos (secret pro / repos privés) ; **blog** (articles éditoriaux, MDX, RSS, démasquage auto) ; **analytics / mesure d'audience** (le site n'embarque aucun script de tracking) ; pages case studies dédiées ; hébreu / RTL ; variantes de design alternatives ; CMS/auth/backend ; PWA installable ; A/B testing.
 
 ## User Journeys
 
@@ -135,29 +132,28 @@ Livraison **phasée** (MVP → Growth → Vision). Le détail des phases, la str
 
 → **Capacités :** i18n FR complet, lien sortant fiable vers Maqom, descriptions de side projects riches, carte méthodo bien présentée.
 
-### Journey 4 — Tom, pair / dev curieux (partage, futur blog)
+### Journey 4 — Tom, pair / dev curieux (partage)
 
 **Situation :** a vu un post LinkedIn de Michael sur l'agentic engineering, vient voir le site.
 
 - **Ouverture :** scrolle direct vers la section AI & agentic, lit les 4 cartes (Claude Code, Claude Design, BMAD, MCP Stack).
-- **Montée :** cherche des écrits — en MVP, **pas de blog visible** (section masquée tant qu'il n'y a pas d'article). Note le `v2026.1`, « à suivre ».
-- **Climax (post-MVP) :** au 1er article publié, la section blog apparaît dans la nav. Tom revient, lit, partage. Bouche-à-oreille.
-- **Résolution :** autorité accrue sur le sujet ; effet réseau.
-- **Risques :** blog visible mais vide en MVP (d'où le masquage) ; post-activation, pas de RSS / pages article propres → friction de lecture.
+- **Montée :** comprend le positionnement (« Shipping with agents, not just for them ») et la stack outillée (MCP, BMAD, Claude Code). Le site lui-même fait office de preuve.
+- **Résolution :** partage le lien à un pair, autorité accrue sur le sujet ; effet réseau.
+- **Risques :** section AI noyée dans la home, ou positionnement vague.
 
-→ **Capacités :** section AI/agentic comme point d'entrée, infra blog présente mais conditionnellement masquée, (post-MVP) pages article MDX + RSS + démasquage auto de la nav.
+→ **Capacités :** section AI/agentic comme point d'entrée visible et soignée ; le site lui-même comme démo de la méthodo. *(Blog & corpus d'écrits initialement prévus post-MVP — retirés du scope le 2026-05-13.)*
 
-### Journey 5 — Michael, propriétaire (maintenance & publication)
+### Journey 5 — Michael, propriétaire (maintenance)
 
-**Situation :** nouveau client signé → mettre à jour le CV téléchargeable ; plus tard, publier le 1er article.
+**Situation :** nouveau client signé / nouveau rôle / KPI à actualiser → mettre à jour le contenu et le CV téléchargeable.
 
-- **Ouverture :** édite le contenu (fichier de contenu typé + MDX) — un seul endroit, FR + EN.
-- **Montée :** remplace le PDF du CV ; ajoute un article MDX dans `content/blog/` → la section blog se démasque automatiquement, la nav ajoute le lien, le RSS se régénère au build.
+- **Ouverture :** édite le contenu (fichier de contenu typé) — un seul endroit, FR + EN.
+- **Montée :** remplace le PDF du CV ; ajuste rôles/KPI/stack dans le dictionnaire typé.
 - **Climax :** `git push` → déploiement statique automatique (Vercel) en < 1 min, Lighthouse vérifié en CI.
 - **Résolution :** site à jour sans effort, qualité garantie par le pipeline ; déployé avec sa propre méthodo agentique — le site est aussi une démo de son workflow.
 - **Risques :** contenu en dur dispersé → maintenance pénible ; pas de garde-fou perf en CI → régression silencieuse.
 
-→ **Capacités :** contenu centralisé et typé, contenu/i18n éditables sans toucher la présentation, CV remplaçable, pipeline build/déploiement statique, (post-MVP) build qui détecte les articles et démasque le blog, check Lighthouse en CI.
+→ **Capacités :** contenu centralisé et typé, contenu/i18n éditables sans toucher la présentation, CV remplaçable, pipeline build/déploiement statique, check Lighthouse en CI.
 
 ### Journey Requirements Summary
 
@@ -173,16 +169,13 @@ Livraison **phasée** (MVP → Growth → Vision). Le détail des phases, la str
 | Design « Technical Minimal » fidèle + micro-interactions performantes (curseur, fade-in, reduced-motion off) | J2 | ✅ |
 | Qualité technique vérifiable : HTML sémantique, métadonnées sociales, Lighthouse | J2 | ✅ |
 | Contenu centralisé/typé, éditable sans toucher la présentation | J5 | ✅ |
-| Infra blog présente mais masquée tant que vide | J4, J5 | ✅ |
-| Pages article MDX + RSS + démasquage auto de la nav/section | J4, J5 | ⬜ Post-MVP |
-| Analytics privacy-friendly (visites → clics contact) | J1 (mesure) | ✅ (léger) |
-| Pipeline déploiement statique + CI Lighthouse | J5 | ✅ déploiement / CI Lighthouse souhaitable |
+| Pipeline déploiement statique + CI Lighthouse | J5 | ✅ déploiement / CI Lighthouse advisory |
 
 ## Web App Specific Requirements
 
 ### Project-Type Overview
 
-Site web one-page + section blog, construit avec **Next.js (App Router)** et **TypeScript strict**, **Tailwind CSS** (+ shadcn/ui au besoin). Rendu : statique par défaut (SSG / pré-rendu au build) — aucune donnée dynamique côté serveur, pas d'API applicative, pas d'authentification. Déploiement sur **Vercel**. Le site est essentiellement statique et doit être servi comme tel (pages pré-rendues, assets optimisés).
+Site web one-page, construit avec **Next.js (App Router)** et **TypeScript strict**, **Tailwind CSS** (+ shadcn/ui au besoin). Rendu : statique par défaut (SSG / pré-rendu au build) — aucune donnée dynamique côté serveur, pas d'API applicative, pas d'authentification, pas de blog. Déploiement sur **Vercel**. Le site est essentiellement statique et doit être servi comme tel (pages pré-rendues, assets optimisés).
 
 ### Browser Support Matrix
 
@@ -223,31 +216,30 @@ Site web one-page + section blog, construit avec **Next.js (App Router)** et **T
 - Navigation clavier complète ; ordre de tab logique ; `:focus-visible` stylé (jamais `outline: none` nu) ; skip-link « aller au contenu ».
 - `prefers-reduced-motion: reduce` → curseur custom désactivé, fade-in remplacé par apparition immédiate, marquee figé/ralenti.
 - ARIA minimal et correct : `aria-label` sur les liens d'icônes (LinkedIn, phone…), `aria-current` sur le lien de section actif, marquee décoratif `aria-hidden` (marques présentes en texte accessible ailleurs).
-- Switch de langue annoncé ; `lang` du `<html>` mis à jour ; `dir="ltr"` (HE post-MVP ⇒ `rtl`).
+- Switch de langue annoncé ; `lang` du `<html>` mis à jour ; `dir="ltr"`.
 - Le curseur custom ne masque jamais le curseur système pour qui en dépend (géré : pointeurs fins uniquement).
 
 ### Implementation Considerations
 
 - **Routing / i18n (décidé) :** Next.js App Router avec **segments de locale (`app/[locale]/...`)** — URLs localisées explicites (`/fr`, `/en`), idiomatique App Router, compatible SSG (`generateStaticParams`), `hreflang` + `<link rel="canonical">` par locale, `<html lang>` dérivé du segment. La préférence de langue est mémorisée par cookie, lu par un middleware léger qui redirige `/` vers la locale préférée (ou détectée via `Accept-Language`). Tout le texte passe par un dictionnaire typé FR/EN (un seul fichier de contenu source, dérivé de `content.js`/`content.md`).
-- **Contenu :** données structurées (meta, hero, clients, about, experience, **freelance**, projects, stack, ai, contact, footer) dans un module TS typé — éditable sans toucher la présentation. Ordre canonique des sections affichées : `01 About · 02 Experience · 03 Freelance Engagements · 04 Side Projects · 05 Stack · 06 Contact`. Blog en **MDX** dans `content/blog/`.
-- **Blog masqué :** section/route blog présente, mais lien de nav + section affichés seulement si `≥ 1` article publié (dérivé du dossier MDX au build).
+- **Contenu :** données structurées (meta, hero, clients, about, experience, **freelance**, projects, stack, ai, contact, footer) dans un module TS typé — éditable sans toucher la présentation. Ordre canonique des sections affichées : `01 About · 02 Experience · 03 Freelance Engagements · 04 Side Projects · 05 Stack · 06 Contact`.
 - **Composants :** porter ceux du design de référence (`Minimal.jsx` → React/TS + Tailwind, styles inline → classes) : `Nav`, `GridSection`, `Hero`, `Clients` (marquee), `SectionHead`, `About`, `RoleCard`/`Experience`, `MissionCard`/`Freelance`, `Projects` (terminal-card Maqom + carte méthodo), `Stack`, `AI`, `Contact`, `Footer`, + `CustomCursor` et hook `useScrollFadeIn`.
 - **Assets :** logos (`logo.svg`, `logo-dark.svg`, `logo-text.svg`, `maqom-logo-*`), `splash*.png` → favicon set + OG image + manifest.
-- **Qualité / CI :** ESLint + TypeScript strict en CI ; check Lighthouse en CI (souhaitable) ; déploiement automatique sur push.
-- **Hors scope explicite :** pas de PWA installable pour ce site (Maqom est PWA, pas le portfolio), pas de CLI, pas de backend, pas de base de données, pas d'auth, pas de temps réel.
+- **Qualité / CI :** ESLint + TypeScript strict en CI ; check Lighthouse en CI (advisory) ; déploiement automatique sur push.
+- **Hors scope explicite :** pas de PWA installable pour ce site (Maqom est PWA, pas le portfolio), pas de CLI, pas de backend, pas de base de données, pas d'auth, pas de temps réel, pas de blog, pas d'analytics.
 
 ## Project Scoping & Phased Development
 
 ### MVP Strategy & Philosophy
 
-- **Approche MVP : « experience MVP »** — le site doit être *premium et complet sur la page d'accueil* dès le jour 1 (un portfolio à moitié fini est contre-productif pour un senior). On ne réduit pas les sections ; on diffère uniquement ce qui n'a pas de valeur tant que vide (les **articles** de blog) ou ce qui peut attendre (case studies dédiées, hébreu).
+- **Approche MVP : « experience MVP »** — le site doit être *premium et complet sur la page d'accueil* dès le jour 1 (un portfolio à moitié fini est contre-productif pour un senior). On ne réduit pas les sections de la home. *(Les éléments « post-MVP » historiquement différés — blog, case studies dédiées, hébreu, analytics, variantes de design — ont été retirés du scope le 2026-05-13.)*
 - **Critère « c'est utile » :** un recruteur/CTO arrive, comprend le profil en 30 s, peut contacter en 1 tap, le site est rapide et soigné, l'angle agentic est visible.
 - **Chemin le plus rapide vers un apprentissage validé :** site en ligne avant/pendant Q2 2026, lié à chaque candidature, observer si le taux de réponse monte.
 - **Ressources :** **Michael en solo, assisté IA** (sa propre méthodo agentique). Pas d'équipe, pas de budget, contrainte « ASAP » → favoriser les choix qui minimisent le travail (composants déjà designés à porter, contenu déjà rédigé, stack maîtrisée, déploiement statique Vercel).
 
 ### MVP Feature Set (Phase 1)
 
-**Journeys couverts :** J1 (recruteur mobile), J2 (VP Eng desktop), J3 (fondatrice freelance FR), J5 (propriétaire) ; J4 partiellement (section AI visible, blog masqué).
+**Journeys couverts :** J1 (recruteur mobile), J2 (VP Eng desktop), J3 (fondatrice freelance FR), J4 (pair / dev curieux — section AI), J5 (propriétaire).
 
 **Must-have :**
 - One-page complet : nav, hero, clients (marquee), about, experience (KPI rows), projects (Maqom terminal-card + lien maqom.co, carte méthodo), stack, AI & agentic, contact, footer.
@@ -257,16 +249,12 @@ Site web one-page + section blog, construit avec **Next.js (App Router)** et **T
 - CV téléchargeable (lien nav/hero/contact).
 - SEO de base + OG/Twitter + JSON-LD Person + sitemap + robots ; favicon/OG depuis les assets.
 - Contenu centralisé/typé (module TS dérivé de `content.js`), éditable sans toucher la présentation.
-- Infra blog présente mais section/route masquée tant qu'aucun article (MDX dans `content/blog/`).
-- Analytics privacy-friendly légère.
-- Déploiement statique Vercel ; ESLint + TS strict en CI ; check Lighthouse en CI (souhaitable).
-- Exclu MVP : lien Balink, liens repos (secret pro / privés).
+- Déploiement statique Vercel ; ESLint + TS strict en CI ; check Lighthouse en CI (advisory).
+- Exclu : lien Balink, liens repos (secret pro / privés), blog, analytics, case studies dédiées, hébreu/RTL, variantes de design.
 
 ### Post-MVP Features
 
-**Phase 2 (Growth) :** activation du blog (≥ 1 article agentic) → démasquage section + nav, pages article MDX (syntax highlighting), flux RSS, démasquage auto au build ; pages case studies dédiées approfondies (Balink anonymisé / Limova / Maqom) ; page « now » / changelog `v2026.x` ; CI Lighthouse durci (budget JS strict, blocage sur régression).
-
-**Phase 3 (Vision / Expansion) :** hébreu (3ᵉ langue, `rtl`) si justifié ; corpus d'écrits régulier (mix frontend craft / agentic) ; variantes de design alternatives (autres maquettes du canvas) — A/B léger éventuel ; le site comme hub de marque personnelle, point d'entrée durable des opportunités.
+*(Phases 2 « Growth » et 3 « Vision » retirées le 2026-05-13 — blog, case studies dédiées, page « now »/changelog, CI Lighthouse durci, hébreu/RTL, variantes de design : tout hors scope. Le périmètre se réduit au MVP Phase 1.)*
 
 ### Risk Mitigation Strategy
 
@@ -277,10 +265,9 @@ Site web one-page + section blog, construit avec **Next.js (App Router)** et **T
   - *Portage de `Minimal.jsx` (styles inline) vers React/TS + Tailwind* → tâche cadrée, composant par composant, snapshot visuel de référence.
 - **Risques produit / marché :**
   - *Attribution du « taux de réponse » impossible* → mesure proxy (visites → clics contact) + suivi qualitatif des retours mentionnant le site.
-  - *Blog qui reste vide* → masquage conditionnel ; trigger explicite = 1ᵉʳ article publié (objectif M+12 : ≥ 3).
   - *Absence de code public* → compensée par descriptions produit/stack/challenges riches + lien live Maqom + carte méthodo.
 - **Risques ressources :**
-  - *Solo + ASAP* → scope MVP volontairement borné (pas de blog éditorial, pas de case studies dédiées, pas d'hébreu) ; réutilisation maximale (design + contenu déjà faits). **Le périmètre FR + EN est ferme** (« experience MVP » — un portfolio bilingue à moitié traduit serait contre-productif) : pas de repli EN-only.
+  - *Solo + ASAP* → scope volontairement borné (pas de blog, pas de case studies dédiées, pas d'hébreu, pas d'analytics, pas de variantes de design — cf. *Post-MVP Features*) ; réutilisation maximale (design + contenu déjà faits). **Le périmètre FR + EN est ferme** (« experience MVP » — un portfolio bilingue à moitié traduit serait contre-productif) : pas de repli EN-only.
 
 ## Functional Requirements
 
@@ -313,12 +300,7 @@ Site web one-page + section blog, construit avec **Next.js (App Router)** et **T
 - **FR18 :** Le site sert un contenu correctement localisé pour les moteurs de recherche (URLs localisées, `hreflang`, `lang` du document).
 - **FR19 :** Aucun texte affiché n'est codé en dur en dehors du système de traduction (toute chaîne visible existe en FR et EN).
 
-### D. Blog (infra MVP, contenu post-MVP)
-
-- **FR20 :** Un éditeur (Michael) peut ajouter un article de blog en déposant un fichier de contenu (MDX) dans le dépôt, sans modifier le code de présentation.
-- **FR21 :** Le site n'affiche la section blog et son lien de navigation que lorsqu'au moins un article est publié ; tant qu'aucun article n'existe, la section et le lien restent masqués.
-- **FR22 :** *(Post-MVP)* Un visiteur peut consulter la liste des articles et lire un article individuel.
-- **FR23 :** *(Post-MVP)* Un visiteur/agrégateur peut s'abonner aux articles via un flux RSS.
+### D. Blog *(section retirée le 2026-05-12 — fonctionnalité abandonnée ; FR20–FR23 supprimés ; numéros conservés tels quels pour ne pas renuméroter FR24+.)*
 
 ### E. Édition & maintenance du contenu
 
@@ -330,7 +312,7 @@ Site web one-page + section blog, construit avec **Next.js (App Router)** et **T
 
 - **FR27 :** Le site fournit des métadonnées de référencement et de partage (titre, description, OpenGraph/Twitter Card avec image, données structurées `Person`, `sitemap`, `robots`).
 - **FR28 :** Le site est indexable et pré-rendu de sorte que son contenu soit accessible aux moteurs de recherche sans exécution de JavaScript.
-- **FR29 :** Le site mesure de façon respectueuse de la vie privée les visites et les déclenchements d'appels à l'action de contact, pour suivre la conversion visite → contact.
+- **FR29 :** *(retiré le 2026-05-13 — mesure d'audience hors scope ; numéro conservé pour ne pas renuméroter FR30+.)*
 
 ### G. Expérience visuelle & interactions
 
@@ -380,15 +362,15 @@ Site web one-page + section blog, construit avec **Next.js (App Router)** et **T
 
 ### Maintainability
 
-- **NFR20 :** Tout le contenu (textes, métadonnées, données structurées des sections, articles MDX) est **centralisé**, **typé** et **séparé de la présentation** ; ajouter/modifier du contenu ne requiert aucune modification des composants de présentation.
+- **NFR20 :** Tout le contenu (textes, métadonnées, données structurées des sections) est **centralisé**, **typé** et **séparé de la présentation** ; ajouter/modifier du contenu ne requiert aucune modification des composants de présentation.
 - **NFR21 :** Le contenu existe **intégralement en FR et EN** ; l'absence d'une traduction est détectable (échec de build ou avertissement de lint), aucune chaîne visible n'est codée en dur.
 - **NFR22 :** Le code respecte **TypeScript strict** et passe **ESLint** sans erreur en intégration continue ; un contrôle **Lighthouse en CI** signale les régressions de performance/accessibilité (bloquant à terme — souhaitable en MVP).
 - **NFR23 :** Les composants sont **portés fidèlement** du design de référence (`Minimal.jsx`) vers React/TS + Tailwind (styles inline remplacés par des classes), avec une référence visuelle permettant de vérifier la non-régression.
 
 ### Privacy & Compliance
 
-- **NFR24 :** La mesure d'audience est **respectueuse de la vie privée** : pas de cookies de suivi, pas de données personnelles identifiantes, conforme RGPD sans bannière de consentement requise (ex. solution sans cookie type Plausible) ; seules sont suivies, de façon agrégée, les visites et les déclenchements d'appels à l'action de contact.
-- **NFR25 :** Aucune donnée personnelle de visiteur n'est collectée, stockée ou transmise à des tiers en dehors de cette mesure agrégée.
+- **NFR24 :** *(retiré le 2026-05-13 — mesure d'audience hors scope ; numéro conservé.)*
+- **NFR25 :** Aucune donnée personnelle de visiteur n'est collectée, stockée ou transmise à des tiers. *(NFR24 retiré — l'absence totale de collecte reste valable par défaut puisque le site ne fait plus aucune mesure d'audience.)*
 
 ### SEO & Discoverability (quality targets)
 

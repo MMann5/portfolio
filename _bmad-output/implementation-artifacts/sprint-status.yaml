@@ -1,5 +1,5 @@
 # generated: 2026-05-12
-# last_updated: 2026-05-13 (story 4.2 — review)
+# last_updated: 2026-05-13 (story 4.3 — done après code review ; epics 5/6/7/8 retirés ; epic 9 renuméroté en epic 5)
 # project: portfolio
 # project_key: NOKEY
 # tracking_system: file-system
@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-05-12
-last_updated: 2026-05-13 (story 4.2 — review)
+last_updated: 2026-05-13 (story 4.3 — done après code review ; epics 5/6/7/8 retirés ; epic 9 renuméroté en epic 5)
 project: portfolio
 project_key: NOKEY
 tracking_system: file-system
@@ -68,29 +68,10 @@ development_status:
   epic-4: in-progress
   4-1-accessibilite-wcag-2-1-aa: done
   4-2-budget-de-performance-core-web-vitals: review
-  4-3-seo-metadonnees-de-partage-assets-de-marque: backlog
+  4-3-seo-metadonnees-de-partage-assets-de-marque: done
   epic-4-retrospective: optional
 
-  # Epic 5: Mesure d'audience privacy-friendly
-  epic-5: backlog
-  5-1-analytics-sans-cookie-suivi-des-cta-contact: backlog
+  # Epic 5: QA & relecture pré-lancement (anciennement Epic 9 — Epics 5/6/7/8 retirés le 2026-05-13)
+  epic-5: in-progress
+  5-1-audit-de-contenu-liens-polish-pre-lancement: ready-for-dev
   epic-5-retrospective: optional
-
-  # Epic 6: Blog — RETIRÉE le 2026-05-12 (fonctionnalité abandonnée). Numéros Epic 7/8/9 conservés.
-
-  # Epic 7: Growth — case studies, page « now »/changelog & CI durci
-  epic-7: backlog
-  7-1-pages-case-studies-page-now-changelog-post-mvp: backlog
-  7-2-ci-lighthouse-durci-post-mvp: backlog
-  epic-7-retrospective: optional
-
-  # Epic 8: Vision — hébreu (RTL) & variantes de design
-  epic-8: backlog
-  8-1-support-de-l-hebreu-3e-langue-rtl-post-mvp: backlog
-  8-2-variantes-de-design-alternatives-post-mvp: backlog
-  epic-8-retrospective: optional
-
-  # Epic 9: QA & relecture pré-lancement
-  epic-9: in-progress
-  9-1-audit-de-contenu-liens-polish-pre-lancement: ready-for-dev
-  epic-9-retrospective: optional

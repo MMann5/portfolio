@@ -14,6 +14,9 @@ documentsMissing:
 **Date:** 2026-05-12
 **Project:** portfolio
 
+> ⚠️ **Snapshot du 2026-05-12 — partiellement superseded au 2026-05-13.**
+> Les Epics 5 (analytics privacy-friendly), 6 (blog — déjà retiré le 2026-05-12), 7 (Growth — case studies / « now »/changelog / CI durci) et 8 (Vision — hébreu RTL / variantes de design) ont été **retirées du scope le 2026-05-13** ; l'ancienne Epic 9 (QA & relecture pré-lancement) devient **Epic 5**. Les exigences associées (FR20–FR23, FR29, NFR24, AR10, UX-DR20) sont retirées dans `prd.md` et `epics.md`. Toute analyse de couverture FR/NFR/AR ci-dessous référençant ces epics doit être considérée comme historique — voir `prd.md` et `epics.md` pour l'état courant.
+
 ## 1. Document Inventory
 
 **Documents inclus dans l'évaluation :**

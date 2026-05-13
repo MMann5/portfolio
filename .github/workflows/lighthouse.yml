@@ -1,0 +1,62 @@
+name: Lighthouse CI (advisory)
+
+# Advisory en MVP (Story 4.3 AC#11) — un échec ne bloque pas le merge. Sera
+# durci en Story 7.2 (`continue-on-error: false` + assertions `error`).
+# Cible : la home `/en` après `npm run build && npm run start` local au runner.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lighthouse:
+    name: Lighthouse advisory
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Start server
+        run: npm run start &
+
+      - name: Wait for server
+        run: npx --yes wait-on http://localhost:3000/en --timeout 60000
+
+      - name: Lighthouse audit
+        # `--upload.target=filesystem` : le rapport reste local au runner et est
+        # uploadé en artefact GitHub (étape suivante). Story 4.3 review patch
+        # P6 — remplace `temporary-public-storage` qui poussait le rapport
+        # (incluant DOM, JSON-LD avec email/téléphone) sur l'URL publique
+        # non listée de Google.
+        run: |
+          npx --yes @lhci/cli@0.14.x autorun \
+            --collect.url=http://localhost:3000/en \
+            --collect.numberOfRuns=1 \
+            --upload.target=filesystem \
+            --upload.outputDir=./.lighthouseci \
+            --assert.assertions.categories:performance='["warn",{"minScore":0.95}]' \
+            --assert.assertions.categories:accessibility='["warn",{"minScore":1.0}]' \
+            --assert.assertions.categories:best-practices='["warn",{"minScore":0.95}]' \
+            --assert.assertions.categories:seo='["warn",{"minScore":0.95}]'
+
+      - name: Upload Lighthouse report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: .lighthouseci/

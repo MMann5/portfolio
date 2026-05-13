@@ -2,6 +2,7 @@
 # (notamment le PDF de CV sous `public/cv/`).
 *.pdf binary
 *.woff2 binary
+*.ttf binary
 *.ico binary
 *.png binary
 *.jpg binary

@@ -1,4 +1,4 @@
-# Story 9.1: Audit de contenu, liens & polish pré-lancement
+# Story 5.1: Audit de contenu, liens & polish pré-lancement
 
 Status: ready-for-dev
 
@@ -65,7 +65,7 @@ so that nothing factually wrong, broken, untranslated, or embarrassing reaches a
   - [ ] `npm run lint` → 0 erreur.
   - [ ] `npm run build` → succès ; `● /[locale]` statique pour `/en` et `/fr` ; `ƒ Proxy (Middleware)` listé ; aucun `'use client'` introduit.
   - [ ] Inspection finale du HTML pré-rendu : lien LinkedIn = profil réel (plus de `339545149`) ; aucun `href` interdit ; `<title>`/`<html lang>` corrects ; numérotation des sections cohérente.
-  - [ ] Commit Conventional Commits, message simple, **sans** trailer `Co-Authored-By` (sauf demande explicite). Suggestion : `fix(story-9.1): correct LinkedIn URL + pre-launch content/link QA`. *(Commit/push laissés à la discrétion de Mike — convention du repo.)*
+  - [ ] Commit Conventional Commits, message simple, **sans** trailer `Co-Authored-By` (sauf demande explicite). Suggestion : `fix(story-5.1): correct LinkedIn URL + pre-launch content/link QA`. *(Commit/push laissés à la discrétion de Mike — convention du repo.)*
   - [ ] Push sur `main` → déploiement Vercel auto ; ouvrir l'URL déployée et **re-cliquer le lien LinkedIn** + le lien Maqom + un `mailto:` + le CV pour confirmer en prod.
   - [ ] Remplir le *Dev Agent Record* (modèle, Debug Log, Completion Notes, File List) + le *Change Log* ; reporter dans `deferred-work.md` tout point laissé ouvert.
 
@@ -100,7 +100,7 @@ Pas de framework de test installé (Vitest/Playwright = scope Epic 4). « Tester
 
 ### References
 
-- [Source: _bmad-output/planning-artifacts/epics.md#Epic 9: QA & relecture pré-lancement] · [#Story 9.1]
+- [Source: _bmad-output/planning-artifacts/epics.md#Epic 5: QA & relecture pré-lancement] · [#Story 5.1]
 - [Source: _bmad-output/planning-artifacts/prd.md#FR10, FR13, FR14, FR19, FR24, FR25, FR33, FR34] · [#NFR3, NFR4, NFR12, NFR16]
 - [Source: src/i18n/dictionaries/en.ts — meta (linkedin/linkedinShort/email/cvPath/title/description), sections.*, ai, footer] · [src/i18n/dictionaries/fr.ts — mêmes clés, traductions]
 - [Source: _bmad-output/implementation-artifacts/CV_Michael_Mann.pdf — référence factuelle (entreprises, postes, dates, durées, KPI, stack)]
@@ -124,4 +124,5 @@ Pas de framework de test installé (Vitest/Playwright = scope Epic 4). « Tester
 
 | Date       | Version | Description                                                                                                  | Auteur |
 | ---------- | ------- | ------------------------------------------------------------------------------------------------------------ | ------ |
+| 2026-05-13 | 0.2     | Renumérotation : Story 9.1 → 5.1 (Epics 5/6/7/8 d'origine retirés du scope ; l'ancienne Epic 9 devient Epic 5). | Mike + Claude |
 | 2026-05-12 | 0.1     | Création de la story 9.1 (Epic 9 — QA & relecture pré-lancement) : audit de contenu FR/EN, validation de tous les liens sortants (lien LinkedIn actuel en 404 → correction prioritaire), parité FR/EN au niveau du contenu, relecture de la section Stack, smoke responsive ~375px. | Mike + Claude |

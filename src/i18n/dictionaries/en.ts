@@ -18,6 +18,12 @@ const en = {
     title: "Michael Mann",
     description:
       "Senior frontend engineer building production SaaS for global brands.",
+    // Libellés SEO ajoutés en Story 4.3 — `jobTitle` est consommé par le JSON-LD
+    // `Person` et par le `title.default` enrichi ; `ogImageAlt` sert d'`alt`
+    // pour la balise `og:image` et la balise `twitter:image:alt`.
+    jobTitle: "Senior Frontend Developer",
+    ogImageAlt:
+      "Michael Mann — Senior Frontend Developer · 5+ years · Ashdod, IL",
     email: "michael.mann55@gmail.com",
     linkedin: "https://www.linkedin.com/in/michaelmann-339545149",
     linkedinShort: "https://www.linkedin.com/in/michaelmann-339545149",
