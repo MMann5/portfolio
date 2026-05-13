@@ -31,7 +31,14 @@
       "Bash(git pull *)",
       "Bash(npm run *)",
       "Read(//tmp/**)",
-      "Bash(git apply *)"
+      "Bash(git apply *)",
+      "mcp__chrome-devtools__new_page",
+      "mcp__chrome-devtools__resize_page",
+      "mcp__chrome-devtools__take_screenshot",
+      "mcp__chrome-devtools__navigate_page",
+      "mcp__chrome-devtools__evaluate_script",
+      "mcp__chrome-devtools__emulate",
+      "mcp__chrome-devtools__close_page"
     ]
   }
 }

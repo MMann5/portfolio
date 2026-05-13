@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import "../globals.css";
 import { locales, isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { CursorMount } from "@/components/CursorMount";
 
 // Root layout, imbriqué sous `app/[locale]/` (autorisé par App Router) : c'est ici
 // qu'on rend `<html>` / `<body>`, donc c'est l'ancêtre commun obligatoire des classes
@@ -87,7 +88,10 @@ export default async function RootLayout({
       lang={locale}
       className={`${inter.variable} ${jetbrainsMono.variable} ${cormorant.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <CursorMount />
+      </body>
     </html>
   );
 }

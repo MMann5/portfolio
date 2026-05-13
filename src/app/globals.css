@@ -159,6 +159,83 @@
   .animate-marquee { animation-play-state: paused; }
 }
 
+/*
+  Curseur personnalisé (Story 3.2) — ported from `Portfolio.html` L37-80.
+  Only active while `<html>` carries the `cursor-none` class, which `CustomCursor.tsx`
+  adds/removes dynamically based on `(hover: hover) and (pointer: fine)` AND
+  `!prefers-reduced-motion`. Targeting `a/button/[data-cursor="hover"]` explicitly is
+  required because UA stylesheets (Firefox) force `cursor: pointer` on interactive
+  elements with specificity ≥ `body`.
+*/
+html.cursor-none,
+html.cursor-none body {
+  cursor: none;
+}
+html.cursor-none a,
+html.cursor-none button,
+html.cursor-none [data-cursor="hover"] {
+  cursor: none;
+}
+
+/*
+  Default opacity 0 on both elements; `CustomCursor.tsx` adds `cursor-{dot,ring}--visible`
+  on the first real `mousemove` to avoid a viewport-center flash before the pointer
+  position is known (also covers `enabled: false → true` re-mount cycles).
+*/
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: width 0.18s, height 0.18s, background 0.18s, opacity 0.15s;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 165, 116, 0.5);
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition:
+    transform 0.22s cubic-bezier(0.2, 0.7, 0.3, 1),
+    width 0.18s,
+    height 0.18s,
+    border-color 0.18s,
+    opacity 0.15s;
+  will-change: transform;
+}
+
+.cursor-dot--visible,
+.cursor-ring--visible {
+  opacity: 1;
+}
+
+.cursor-dot--hover {
+  width: 4px;
+  height: 4px;
+}
+
+.cursor-ring--hover {
+  width: 56px;
+  height: 56px;
+  border-color: rgba(212, 165, 116, 0.9);
+}
+
 :root {
   color-scheme: dark;
 }
