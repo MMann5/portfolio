@@ -58,6 +58,7 @@ export default async function Home({
         menuLabel={nav.menuLabel}
         menuClose={nav.menuClose}
         menuAriaLabel={nav.menuAriaLabel}
+        menuPanelLabel={nav.menuPanelLabel}
         sections={navSections}
         langLabel={langSwitcher.label}
         langEnglish={langSwitcher.english}
@@ -65,6 +66,12 @@ export default async function Home({
         langChangedTo={langSwitcher.changedTo}
       />
 
+      {/*
+        `id="main-content"` est la cible du `<SkipLink>` monté dans `layout.tsx`.
+        Ne PAS renommer ni supprimer cet id sans mettre à jour `SkipLink.tsx` —
+        le couplage est purement textuel (pas de typecheck) et silencieusement
+        fragile (cf. deferred-work review 4.1).
+      */}
       <main id="main-content" className="flex flex-1 flex-col">
         {/* Hero — Story 2.1. Au-dessus du fold, pas de FadeIn. */}
         <GridSection id="hero" idx="00" label="Hero">

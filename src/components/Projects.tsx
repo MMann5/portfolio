@@ -14,7 +14,7 @@ import { MethodologyCard } from "@/components/MethodologyCard";
 type ProjectsProps = {
   items: Dictionary["sections"]["projects"]["items"];
   /** Suffixe visually-hidden propagé à `MaqomCard` (seul item externe) — Story 4.1 AC#5. */
-  opensInNewTabLabel: Dictionary["a11y"]["opensInNewTab"];
+  opensInNewTabLabel: string;
 };
 
 export function Projects({ items, opensInNewTabLabel }: ProjectsProps) {

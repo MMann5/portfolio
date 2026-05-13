@@ -8,11 +8,11 @@ import { useEffect, useRef, useState } from "react";
 // the prerendered HTML (NFR3, AC #6), `window` is guaranteed available in the lazy
 // `useState` initializer below, and there is no hydration mismatch.
 //
-// Keyboard focus is intentionally NOT tracked by this cursor (Story 4.1 AC#7). The accent
-// focus ring (`focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`)
-// is the primary keyboard-focus indicator across the site; doubling that signal with a ring
-// translation here would be redundant and add cost for no benefit. The custom cursor is
-// deliberately mouse-only — mounted only when `(hover: hover) and (pointer: fine)` matches.
+// Focus clavier : non tracké par le curseur custom (décision Story 4.1 AC#7). L'anneau de
+// focus accent (`focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`)
+// est l'indicateur primaire pour la navigation clavier. Doubler ce signal avec un déplacement
+// du ring ici serait redondant et coûteux ; le curseur custom est délibérément orienté souris
+// — monté uniquement quand `(hover: hover) and (pointer: fine)` correspond.
 function computeEligibility() {
   return (
     window.matchMedia("(hover: hover) and (pointer: fine)").matches &&

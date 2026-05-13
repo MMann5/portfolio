@@ -28,7 +28,7 @@ type Props = {
   email: Dictionary["meta"]["email"];
   cvPath: Dictionary["meta"]["cvPath"];
   /** Suffixe visually-hidden « (opens in a new tab) / (ouvre un nouvel onglet) » — Story 4.1 AC#5. */
-  opensInNewTabLabel: Dictionary["a11y"]["opensInNewTab"];
+  opensInNewTabLabel: string;
 };
 
 // Anneau de focus (jamais d'`outline:none` nu) — 4e copie locale dans le repo (Hero,
@@ -141,8 +141,10 @@ export function Contact({
                 // Story 4.1 AC#6 — entrées non-cliquables (Location, Languages) : pas
                 // d'encadré ni de `min-h-11` (n'étant pas interactives, la cible tactile
                 // ≥44px n'est pas requise) → signale clairement « info statique » vs
-                // l'affordance des `<a>` LinkedIn/Phone bordés.
-                <div className="px-1 py-2">{labelBlock}</div>
+                // l'affordance des `<a>` LinkedIn/Phone bordés. `px-5` (= padding horizontal
+                // des `<a>` voisins) préservé pour aligner le label mono verticalement
+                // dans la liste (Story 4.1 review patch P12).
+                <div className="flex items-center px-5 py-2">{labelBlock}</div>
               )}
             </li>
           );

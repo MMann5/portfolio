@@ -70,10 +70,13 @@ export function MissionCard({ mission, idx, total, opensInNewTabLabel }: Props) 
           rel="noopener noreferrer"
           className={`inline-flex min-h-11 items-center gap-1.5 font-mono text-label text-fg-subtle transition-colors hover:text-fg ${FOCUS_RING}`}
         >
-          <span aria-hidden="true">$ open</span> {mission.url}{" "}
+          <span aria-hidden="true">$ open</span> {mission.url}
           <span aria-hidden="true">↗</span>
           {/* Pattern WCAG G201 : libellé visible préservé, suffixe sr-only annoncé à l'AT
-              (Story 4.1 AC#5). */}
+              (Story 4.1 AC#5). Convention uniforme entre Hero/Contact/MissionCard/MaqomCard :
+              pas de `{" "}` JSX explicite avant l'icône aria-hidden — le whitespace texte JSX
+              entre éléments siblings gère le rendu visuel, et l'AT ne lit qu'un seul espace
+              avant le suffixe sr-only (Story 4.1 review patch P8). */}
           <span className="sr-only"> {opensInNewTabLabel}</span>
         </a>
       </div>

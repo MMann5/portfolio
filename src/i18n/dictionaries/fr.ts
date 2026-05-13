@@ -36,6 +36,7 @@ const fr = {
     menuLabel: "Menu",
     menuClose: "Fermer",
     menuAriaLabel: "Afficher / masquer le menu",
+    menuPanelLabel: "Navigation mobile",
   },
 
   // ── Hero ───────────────────────────────────────────────────────────────────

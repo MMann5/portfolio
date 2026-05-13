@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react";
 import type { Locale } from "@/i18n/config";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { MMLogo } from "@/components/MMLogo";
@@ -45,6 +45,8 @@ type Props = {
   menuClose: string;
   /** `aria-label` du bouton bascule du menu mobile. */
   menuAriaLabel: string;
+  /** `aria-label` du panneau de navigation mobile (région landmark — pattern ARIA APG disclosure). */
+  menuPanelLabel: string;
   /** Sections de nav, dans l'ordre d'affichage. */
   sections: readonly NavSection[];
   // Libellés du LanguageSwitcher (passés tels quels).
@@ -73,6 +75,7 @@ export function Nav({
   menuLabel,
   menuClose,
   menuAriaLabel,
+  menuPanelLabel,
   sections,
   langLabel,
   langEnglish,
@@ -81,42 +84,92 @@ export function Nav({
 }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const activeSection = useActiveSection(sections.map((s) => s.id));
+  const navRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
   // Dès que le viewport atteint le palier `lg` (la barre desktop prend le relais), on ferme le
   // menu mobile — sinon `menuOpen` / `aria-expanded="true"` restent collés sur le bouton bascule
   // désormais masqué (`lg:hidden`), et revenir sous `lg` rouvre le panneau de façon inattendue.
+  // Si le focus était dans le panneau au moment du resize, on le rend au bouton bascule AVANT
+  // le démontage pour éviter une chute sur `<body>` (Story 4.1 review patch P2).
   useEffect(() => {
     if (typeof window === "undefined" || !window.matchMedia) return;
     const mql = window.matchMedia("(min-width: 1024px)");
     const closeIfDesktop = () => {
-      if (mql.matches) setMenuOpen(false);
+      if (!mql.matches) return;
+      if (panelRef.current?.contains(document.activeElement)) {
+        toggleRef.current?.focus({ preventScroll: true });
+      }
+      setMenuOpen(false);
     };
     closeIfDesktop();
     mql.addEventListener("change", closeIfDesktop);
     return () => mql.removeEventListener("change", closeIfDesktop);
   }, []);
 
+  // Mesure dynamique de la hauteur de la `<nav>` sticky → écrit dans `--nav-height` au niveau
+  // du `<html>` (Story 4.1 review patch P10). Le token statique `--spacing-nav-height: 72px`
+  // (cf. globals.css) reste le fallback CSS-first ; ResizeObserver remplace par la vraie
+  // hauteur au runtime, qui s'adapte au zoom 200%, à l'ouverture du menu mobile, et aux
+  // changements de viewport. Les sections (`scroll-mt-[var(--nav-height,72px)]` via la classe
+  // `scroll-mt-nav-height` dérivée du token spacing) restent toujours alignées sous la barre.
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.ResizeObserver) return;
+    const navEl = navRef.current;
+    if (!navEl) return;
+    const root = document.documentElement;
+    const apply = () => {
+      root.style.setProperty("--nav-height", `${navEl.offsetHeight}px`);
+    };
+    apply();
+    const ro = new ResizeObserver(apply);
+    ro.observe(navEl);
+    return () => {
+      ro.disconnect();
+      root.style.removeProperty("--nav-height");
+    };
+  }, []);
+
   // Pattern ARIA APG `disclosure` (Story 4.1 AC#4) : à l'ouverture du panneau mobile, déplacer
   // le focus sur le premier élément focusable + intercepter `Escape` pour fermer et rendre
   // le focus au bouton bascule. PAS de focus-trap cyclique : `Tab` depuis le dernier élément
   // doit pouvoir sortir vers le reste de la page (un menu de nav n'est pas une modale).
+  // Le listener Escape est scopé au panneau via `panelRef` (et non au `document`) pour ne pas
+  // capturer Escape destiné à un futur dropdown/dialog imbriqué (Story 4.1 review patch P4).
+  // `focus({ preventScroll: true })` évite de déplacer le scroll de page (Story 4.1 review P1).
   useEffect(() => {
     if (!menuOpen) return;
+    const panel = panelRef.current;
+    if (!panel) return;
 
-    const firstFocusable = panelRef.current?.querySelector<HTMLElement>("a, button");
-    firstFocusable?.focus();
+    const firstFocusable = panel.querySelector<HTMLElement>("a, button");
+    firstFocusable?.focus({ preventScroll: true });
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setMenuOpen(false);
-        toggleRef.current?.focus();
+        toggleRef.current?.focus({ preventScroll: true });
       }
     };
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
+    panel.addEventListener("keydown", onKeyDown);
+    return () => panel.removeEventListener("keydown", onKeyDown);
   }, [menuOpen]);
+
+  // Clic sur un lien depuis le panneau mobile (Story 4.1 review patch P9) : on ferme le panneau
+  // AVANT que le scroll natif vers l'ancre s'effectue, sinon le scroll-margin est calculé alors
+  // que le panneau gonfle encore la hauteur de la nav, et la section cible atterrit cachée sous
+  // la barre. preventDefault + setMenuOpen(false) + requestAnimationFrame avant push du hash.
+  const handleMenuLinkClick = (e: ReactMouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault();
+    setMenuOpen(false);
+    requestAnimationFrame(() => {
+      // Double rAF : laisse React commit + paint avant que le navigateur calcule l'ancre.
+      requestAnimationFrame(() => {
+        window.location.hash = `#${sectionId}`;
+      });
+    });
+  };
 
   const sectionLink = (section: NavSection, variant: "bar" | "menu") => {
     const isActive = activeSection === section.id;
@@ -129,7 +182,7 @@ export function Nav({
         key={section.id}
         href={`#${section.id}`}
         aria-current={isActive ? "true" : undefined}
-        onClick={variant === "menu" ? () => setMenuOpen(false) : undefined}
+        onClick={variant === "menu" ? (e) => handleMenuLinkClick(e, section.id) : undefined}
         className={`${base} rounded-sm ${FOCUS_RING} ${isActive ? "text-fg" : "text-fg-subtle hover:text-fg"
           }`}
       >
@@ -176,6 +229,7 @@ export function Nav({
 
   return (
     <nav
+      ref={navRef}
       aria-label={ariaLabel}
       className={`sticky top-0 z-50 border-b border-line ${NAV_SURFACE}`}
     >
@@ -227,6 +281,7 @@ export function Nav({
         <div
           ref={panelRef}
           id="nav-mobile-menu"
+          aria-label={menuPanelLabel}
           className="flex flex-col gap-4 border-t border-line px-section-x-mobile py-4 sm:px-section-x lg:hidden"
         >
           <ul className="flex flex-col">

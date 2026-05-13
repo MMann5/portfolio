@@ -42,6 +42,7 @@ const en = {
     menuLabel: "Menu",
     menuClose: "Close",
     menuAriaLabel: "Toggle navigation menu",
+    menuPanelLabel: "Mobile navigation",
   },
 
   // ── Hero (layout réel = Story 2.1 ; ici seulement le contenu typé) ─────────
