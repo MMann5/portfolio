@@ -1,5 +1,5 @@
 # generated: 2026-05-12
-# last_updated: 2026-05-13 (story 4.2 contextée — ready-for-dev)
+# last_updated: 2026-05-13 (story 4.2 — review)
 # project: portfolio
 # project_key: NOKEY
 # tracking_system: file-system
@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-05-12
-last_updated: 2026-05-13 (story 4.2 contextée — ready-for-dev)
+last_updated: 2026-05-13 (story 4.2 — review)
 project: portfolio
 project_key: NOKEY
 tracking_system: file-system
@@ -67,7 +67,7 @@ development_status:
   # Epic 4: Accessibilité, performance & SEO — prêt au lancement
   epic-4: in-progress
   4-1-accessibilite-wcag-2-1-aa: done
-  4-2-budget-de-performance-core-web-vitals: ready-for-dev
+  4-2-budget-de-performance-core-web-vitals: review
   4-3-seo-metadonnees-de-partage-assets-de-marque: backlog
   epic-4-retrospective: optional
 

@@ -64,6 +64,14 @@ export function CustomCursor() {
     // Dot/ring stay invisible until the first real `mousemove` so they don't flash at
     // viewport center on initial mount or after an `enabled: false → true` cycle.
     let firstMove = true;
+    // Idle gating (Story 4.2 AC#4 — résolution dette review 3.2) : la boucle RAF s'arrête
+    // quand le ring a rattrapé la souris (à <0.1px près, seuil sub-pixel invisible) et
+    // reprend au prochain `mousemove`. Évite de drainer CPU/batterie quand le pointeur
+    // reste immobile : le lerp 0.18 du ring + le ré-enchaînement RAF chaque frame
+    // tournaient inutilement à 60-120 fps. Le `dot` (positionné directement dans
+    // `onMove`, sans lerp ni RAF) n'est pas concerné — il bouge instantanément avec
+    // la souris.
+    let idle = false;
 
     const onMove = (e: MouseEvent) => {
       x = e.clientX;
@@ -78,12 +86,22 @@ export function CustomCursor() {
         ring.classList.add("cursor-ring--visible");
       }
       dot.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+      // Reprise de la boucle RAF si elle a été stoppée par l'idle gate.
+      if (idle) {
+        idle = false;
+        raf = requestAnimationFrame(loop);
+      }
     };
 
     const loop = () => {
       rx += (x - rx) * 0.18;
       ry += (y - ry) * 0.18;
       ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      if (Math.abs(x - rx) < 0.1 && Math.abs(y - ry) < 0.1) {
+        // Idle : on stoppe la boucle (relancée dans `onMove`).
+        idle = true;
+        return;
+      }
       raf = requestAnimationFrame(loop);
     };
 

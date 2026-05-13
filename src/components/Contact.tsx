@@ -104,14 +104,21 @@ export function Contact({
               : null;
 
           const labelBlock = (
-            <div>
+            // `min-w-0` autorise ce flex item à se contracter sous sa largeur intrinsèque
+            // (sinon l'URL LinkedIn de 47 chars sans espace impose une largeur min qui déborde
+            // la carte sur viewport ~320px — résout dette différée review 2.4, Story 4.2 AC#3).
+            <div className="min-w-0">
               <div
                 aria-hidden="true"
                 className="font-mono text-label-sm tracking-wider text-fg-subtle uppercase"
               >
                 {link.label}
               </div>
-              <div className="mt-1 font-sans text-body-sm text-fg">{link.value}</div>
+              {/* `wrap-anywhere` (overflow-wrap: anywhere) : casse l'URL au besoin pour éviter
+                  tout débordement horizontal sur très petit viewport. */}
+              <div className="mt-1 font-sans text-body-sm text-fg wrap-anywhere">
+                {link.value}
+              </div>
             </div>
           );
 

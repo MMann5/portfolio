@@ -26,7 +26,7 @@ export function MethodologyCard({ item }: { item: ProjectItem }) {
         <span className="font-mono text-label text-fg-subtle">{item.status}</span>
       </div>
 
-      <h3 className="font-sans text-display-sm font-semibold tracking-snug text-fg-strong">
+      <h3 className="font-sans text-display-sm font-semibold tracking-snug text-fg-strong wrap-break-word">
         {item.name}
       </h3>
 
