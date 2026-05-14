@@ -17,18 +17,20 @@ const en = {
   meta: {
     title: "Michael Mann",
     description:
-      "Senior frontend engineer building production SaaS for global brands.",
+      "Senior frontend engineer — from luxury retail to AI. React/TypeScript, from architecture to production.",
     // Libellés SEO ajoutés en Story 4.3 — `jobTitle` est consommé par le JSON-LD
     // `Person` et par le `title.default` enrichi ; `ogImageAlt` sert d'`alt`
     // pour la balise `og:image` et la balise `twitter:image:alt`.
     jobTitle: "Senior Frontend Developer",
     ogImageAlt:
-      "Michael Mann — Senior Frontend Developer · 5+ years · Ashdod, IL",
+      "Michael Mann — Senior Frontend Developer · 4.5+ yrs",
     email: "michael.mann55@gmail.com",
-    linkedin: "https://www.linkedin.com/in/michaelmann-339545149",
-    linkedinShort: "https://www.linkedin.com/in/michaelmann-339545149",
+    linkedin: "https://www.linkedin.com/in/michael-mann-339545149",
+    linkedinShort: "https://www.linkedin.com/in/michael-mann-339545149",
     phone: "+972 58 422 0567",
-    location: "Ashdod, Israel",
+    // Lien WhatsApp pour les CTAs nav/hero (le bouton mail du Contact reste `mailto:`).
+    // Format `wa.me` international, sans espaces ni `+` — ouvre l'app native ou WhatsApp Web.
+    whatsapp: "https://wa.me/972584220567",
     languagesList: "French · Hebrew · English",
     statusLabel: "Available for new opportunities — Q2 2026",
     // Chemin du PDF de CV servi depuis `public/cv/` — MÊME valeur EN/FR. Référencé
@@ -55,20 +57,19 @@ const en = {
   hero: {
     badge: "Available — Q2 2026",
     headline: {
-      lead: "Senior Frontend Developer with 5 years of experience building ",
-      accent: "production SaaS platforms",
-      tail: " in React/TypeScript. Architecture, design systems, performance optimization, and team leadership.",
+      lead: "Senior Frontend Developer, 4.5+ years, ",
+      accent: "from luxury retail to AI",
+      tail: " — React/TypeScript, from architecture to production.",
     },
-    sub: "Five+ years shipping React/TypeScript apps used daily by sales teams at Louis Vuitton, Dior, Tiffany & Co. and Messika — plus AI platforms serving 3,000+ companies. Currently building independent SaaS products.",
+    sub: "Applications used daily by Sales Advisors at Louis Vuitton, Dior, Tiffany & Co., and Messika. A multi-agent AI platform serving 3,000+ companies. Today, I'm building my own SaaS.",
     meta: [
-      { label: "Location", value: "Ashdod, Israel" },
-      { label: "Experience", value: "5+ years" },
+      { label: "Experience", value: "4.5+ yrs" },
       { label: "Languages", value: "FR · HE · EN" },
       { label: "Focus", value: "React · TS · Supabase" },
     ],
     // Ligne décorative `$ whoami → …` du design (le préfixe `$ whoami →` est ajouté
     // par le composant — décoration ASCII ; seule la valeur est du contenu).
-    whoami: "michael-mann · senior-frontend-engineer · ashdod.il",
+    whoami: "michael-mann · senior-frontend-engineer",
     // Libellés des 3 CTAs du hero (copie distincte de la nav — cf. Story 2.1).
     ctaContact: "Start a conversation",
     ctaLinkedin: "LinkedIn",
@@ -95,16 +96,16 @@ const en = {
       num: "01",
       navLabel: "About",
       label: "About",
-      heading: "A frontend engineer who thinks in systems.",
-      sub: "Architecture, design systems, performance, team leadership.",
+      heading: "A frontend engineer who thinks in systems — and ships.",
+      sub: "Architecture, design systems, performance, end-to-end delivery.",
       body: {
         left: [
-          "I'm a senior frontend developer specialized in production SaaS platforms built on React, TypeScript, Tailwind and Supabase. My work ranges from architecting frontend codebases from scratch to leading distributed teams across multiple continents.",
-          "Over five years, I've gone from junior to team lead — establishing frontend standards, mentoring developers, and owning end-to-end delivery on multi-brand projects with strict performance and accessibility constraints.",
+          "Senior frontend engineer. React, TypeScript, Tailwind, Supabase — and products that actually ship. From luxury retail to multi-agent AI, I architect frontend codebases from scratch, across multi-brand and multi-timezone projects.",
+          "Today: I take codebases from architecture to deployment, on projects under strict performance and accessibility constraints. I set frontend standards, I mentor teammates — and I ship.",
         ],
         right: [
-          "I care deeply about craft: clean architecture, refined UI, performance budgets that actually hold, and design systems that scale beyond a single team. I think long-term — both in code and in product.",
-          "Outside client work, I build independent SaaS products targeting the event industry, leveraging a trilingual position across Israeli and French markets.",
+          "I care about the craft: clean architecture, polished UI, performance budgets that actually hold, design systems that scale beyond a single team. I think long-term — in the code, and in the product.",
+          "And beyond client work, I'm building my own SaaS — designed multi-market, multi-language, multi-currency from V1. My trilingual profile stops being a line on a CV: it becomes a product edge.",
         ],
       },
     },
@@ -118,40 +119,42 @@ const en = {
       roles: [
         {
           company: "Balink",
-          location: "Jerusalem",
+          location: null,
+          url: "www.balink.net",
           title: "Senior Frontend Developer",
           dates: "Dec 2021 — Present",
           duration: "4.5 years",
           bullets: [
             "Delivered React/TypeScript apps for luxury brands (Louis Vuitton, Dior, Messika, Tiffany & Co.) used daily by Sales Advisors across global retail stores.",
-            "Led a distributed frontend team of 4 developers across Israel, France and China — owning architecture, code reviews and delivery on multi-brand projects.",
+            "Owned frontend architecture, code reviews, and delivery across multi-brand projects with a distributed team in France ↔ Israel ↔ China.",
             "Built a complete catalog app for Louis Vuitton from scratch, and shipped 2 WeChat Mini Programs (Vuitton, Dior) within the strict 2 MB main-package limit through custom subpackages, zero-dependency components and aggressive bundle optimization.",
             "Designed and developed an internal back-office for Messika and a customer-facing digital card for Tiffany & Co. — from architecture to production rollout.",
-            "Grew from junior to team lead: established frontend standards, mentored teammates, owned end-to-end delivery on cross-cultural projects.",
+            "Frontend standards that still shape the team today, teammates mentored through code review, end-to-end delivery owned across multi-brand, cross-cultural projects.",
           ],
           tags: [
             "React",
             "TypeScript",
             "WeChat Mini Programs",
             "Bundle optimization",
-            "Team leadership",
+            "Frontend architecture",
           ],
           kpis: [
             { value: "4", label: "Luxury maisons" },
             { value: "2 MB", label: "WeChat bundle cap" },
-            { value: "4", label: "Devs led, 3 countries" },
+            { value: "5", label: "Apps shipped from scratch" },
           ],
         },
         {
           company: "Limova.ai",
           location: "France · Remote",
+          url: "www.limova.ai",
           title: "Senior Frontend Developer · Freelance",
           dates: "Mar 2024 — Nov 2025",
           duration: "1.5 years",
           bullets: [
             "Sole frontend developer for the first 6 months: designed and built the entire frontend architecture from scratch with React, TypeScript, Next.js, Vite, Tailwind, React Query, Redux Toolkit and Supabase. Shipped to production for the V1 launch.",
             "Drove a full product pivot post-launch — from a SaaS for non-profit grant applications to a multi-agent AI platform for entrepreneurs and SMBs, now serving 3,000+ companies.",
-            "Acted as Frontend Team Lead for 6+ months: hired and onboarded 5 frontend developers, defined coding standards, code review processes and sprint workflows that scaled the team without sacrificing velocity.",
+            "Laid the foundations that let the frontend team scale: coding standards, review processes, sprint workflows — and onboarded 5 frontend developers in 6 months, without losing velocity.",
             "Translated complex AI workflows into clean, user-focused interfaces (chatbots, dashboards, agent configuration, WhatsApp integration), collaborating with product, design and AI engineering teams.",
           ],
           tags: [
@@ -159,11 +162,11 @@ const en = {
             "Supabase",
             "AI / LLMs",
             "Redux Toolkit",
-            "Team scaling",
+            "Architecture from scratch",
           ],
           kpis: [
             { value: "3,000+", label: "Companies served" },
-            { value: "5", label: "Devs hired & onboarded" },
+            { value: "1", label: "Full product pivot" },
             { value: "V1", label: "Shipped solo" },
           ],
         },
@@ -175,7 +178,7 @@ const en = {
       navLabel: "Freelance Engagements",
       label: "Freelance Engagements",
       heading: "Selected missions.",
-      sub: "Focused engagements where I led frontend delivery end-to-end.",
+      sub: "Engagements where I owned the entire frontend solo — from architecture to delivery.",
       missions: [
         {
           name: "Sayelo",
@@ -188,10 +191,10 @@ const en = {
           tagline:
             "AI voice assistant for business phone reception — answering, qualifying and booking appointments 24/7.",
           bullets: [
-            "Lead frontend developer on a 5-month mission for Sayelo, a French AI voice assistant startup that automates business phone reception (call answering, lead qualification, 24/7 appointment booking).",
+            "Built and shipped the frontend solo over 5 months — Google OAuth, Supabase integration, full user journey from booking flow to agent dashboard.",
             "Configured Google OAuth and Supabase integration for the platform's authentication and Google Calendar booking flow.",
             "Prepared the technical roadmap for Google Calendar integration — evaluating OAuth verification vs. split Cloud projects to scale across customer accounts.",
-            "Collaborated closely with the founding team and a second frontend developer on architecture decisions, code reviews and feature delivery.",
+            "Solo on the frontend, in direct touch with the founding team — architecture decisions, technical trade-offs, and delivery cadence.",
           ],
           tags: [
             "React",
@@ -212,7 +215,7 @@ const en = {
           tagline:
             "A safe digital penpal platform for kids — building language skills and cultural curiosity through letter exchanges.",
           bullets: [
-            "Lead frontend developer on a 9-month mission building the web application from the ground up — child profiles, penpal matching, letter exchange flow and parent dashboard.",
+            "Built the web application solo, from scratch: kids' profiles, pen-pal matching, letter exchange flow, and parent dashboard.",
             "Owned the frontend architecture end-to-end: component library, state management, routing and backend integration.",
             "Shipped a polished, child-friendly UI with strong emphasis on UX, accessibility and parental safety controls.",
             "Collaborated directly with founders and design to translate product vision into production-ready interfaces. Successfully deployed to production.",
@@ -237,11 +240,11 @@ const en = {
       items: [
         {
           name: "Maqom",
-          url: "maqom.co",
+          url: "www.maqom.co/en",
           status: "In validation",
           tagline: "A CRM built for event industry professionals.",
           description:
-            "Co-founded with two partners under Maqom Software Ltd (Cyprus). A focused CRM for photographers, videographers and wedding planners — multi-currency Stripe billing (EUR/USD/ILS) with IP-based geolocation, full Stripe KYC for the entity, and Google Workspace email infrastructure. PWA-first with mobile store distribution.",
+            "Co-founded with two partners under Maqom Software Ltd (Cyprus). A focused CRM for photographers, videographers and wedding planners — multi-currency Stripe billing (EUR/USD/ILS) with IP-based geolocation, full Stripe KYC for the entity, and Google Workspace email infrastructure. Multi-language from V1 (8 languages), PWA web-first.",
           descriptionTwo: null,
           stack: ["React", "TypeScript", "Tailwind CSS", "Supabase", "Stripe", "PWA"],
           featured: true,
@@ -249,7 +252,8 @@ const en = {
             { label: "entity", value: "Maqom Software Ltd. (CY)" },
             { label: "billing", value: "Stripe · multi-currency" },
             { label: "markets", value: "EUR · USD · ILS" },
-            { label: "distribution", value: "PWA + App Stores" },
+            { label: "languages", value: "8 from V1" },
+            { label: "distribution", value: "PWA web-first" },
             { label: "role", value: "Co-founder · frontend lead" },
             { label: "target", value: "Photographers · videographers · planners" },
           ],
@@ -259,11 +263,11 @@ const en = {
           url: null,
           status: "In production",
           tagline:
-            "A reproducible system for shipping any project from scratch — at AI speed, without losing engineering rigor.",
+            "An engineer's agentic methodology, born from practice — assembled and refined project after project on production codebases.",
           description:
-            "A methodology I designed and refined across multiple production codebases — combining structured agentic workflows (BMAD), a curated MCP server stack (Context7, Playwright, Sequential Thinking, Brave Search) and a Claude Code-centric setup. Covers the full lifecycle: PRD & architecture, scaffolding, feature delivery, testing, code review and refactoring — with deterministic outputs at every stage.",
+            "An engineer's approach to the agentic stack, refined project after project on production codebases. The stack: Claude Code as the cockpit, BMAD for structured agentic workflows, and a hand-picked MCP server set (Context7, Playwright, Sequential Thinking, Brave Search) wired into every project. Covers the full lifecycle — PRD & architecture, scaffolding, feature delivery, testing, code review, refactoring — with deterministic outputs at every stage.",
           descriptionTwo:
-            "The result: a battle-tested process I deploy on every new project — client work or my own SaaS — that compresses delivery time by an order of magnitude while keeping code quality, type safety and architectural coherence intact. Stack-agnostic, framework-agnostic, project-agnostic.",
+            "The result: a battle-tested process I deploy on every new project — client work or my own SaaS — that compresses delivery time by an order of magnitude, without giving an inch on code quality, type safety or architectural coherence. Stack-agnostic, framework-agnostic, project-agnostic.",
           stack: ["Claude Code", "MCP", "BMAD", "Agentic workflows", "Methodology"],
           featured: false,
           projectMeta: [],
@@ -276,7 +280,7 @@ const en = {
       navLabel: "Stack",
       label: "Stack",
       heading: "Tools of the trade.",
-      sub: "The technologies I reach for to ship reliable, performant frontends.",
+      sub: "The technologies I summon to ship frontends that are reliable, performant — and built to last.",
       groups: [
         {
           title: "Frontend",
@@ -293,11 +297,10 @@ const en = {
             "PWA",
             "i18n",
             "WCAG",
-            "Orval",
           ],
         },
         {
-          title: "Tooling & Architecture",
+          title: "Architecture & tooling",
           items: [
             "Frontend architecture",
             "Design systems",
@@ -323,6 +326,17 @@ const en = {
             "Next.js SSR",
           ],
         },
+        {
+          title: "Agentic & AI",
+          items: [
+            "Claude Code",
+            "BMAD",
+            "MCP",
+            "Context7",
+            "Playwright MCP",
+            "Sequential Thinking",
+          ],
+        },
       ],
     },
     contact: {
@@ -331,16 +345,14 @@ const en = {
       navLabel: "Contact",
       label: "Contact",
       heading: "Let's build something lasting.",
-      sub: "Open to senior frontend roles, technical leadership opportunities and selected freelance engagements. I respond within 24 hours.",
-      body: "Open to senior frontend roles, technical leadership opportunities and selected freelance engagements.",
+      sub: "Open to senior frontend roles.",
       primaryCtaLabel: "Drop me a line.",
       respondWithin: "I respond within 24 hours.",
       ctaCv: "Download CV",
       ctaCvAriaLabel: "Download CV (PDF)",
       secondaryLinks: [
-        { label: "LinkedIn", value: "https://www.linkedin.com/in/michaelmann-339545149" },
+        { label: "LinkedIn", value: "https://www.linkedin.com/in/michael-mann-339545149" },
         { label: "Phone", value: "+972 58 422 0567" },
-        { label: "Location", value: "Ashdod, Israel" },
         { label: "Languages", value: "French · Hebrew · English" },
       ],
     },
@@ -350,11 +362,11 @@ const en = {
   ai: {
     label: "AI & Agentic Engineering",
     heading: "Shipping with agents, not just for them.",
-    body: "Beyond integrating LLMs into product features (chatbots, multi-agent platforms, AI dashboards at Limova.ai), I've made agentic workflows a core part of how I engineer software. Claude Code is my daily driver — paired with a curated MCP server stack and structured methodologies — letting me move from PRD to production with deterministic outputs at every stage.",
+    body: "Beyond integrating LLMs into product features (chatbots, multi-agent platforms, AI dashboards at Limova.ai), I've made agentic workflows a central part of how I engineer. Claude Code as the cockpit, BMAD for structured workflows, and a hand-picked MCP server set (Context7, Playwright, Sequential Thinking, Brave Search) wired into every project — for deterministic outputs from PRD to production.",
     tools: [
       {
         name: "Claude Code",
-        desc: "Primary agentic IDE for architecture, scaffolding, refactoring and review.",
+        desc: "Agentic cockpit for architecture, scaffolding, refactoring, and review.",
       },
       {
         name: "Claude Design",
@@ -374,7 +386,7 @@ const en = {
   // ── Pied de page ───────────────────────────────────────────────────────────
   footer: {
     copyright: "© 2026 Michael Mann · All rights reserved",
-    tagline: "built with care · ashdod ↗ everywhere",
+    tagline: "built with care ↗ everywhere",
   },
 
   // ── Sélecteur de langue (inchangé depuis 1.2b) ─────────────────────────────

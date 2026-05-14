@@ -6,6 +6,13 @@ import type { Dictionary } from "@/i18n/dictionaries";
 // tuiles KPI, `<ul>` de bullets numérotés, rangée de tags. `<h3>` pour `company` (le `<h1>` est le
 // hero, les `<h2>` sont les `SectionHead` — pas de saut de niveau). Toutes les chaînes visibles
 // viennent du dictionnaire ; les glyphes décoratifs (`·`, `/`, numéros `01`) sont tolérés en dur.
+//
+// Quand `role.url` est non-null (ex. Limova.ai), le nom de la company devient un lien sortant
+// (`target="_blank" rel="noopener noreferrer"` + suffixe sr-only « (opens in a new tab) ` cf.
+// Story 4.1 AC#5 / WCAG G201). Sinon, le nom reste un simple titre.
+
+const FOCUS_RING =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 type Role = Dictionary["sections"]["experience"]["roles"][number];
 
@@ -15,9 +22,11 @@ type Props = {
   idx: number;
   /** Nombre total de rôles (pour le compteur `01 / 02`). */
   total: number;
+  /** Suffixe visually-hidden « (opens in a new tab) / (ouvre un nouvel onglet) » — Story 4.1 AC#5. */
+  opensInNewTabLabel: string;
 };
 
-export function RoleCard({ role, idx, total }: Props) {
+export function RoleCard({ role, idx, total, opensInNewTabLabel }: Props) {
   return (
     <article className="relative rounded-xl border border-line bg-white/[0.015] p-6 sm:p-8">
       {/* Compteur décoratif. */}
@@ -28,15 +37,34 @@ export function RoleCard({ role, idx, total }: Props) {
         {String(idx + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
       </div>
 
-      {/* En-tête : company · location. */}
+      {/* En-tête : company [· location] — `location` peut être `null` (ex. Balink, Story 5.1). */}
       <div className="flex flex-wrap items-baseline gap-x-3.5 gap-y-1 pr-12">
-        <h3 className="font-sans text-display-md font-semibold tracking-snug text-fg-strong">
-          {role.company}
-        </h3>
-        <span aria-hidden="true" className="font-mono text-ui-sm text-fg-subtle">
-          ·
-        </span>
-        <span className="font-mono text-ui-sm text-fg-subtle">{role.location}</span>
+        {role.url ? (
+          <h3 className="font-sans text-display-md font-semibold tracking-snug text-fg-strong">
+            <a
+              href={`https://${role.url}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`inline-flex items-baseline gap-1.5 transition-colors hover:text-accent ${FOCUS_RING}`}
+            >
+              {role.company}
+              <span aria-hidden="true" className="text-fg-subtle">↗</span>
+              <span className="sr-only"> {opensInNewTabLabel}</span>
+            </a>
+          </h3>
+        ) : (
+          <h3 className="font-sans text-display-md font-semibold tracking-snug text-fg-strong">
+            {role.company}
+          </h3>
+        )}
+        {role.location && (
+          <>
+            <span aria-hidden="true" className="font-mono text-ui-sm text-fg-subtle">
+              ·
+            </span>
+            <span className="font-mono text-ui-sm text-fg-subtle">{role.location}</span>
+          </>
+        )}
       </div>
 
       {/* Ligne titre / dates · durée. */}

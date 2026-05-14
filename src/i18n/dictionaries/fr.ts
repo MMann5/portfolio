@@ -13,16 +13,17 @@ const fr = {
   meta: {
     title: "Michael Mann",
     description:
-      "Ingénieur frontend senior — applications SaaS de production pour des marques internationales.",
+      "Ingénieur frontend senior — du retail de luxe à l'IA. React/TypeScript, de l'architecture à la prod.",
     // Libellés SEO ajoutés en Story 4.3 — voir `en.ts` pour le détail de l'usage.
     jobTitle: "Développeur frontend senior",
     ogImageAlt:
-      "Michael Mann — Développeur frontend senior · 5+ ans · Ashdod, IL",
+      "Michael Mann — Développeur frontend senior · 4.5+ ans",
     email: "michael.mann55@gmail.com",
-    linkedin: "https://www.linkedin.com/in/michaelmann-339545149",
-    linkedinShort: "https://www.linkedin.com/in/michaelmann-339545149",
+    linkedin: "https://www.linkedin.com/in/michael-mann-339545149",
+    linkedinShort: "https://www.linkedin.com/in/michael-mann-339545149",
     phone: "+972 58 422 0567",
-    location: "Ashdod, Israël",
+    // Lien WhatsApp pour les CTAs nav/hero (le bouton mail du Contact reste `mailto:`).
+    whatsapp: "https://wa.me/972584220567",
     languagesList: "Français · Hébreu · Anglais",
     statusLabel: "Disponible pour de nouvelles opportunités — T2 2026",
     cvPath: "/cv/michael-mann-cv.pdf",
@@ -47,18 +48,17 @@ const fr = {
   hero: {
     badge: "Disponible — T2 2026",
     headline: {
-      lead: "Développeur frontend senior, 5 ans d'expérience à construire des plateformes ",
-      accent: "SaaS de production",
-      tail: " en React/TypeScript. Architecture, design systems, performance, leadership d'équipe.",
+      lead: "Développeur frontend senior, 4.5+ ans, ",
+      accent: "du retail de luxe à l'IA",
+      tail: " — React/TypeScript, de l'architecture à la prod.",
     },
-    sub: "Plus de cinq ans à livrer des applications React/TypeScript utilisées au quotidien par les équipes commerciales de Louis Vuitton, Dior, Tiffany & Co. et Messika — ainsi que des plateformes d'IA au service de plus de 3 000 entreprises. Je construis aujourd'hui mes propres produits SaaS.",
+    sub: "Applications quotidiennes pour les Sales Advisors de Louis Vuitton, Dior, Tiffany & Co. et Messika. Plateforme d'IA multi-agents pour 3 000+ entreprises. Aujourd'hui, je construis mes propres SaaS.",
     meta: [
-      { label: "Localisation", value: "Ashdod, Israël" },
-      { label: "Expérience", value: "5+ ans" },
+      { label: "Expérience", value: "4.5+ ans" },
       { label: "Langues", value: "FR · HE · EN" },
       { label: "Focus", value: "React · TS · Supabase" },
     ],
-    whoami: "michael-mann · senior-frontend-engineer · ashdod.il",
+    whoami: "michael-mann · senior-frontend-engineer",
     ctaContact: "Démarrer une conversation",
     ctaLinkedin: "LinkedIn",
     ctaCv: "Télécharger le CV",
@@ -84,16 +84,16 @@ const fr = {
       num: "01",
       navLabel: "À propos",
       label: "À propos",
-      heading: "Un ingénieur frontend qui raisonne en systèmes.",
-      sub: "Architecture, design systems, performance, leadership d'équipe.",
+      heading: "Un ingénieur frontend qui raisonne en systèmes — et qui livre.",
+      sub: "Architecture, design systems, performance, livraison de bout en bout.",
       body: {
         left: [
-          "Je suis développeur frontend senior, spécialisé dans les plateformes SaaS de production bâties sur React, TypeScript, Tailwind et Supabase. Mon travail va de l'architecture de bases de code frontend depuis zéro à la direction d'équipes distribuées sur plusieurs continents.",
-          "En cinq ans, je suis passé de junior à team lead — en établissant les standards frontend, en accompagnant les développeurs et en assumant la livraison de bout en bout de projets multi-marques aux contraintes de performance et d'accessibilité strictes.",
+          "Ingénieur frontend senior. React, TypeScript, Tailwind, Supabase — et des produits qui partent vraiment en production. Du retail de luxe à l'IA multi-agents, j'architecture des bases de code frontend depuis zéro, sur des projets multi-marques et multi-fuseaux.",
+          "Aujourd'hui, je porte des bases de code de l'archi au déploiement, sur des projets aux contraintes strictes de performance et d'accessibilité. J'établis des standards frontend, j'accompagne les coéquipiers — et j'expédie.",
         ],
         right: [
-          "Je tiens profondément au métier : architecture propre, UI soignée, budgets de performance qui tiennent vraiment, et design systems qui passent à l'échelle au-delà d'une seule équipe. Je pense long terme — dans le code comme dans le produit.",
-          "En dehors des missions clients, je construis des produits SaaS indépendants ciblant l'industrie de l'événementiel, en tirant parti d'une position trilingue entre les marchés israélien et français.",
+          "Je tiens au métier : architecture propre, UI soignée, budgets de performance qui tiennent vraiment, design systems qui passent à l'échelle au-delà d'une seule équipe. Je pense long terme — dans le code comme dans le produit.",
+          "Et au-delà des missions, je construis mes propres SaaS — pensés multi-marchés, multi-langues, multi-devises dès la V1. Mon profil trilingue cesse alors d'être une ligne de CV : il devient un avantage produit.",
         ],
       },
     },
@@ -107,40 +107,42 @@ const fr = {
       roles: [
         {
           company: "Balink",
-          location: "Jérusalem",
+          location: null,
+          url: "www.balink.net",
           title: "Développeur frontend senior",
           dates: "Déc. 2021 — aujourd'hui",
-          duration: "4,5 ans",
+          duration: "4.5 ans",
           bullets: [
             "Livré des applications React/TypeScript pour des marques de luxe (Louis Vuitton, Dior, Messika, Tiffany & Co.) utilisées chaque jour par les Sales Advisors dans les boutiques du monde entier.",
-            "Dirigé une équipe frontend distribuée de 4 développeurs entre Israël, la France et la Chine — en assumant l'architecture, les revues de code et la livraison sur des projets multi-marques.",
+            "Conduit l'architecture frontend, les revues de code et la livraison sur des projets multi-marques portés par une équipe distribuée France ↔ Israël ↔ Chine.",
             "Construit de zéro une application catalogue complète pour Louis Vuitton, et livré 2 mini-programmes WeChat (Vuitton, Dior) sous la limite stricte de 2 Mo du package principal, via des sous-packages sur mesure, des composants sans dépendances et une optimisation agressive du bundle.",
             "Conçu et développé un back-office interne pour Messika et une carte digitale orientée client pour Tiffany & Co. — de l'architecture au déploiement en production.",
-            "Passé de junior à team lead : standards frontend établis, coéquipiers accompagnés, livraison de bout en bout assumée sur des projets interculturels.",
+            "Standards frontend qui structurent encore l'équipe aujourd'hui, coéquipiers accompagnés en revue de code, livraison de bout en bout assumée sur des projets multi-marques interculturels.",
           ],
           tags: [
             "React",
             "TypeScript",
             "Mini-programmes WeChat",
             "Optimisation de bundle",
-            "Leadership d'équipe",
+            "Architecture frontend",
           ],
           kpis: [
             { value: "4", label: "Maisons de luxe" },
             { value: "2 Mo", label: "Limite bundle WeChat" },
-            { value: "4", label: "Devs dirigés, 3 pays" },
+            { value: "5", label: "Apps livrées de zéro à la prod" },
           ],
         },
         {
           company: "Limova.ai",
           location: "France · Remote",
+          url: "www.limova.ai",
           title: "Développeur frontend senior · Freelance",
           dates: "Mars 2024 — nov. 2025",
-          duration: "1,5 an",
+          duration: "1.5 an",
           bullets: [
             "Seul développeur frontend les 6 premiers mois : conçu et construit toute l'architecture frontend depuis zéro avec React, TypeScript, Next.js, Vite, Tailwind, React Query, Redux Toolkit et Supabase. Mis en production pour le lancement de la V1.",
             "Mené un pivot produit complet après le lancement — d'un SaaS pour les demandes de subventions associatives à une plateforme d'IA multi-agents pour entrepreneurs et PME, aujourd'hui au service de plus de 3 000 entreprises.",
-            "Assumé le rôle de Frontend Team Lead pendant 6+ mois : recruté et intégré 5 développeurs frontend, défini les standards de code, les processus de revue et les workflows de sprint qui ont fait grandir l'équipe sans sacrifier la vélocité.",
+            "Posé les fondations qui ont permis à l'équipe frontend de grandir : standards de code, processus de revue, workflows de sprint — et l'intégration de 5 développeurs en 6 mois, sans perte de vélocité.",
             "Traduit des workflows d'IA complexes en interfaces claires et centrées utilisateur (chatbots, dashboards, configuration d'agents, intégration WhatsApp), en collaboration avec les équipes produit, design et IA.",
           ],
           tags: [
@@ -148,11 +150,11 @@ const fr = {
             "Supabase",
             "IA / LLMs",
             "Redux Toolkit",
-            "Mise à l'échelle d'équipe",
+            "Architecture de zéro",
           ],
           kpis: [
             { value: "3 000+", label: "Entreprises servies" },
-            { value: "5", label: "Devs recrutés & intégrés" },
+            { value: "1", label: "Pivot produit complet" },
             { value: "V1", label: "Livrée en solo" },
           ],
         },
@@ -164,7 +166,7 @@ const fr = {
       navLabel: "Missions freelance",
       label: "Missions freelance",
       heading: "Missions sélectionnées.",
-      sub: "Des missions ciblées où j'ai piloté la livraison frontend de bout en bout.",
+      sub: "Des missions où j'ai porté tout le frontend seul — de l'architecture à la livraison.",
       missions: [
         {
           name: "Sayelo",
@@ -177,10 +179,10 @@ const fr = {
           tagline:
             "Assistant vocal IA pour l'accueil téléphonique des entreprises — répondre, qualifier et prendre des rendez-vous 24/7.",
           bullets: [
-            "Lead développeur frontend sur une mission de 5 mois pour Sayelo, une startup française d'assistant vocal IA qui automatise l'accueil téléphonique des entreprises (prise d'appels, qualification de leads, prise de rendez-vous 24/7).",
+            "Construit et livré le frontend seul sur 5 mois — authentification Google OAuth, intégration Supabase, parcours de la prise de rendez-vous au dashboard agent.",
             "Configuré l'intégration Google OAuth et Supabase pour l'authentification de la plateforme et le flux de réservation Google Calendar.",
             "Préparé la feuille de route technique de l'intégration Google Calendar — en évaluant la vérification OAuth vs. la séparation des projets Cloud pour passer à l'échelle sur les comptes clients.",
-            "Collaboré étroitement avec l'équipe fondatrice et un second développeur frontend sur les décisions d'architecture, les revues de code et la livraison de fonctionnalités.",
+            "Frontend solo, en lien direct avec l'équipe fondatrice — décisions d'architecture, arbitrages techniques et cadence de livraison.",
           ],
           tags: [
             "React",
@@ -201,7 +203,7 @@ const fr = {
           tagline:
             "Une plateforme de correspondants sûre pour les enfants — développer les compétences linguistiques et la curiosité culturelle par l'échange de lettres.",
           bullets: [
-            "Lead développeur frontend sur une mission de 9 mois pour construire l'application web depuis zéro — profils enfants, mise en relation des correspondants, flux d'échange de lettres et dashboard parent.",
+            "Construit l'application web seul, depuis zéro : profils enfants, mise en relation des correspondants, flux d'échange de lettres et dashboard parent.",
             "Assumé l'architecture frontend de bout en bout : bibliothèque de composants, gestion d'état, routing et intégration backend.",
             "Livré une UI soignée et adaptée aux enfants, avec un fort accent sur l'UX, l'accessibilité et les contrôles de sécurité parentaux.",
             "Collaboré directement avec les fondateurs et le design pour traduire la vision produit en interfaces prêtes pour la production. Déployée avec succès en production.",
@@ -226,11 +228,11 @@ const fr = {
       items: [
         {
           name: "Maqom",
-          url: "maqom.co",
+          url: "www.maqom.co/fr",
           status: "En validation",
           tagline: "Un CRM conçu pour les professionnels de l'événementiel.",
           description:
-            "Co-fondé avec deux associés sous Maqom Software Ltd (Chypre). Un CRM ciblé pour photographes, vidéastes et wedding planners — facturation Stripe multi-devises (EUR/USD/ILS) avec géolocalisation par IP, KYC Stripe complet pour l'entité, et infrastructure email Google Workspace. PWA d'abord, avec distribution sur les stores mobiles.",
+            "Co-fondé avec deux associés sous Maqom Software Ltd (Chypre). Un CRM ciblé pour photographes, vidéastes et wedding planners — facturation Stripe multi-devises (EUR/USD/ILS) avec géolocalisation par IP, KYC Stripe complet pour l'entité, et infrastructure email Google Workspace. Multi-langues dès la V1 (8 langues), PWA web-first.",
           descriptionTwo: null,
           stack: ["React", "TypeScript", "Tailwind CSS", "Supabase", "Stripe", "PWA"],
           featured: true,
@@ -238,7 +240,8 @@ const fr = {
             { label: "entité", value: "Maqom Software Ltd. (CY)" },
             { label: "facturation", value: "Stripe · multi-devises" },
             { label: "marchés", value: "EUR · USD · ILS" },
-            { label: "distribution", value: "PWA + stores mobiles" },
+            { label: "langues", value: "8 dès la V1" },
+            { label: "distribution", value: "PWA web-first" },
             { label: "rôle", value: "Co-fondateur · lead frontend" },
             { label: "cible", value: "Photographes · vidéastes · wedding planners" },
           ],
@@ -248,11 +251,11 @@ const fr = {
           url: null,
           status: "En production",
           tagline:
-            "Un système reproductible pour livrer n'importe quel projet depuis zéro — à la vitesse de l'IA, sans perdre la rigueur d'ingénierie.",
+            "Une méthodologie agentique d'ingénieur, née de la pratique — assemblée et affinée projet après projet sur des bases de code en production.",
           description:
-            "Une méthodologie que j'ai conçue et affinée sur plusieurs bases de code en production — combinant des workflows agentiques structurés (BMAD), une pile de serveurs MCP soigneusement choisie (Context7, Playwright, Sequential Thinking, Brave Search) et une configuration centrée sur Claude Code. Couvre tout le cycle de vie : PRD & architecture, scaffolding, livraison de fonctionnalités, tests, revue de code et refactoring — avec des sorties déterministes à chaque étape.",
+            "Une approche d'ingénieur appliquée à l'agentique, affinée projet après projet sur des bases de code en production. La pile : Claude Code en cockpit, BMAD pour les workflows agentiques structurés, et une sélection de serveurs MCP (Context7, Playwright, Sequential Thinking, Brave Search) connectés à chaque projet. Elle couvre tout le cycle — PRD & architecture, scaffolding, livraison de fonctionnalités, tests, revue de code, refactoring — avec des sorties déterministes à chaque étape.",
           descriptionTwo:
-            "Le résultat : un processus éprouvé que je déploie sur chaque nouveau projet — mission client ou mon propre SaaS — qui compresse le temps de livraison d'un ordre de grandeur tout en préservant la qualité du code, la sûreté de typage et la cohérence architecturale. Indépendant de la stack, du framework et du projet.",
+            "Le résultat : un processus éprouvé que je déploie sur chaque nouveau projet — mission client ou mon propre SaaS — qui compresse le temps de livraison d'un ordre de grandeur, sans céder un pouce sur la qualité du code, la sûreté de typage ou la cohérence architecturale. Indépendant de la stack, du framework et du projet.",
           stack: ["Claude Code", "MCP", "BMAD", "Workflows agentiques", "Méthodologie"],
           featured: false,
           projectMeta: [],
@@ -265,7 +268,7 @@ const fr = {
       navLabel: "Stack",
       label: "Stack",
       heading: "Les outils du métier.",
-      sub: "Les technologies vers lesquelles je me tourne pour livrer des frontends fiables et performants.",
+      sub: "Les technologies que je convoque pour livrer des frontends fiables, performants — et qui durent.",
       groups: [
         {
           title: "Frontend",
@@ -282,11 +285,10 @@ const fr = {
             "PWA",
             "i18n",
             "WCAG",
-            "Orval",
           ],
         },
         {
-          title: "Outillage & Architecture",
+          title: "Architecture & outillage",
           items: [
             "Architecture frontend",
             "Design systems",
@@ -312,6 +314,17 @@ const fr = {
             "Next.js SSR",
           ],
         },
+        {
+          title: "Agentique & IA",
+          items: [
+            "Claude Code",
+            "BMAD",
+            "MCP",
+            "Context7",
+            "Playwright MCP",
+            "Sequential Thinking",
+          ],
+        },
       ],
     },
     contact: {
@@ -320,16 +333,14 @@ const fr = {
       navLabel: "Contact",
       label: "Contact",
       heading: "Construisons quelque chose qui dure.",
-      sub: "Ouvert aux postes de frontend senior, aux opportunités de leadership technique et à des missions freelance sélectionnées. Je réponds sous 24 heures.",
-      body: "Ouvert aux postes de frontend senior, aux opportunités de leadership technique et à des missions freelance sélectionnées.",
+      sub: "Ouvert aux postes de frontend senior.",
       primaryCtaLabel: "Écrivez-moi un mot.",
       respondWithin: "Je réponds sous 24 heures.",
       ctaCv: "Télécharger le CV",
       ctaCvAriaLabel: "Télécharger le CV (PDF)",
       secondaryLinks: [
-        { label: "LinkedIn", value: "https://www.linkedin.com/in/michaelmann-339545149" },
+        { label: "LinkedIn", value: "https://www.linkedin.com/in/michael-mann-339545149" },
         { label: "Téléphone", value: "+972 58 422 0567" },
-        { label: "Localisation", value: "Ashdod, Israël" },
         { label: "Langues", value: "Français · Hébreu · Anglais" },
       ],
     },
@@ -339,11 +350,11 @@ const fr = {
   ai: {
     label: "AI & Agentic Engineering",
     heading: "Livrer avec des agents, pas seulement pour eux.",
-    body: "Au-delà de l'intégration de LLMs dans les fonctionnalités produit (chatbots, plateformes multi-agents, dashboards IA chez Limova.ai), j'ai fait des workflows agentiques une part centrale de ma façon d'ingénier les logiciels. Claude Code est mon outil quotidien — couplé à une pile de serveurs MCP soigneusement choisie et à des méthodologies structurées — me permettant de passer du PRD à la production avec des sorties déterministes à chaque étape.",
+    body: "Au-delà de l'intégration de LLMs dans des fonctionnalités produit (chatbots, plateformes multi-agents, dashboards IA chez Limova.ai), j'ai fait des workflows agentiques une part centrale de ma façon d'ingénier. Claude Code en cockpit, BMAD pour les workflows structurés, et une sélection de serveurs MCP (Context7, Playwright, Sequential Thinking, Brave Search) connectés à chaque projet — pour des sorties déterministes du PRD à la production.",
     tools: [
       {
         name: "Claude Code",
-        desc: "IDE agentique principal pour l'architecture, le scaffolding, le refactoring et la revue.",
+        desc: "Cockpit agentique pour l'architecture, le scaffolding, le refactoring et la revue.",
       },
       {
         name: "Claude Design",
@@ -363,7 +374,7 @@ const fr = {
   // ── Pied de page ───────────────────────────────────────────────────────────
   footer: {
     copyright: "© 2026 Michael Mann · Tous droits réservés",
-    tagline: "fait avec soin · ashdod ↗ partout",
+    tagline: "fait avec soin ↗ partout",
   },
 
   // ── Sélecteur de langue ────────────────────────────────────────────────────

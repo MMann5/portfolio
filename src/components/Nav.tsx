@@ -27,10 +27,12 @@ type Props = {
   brandName: string;
   versionBadge: string;
   availabilityLabel: string;
-  /** Libellé du CTA email. */
+  /** Libellé du CTA de contact principal (cible WhatsApp). */
   ctaEmail: string;
-  /** Adresse email (cible `mailto:`). */
-  email: string;
+  /** URL WhatsApp (cible `https://wa.me/...`) — ouvre l'app native ou WhatsApp Web. */
+  whatsapp: string;
+  /** Suffixe visually-hidden « (opens in a new tab) / (ouvre un nouvel onglet) » — Story 4.1 AC#5. */
+  opensInNewTabLabel: string;
   /** Libellé du lien CV. */
   ctaCv: string;
   /** `aria-label` du lien CV (le libellé visible est court). */
@@ -67,7 +69,8 @@ export function Nav({
   versionBadge,
   availabilityLabel,
   ctaEmail,
-  email,
+  whatsapp,
+  opensInNewTabLabel,
   ctaCv,
   ctaCvAriaLabel,
   cvPath,
@@ -196,13 +199,18 @@ export function Nav({
 
   const emailCta = (
     <a
-      href={`mailto:${email}`}
+      href={whatsapp}
+      target="_blank"
+      rel="noopener noreferrer"
       className={`inline-flex min-h-11 items-center gap-2 rounded-md bg-invert-bg px-3.5 font-sans text-ui font-medium text-invert-fg transition-opacity hover:opacity-90 ${FOCUS_RING}`}
     >
       {ctaEmail}
       <span aria-hidden="true" className="font-mono">
-        →
+        ↗
       </span>
+      {/* Pattern WCAG G201 (Story 4.1 AC#5) : libellé visible préservé, suffixe sr-only
+          annoncé à l'AT. WhatsApp ouvre l'app native / WhatsApp Web ⇒ nouvel onglet. */}
+      <span className="sr-only"> {opensInNewTabLabel}</span>
     </a>
   );
 

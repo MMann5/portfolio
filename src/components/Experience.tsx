@@ -7,13 +7,21 @@ import { RoleCard } from "@/components/RoleCard";
 
 type ExperienceProps = {
   roles: Dictionary["sections"]["experience"]["roles"];
+  /** Suffixe visually-hidden « (opens in a new tab) / (ouvre un nouvel onglet) » — Story 4.1 AC#5. */
+  opensInNewTabLabel: string;
 };
 
-export function Experience({ roles }: ExperienceProps) {
+export function Experience({ roles, opensInNewTabLabel }: ExperienceProps) {
   return (
     <div className="flex flex-col gap-4">
       {roles.map((role, i) => (
-        <RoleCard key={role.company} role={role} idx={i} total={roles.length} />
+        <RoleCard
+          key={role.company}
+          role={role}
+          idx={i}
+          total={roles.length}
+          opensInNewTabLabel={opensInNewTabLabel}
+        />
       ))}
     </div>
   );

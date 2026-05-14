@@ -48,10 +48,8 @@ export default async function Home({
   // Component (pas de hoisting `<head>` par React 19 pour les scripts sans `src`,
   // ce qui est attendu et accepté par les crawlers).
   //
-  // `sameAs` pointe vers l'URL LinkedIn courante du dictionnaire. Cette URL
-  // est connue 404 (cf. dette `deferred-work.md` review 9.1) — sera corrigée
-  // en Story 9.1 sans aucune modification de ce fichier (le dictionnaire
-  // restera la source de vérité).
+  // `sameAs` pointe vers l'URL LinkedIn courante du dictionnaire (source de
+  // vérité — corrigée en Story 5.1).
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -61,11 +59,6 @@ export default async function Home({
     image: `${siteUrl}/opengraph-image`,
     email: `mailto:${meta.email}`,
     telephone: meta.phone,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Ashdod",
-      addressCountry: "IL",
-    },
     sameAs: [meta.linkedin],
     knowsLanguage: ["fr", "he", "en"],
   };
@@ -95,7 +88,8 @@ export default async function Home({
         versionBadge={nav.versionBadge}
         availabilityLabel={nav.availabilityLabel}
         ctaEmail={nav.ctaEmail}
-        email={meta.email}
+        whatsapp={meta.whatsapp}
+        opensInNewTabLabel={a11y.opensInNewTab}
         ctaCv={nav.ctaCv}
         ctaCvAriaLabel={nav.ctaCvAriaLabel}
         cvPath={meta.cvPath}
@@ -126,7 +120,7 @@ export default async function Home({
             meta={hero.meta}
             whoami={hero.whoami}
             availabilityLabel={nav.availabilityLabel}
-            email={meta.email}
+            whatsapp={meta.whatsapp}
             linkedin={meta.linkedin}
             cvPath={meta.cvPath}
             ctaContact={hero.ctaContact}
@@ -158,7 +152,10 @@ export default async function Home({
               />
               {section.id === "about" && <About body={sections.about.body} />}
               {section.id === "experience" && (
-                <Experience roles={sections.experience.roles} />
+                <Experience
+                  roles={sections.experience.roles}
+                  opensInNewTabLabel={a11y.opensInNewTab}
+                />
               )}
               {section.id === "freelance" && (
                 <FreelanceEngagements

@@ -13,7 +13,8 @@ type HeroProps = {
   whoami: string;
   /** Libellé du badge de disponibilité — réutilise `nav.availabilityLabel` (cohérence AC#2). */
   availabilityLabel: string;
-  email: string;
+  /** URL WhatsApp (cible `https://wa.me/...`) pour le CTA primaire `ctaContact`. */
+  whatsapp: string;
   linkedin: string;
   cvPath: string;
   ctaContact: string;
@@ -34,7 +35,7 @@ export function Hero({
   meta,
   whoami,
   availabilityLabel,
-  email,
+  whatsapp,
   linkedin,
   cvPath,
   ctaContact,
@@ -70,9 +71,10 @@ export function Hero({
       {/* Sous-accroche. */}
       <p className="mt-8 max-w-2xl font-sans text-body-lg text-fg-muted">{sub}</p>
 
-      {/* Meta strip — 2 colonnes ≤ ~375px, 4 colonnes ≥ sm. Conteneur `bg-line` + `gap-px` +
-          cellules `bg-bg` ⇒ séparateurs 1px ; `overflow-hidden rounded-lg` clippe les coins. */}
-      <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-line bg-line sm:mt-12 sm:grid-cols-4">
+      {/* Meta strip — 3 items (Experience · Languages · Focus). 1 colonne ≤ ~375px,
+          3 colonnes ≥ sm. Conteneur `bg-line` + `gap-px` + cellules `bg-bg` ⇒ séparateurs 1px ;
+          `overflow-hidden rounded-lg` clippe les coins. (Entrée Location retirée Story 5.1.) */}
+      <div className="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-line bg-line sm:mt-12 sm:grid-cols-3">
         {meta.map((m, i) => (
           <div key={m.label} className="bg-bg px-4 py-4 sm:px-5">
             <div className="font-mono text-label-sm tracking-wider text-fg-subtle uppercase">
@@ -84,17 +86,21 @@ export function Hero({
         ))}
       </div>
 
-      {/* CTAs — email (bouton primaire), LinkedIn (lien sortant), CV (téléchargement).
+      {/* CTAs — contact WhatsApp (bouton primaire), LinkedIn (lien sortant), CV (téléchargement).
           Tap targets ≥ 44px (`min-h-11`), anneau de focus visible. Classes réutilisées de `Nav`. */}
       <div className="mt-8 flex flex-wrap items-center gap-3">
         <a
-          href={`mailto:${email}`}
+          href={whatsapp}
+          target="_blank"
+          rel="noopener noreferrer"
           className={`inline-flex min-h-11 items-center gap-2 rounded-md bg-invert-bg px-3.5 font-sans text-ui font-medium text-invert-fg transition-opacity hover:opacity-90 ${FOCUS_RING}`}
         >
           {ctaContact}
           <span aria-hidden="true" className="font-mono">
-            →
+            ↗
           </span>
+          {/* WCAG G201 (Story 4.1 AC#5) — WhatsApp ouvre l'app native / WhatsApp Web. */}
+          <span className="sr-only"> {opensInNewTabLabel}</span>
         </a>
         <a
           href={linkedin}

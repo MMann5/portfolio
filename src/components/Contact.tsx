@@ -69,12 +69,19 @@ export function Contact({
         <div className="mt-7 flex flex-wrap items-center gap-3">
           <a
             href={`mailto:${email}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className={`inline-flex min-h-11 items-center gap-2 rounded-md bg-invert-bg px-3.5 font-sans text-ui font-medium text-invert-fg transition-opacity hover:opacity-90 ${FOCUS_RING}`}
           >
             {email}
             <span aria-hidden="true" className="font-mono">
-              →
+              ↗
             </span>
+            {/* WCAG G201 (Story 4.1 AC#5) — `mailto:` ouvert en nouvel onglet (Story 5.1 v1.3) :
+                pour les utilisateurs avec Gmail web comme handler, l'onglet vide bascule sur la
+                compose Gmail ; les clients mail natifs ignorent `target="_blank"` et ouvrent
+                directement l'app, l'onglet vide reste mais inoffensif. */}
+            <span className="sr-only"> {opensInNewTabLabel}</span>
           </a>
           <a
             href={cvPath}
@@ -87,11 +94,12 @@ export function Contact({
         </div>
       </div>
 
-      {/* (b) Liste de 4 entrées secondaires — `<ul>` empilée en `gap-2.5` (≈ 10px du design).
+      {/* (b) Liste de 3 entrées secondaires — `<ul>` empilée en `gap-2.5` (≈ 10px du design).
           Dispatch « par index » (l'ordre du dico est l'invariant : LinkedIn / Phone /
-          Location / Languages) plutôt que par `link.label` (localisé). Mêmes 4 entrées en EN
+          Languages) plutôt que par `link.label` (localisé). Mêmes 3 entrées en EN
           et FR — la garde `satisfies Dictionary` est aveugle au contenu des tableaux mais
-          la longueur attendue est connue ; non-régression au niveau du composant. */}
+          la longueur attendue est connue ; non-régression au niveau du composant.
+          (Entrée Location retirée Story 5.1.) */}
       <ul className="flex list-none flex-col gap-2.5 p-0">
         {secondaryLinks.map((link, i) => {
           const isLinkedIn = i === 0;

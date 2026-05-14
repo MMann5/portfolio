@@ -1,6 +1,6 @@
 # Story 5.1: Audit de contenu, liens & polish pré-lancement
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -22,52 +22,60 @@ so that nothing factually wrong, broken, untranslated, or embarrassing reaches a
 
 ## Tasks / Subtasks
 
-- [ ] **Tâche 0 — Pré-lecture & inputs**
-  - [ ] Récupérer auprès de Mike : (a) **l'URL LinkedIn réelle** (vérifiée en navigation privée — celle dans le code, `…/in/michaelmann-339545149`, 404e), (b) confirmation de l'**adresse email** (`meta.email`), du **téléphone**, de la **localisation** et des **langues** affichés dans `contact.secondaryLinks`, (c) le **CV à jour** (PDF) si une nouvelle version existe.
-  - [ ] Croiser avec le CV : `_bmad-output/implementation-artifacts/CV_Michael_Mann.pdf` (entreprises, postes, dates, durées, KPI, stack).
-  - [ ] Lire `_bmad-output/implementation-artifacts/deferred-work.md` (items pertinents : « lien LinkedIn nouvel onglet non annoncé » review 2.1 — ne **pas** le « corriger » ici, c'est cadré Story 4.1 ; « garde FR/EN aveugle aux tableaux » review 1.3 — base de l'AC#4 ; « tags d'experience source content.js vs content.md » — à arbitrer avec Mike ici ou en 2.4 ; « projectMeta: [] → never[] » — ne pas y toucher).
-  - [ ] AGENTS.md : si une retouche touche du code (peu probable — surtout du contenu de dico), survoler les docs Next pertinentes dans `node_modules/next/dist/docs/`.
+- [x] **Tâche 0 — Pré-lecture & inputs**
+  - [x] Récupérer auprès de Mike : (a) **l'URL LinkedIn réelle** — Mike a confirmé `https://www.linkedin.com/in/michael-mann-339545149/` (avec dash). Le CV (`CV_Michael_Mann.pdf`) confirme la même URL. WebFetch retourne 404 (probable anti-bot LinkedIn), Mike doit revérifier en navigateur logué avant push. (b) Contact (email/téléphone/localisation/langues) : confirmé sans modification. (c) CV : la version dans `public/cv/michael-mann-cv.pdf` (52 KB, May 12) est utilisée — Mike confirme si une plus récente est à substituer.
+  - [x] Croisé avec le CV : entreprises, postes, dates correspondent. Quelques écarts éditoriaux **volontaires** notés (cf. Completion Notes) : "5 years" (portfolio) vs "4 years+" (CV) ; "1,5 an" (portfolio) vs "1 year" (CV) pour Limova. Sayelo/Penpaloo dans le portfolio mais pas dans le CV (CV à compléter par Mike, hors périmètre).
+  - [x] Survol des items pertinents de `deferred-work.md` — aucun pris en charge ici (tous cadrés ailleurs).
+  - [x] AGENTS.md : retouches code limitées (RoleCard + Experience + page.tsx) — pas de nouvelle API Next utilisée, pattern strictement aligné sur MissionCard/MaqomCard existants.
 
-- [ ] **Tâche 1 — Corriger le lien LinkedIn partout (AC: #1)**
-  - [ ] Si l'URL réelle est fournie : remplacer dans `src/i18n/dictionaries/en.ts` → `meta.linkedin`, `meta.linkedinShort` ; et `sections.contact.secondaryLinks` (entrée `{ label: "LinkedIn", value: … }`). Idem dans `src/i18n/dictionaries/fr.ts` (mêmes 3 endroits). Décider si `linkedinShort` doit être un alias court distinct (ex. `linkedin.com/in/michaelmann`) ou rester égal à `linkedin` — documenter.
-  - [ ] Si l'URL réelle **n'est pas** disponible : masquer proprement les liens LinkedIn (nav `ctaLinkedin`/équivalent, hero `ctaLinkedin`, entrée `LinkedIn` de `secondaryLinks`) sans casser les layouts — et noter dans le Debug Log + ajouter un item `deferred-work.md` « réactiver LinkedIn une fois l'URL confirmée ». *(À éviter si possible — préférer obtenir l'URL.)*
-  - [ ] Vérifier qu'aucune autre occurrence de `linkedin`/`linkedin.com`/`339545149` ne subsiste codée en dur (`grep`).
+- [x] **Tâche 1 — Corriger le lien LinkedIn partout (AC: #1)**
+  - [x] Remplacement de l'URL LinkedIn dans `en.ts` et `fr.ts` (6 chaînes au total) : `meta.linkedin`, `meta.linkedinShort`, `contact.secondaryLinks[0].value` × 2 locales. Ancienne valeur `michaelmann-339545149` (sans dash, 404) → nouvelle valeur `michael-mann-339545149` (avec dash, confirmée par le CV). `linkedinShort` reste égal à `linkedin` (story autorise ce choix).
+  - [x] (Branche repli non utilisée.) Mike a fourni l'URL.
+  - [x] Grep final `michaelmann-339545149|339545149` : 0 occurrence sans-dash restante ; toutes les 6 occurrences avec-dash. ✅
 
-- [ ] **Tâche 2 — Audit des liens sortants & anti-fuite (AC: #2)**
-  - [ ] Inspecter le HTML pré-rendu (`.next/server/app/{en,fr}.html`) : lister tous les `href`/`mailto:` ; vérifier le lien Maqom (`https://maqom.co`, `target="_blank" rel="noopener noreferrer"`), les `mailto:meta.email`, le `cvPath`.
-  - [ ] Vérifier que **aucun** `href` ne pointe vers : un dépôt de code (`github.com`, `gitlab.com`, `bitbucket.org`…), `balink` (sous toute forme), ou un projet client sous secret. (FR10.)
-  - [ ] Vérifier le fichier CV : présent dans `public/` au chemin de `meta.cvPath`, à jour, et le lien le télécharge bien (header `Content-Disposition`/attribut `download` selon l'implémentation Story 1.3/2.4).
+- [x] **Tâche 2 — Audit des liens sortants & anti-fuite (AC: #2)**
+  - [x] Inspection du HTML pré-rendu `.next/server/app/{en,fr}.html` — tous les `href` extraits et triés (cf. Debug Log). **Lien Maqom** : `https://maqom.co` (apex) retournait **ECONNREFUSED** ; corrigé en `https://www.maqom.co/en` (en.ts) et `https://www.maqom.co/fr` (fr.ts) — les deux confirmées HTTP 200. **mailto** : `mailto:michael.mann55@gmail.com` ✅. **Téléphone** : `tel:+972584220567` ✅. **CV** : `/cv/michael-mann-cv.pdf` ✅ (fichier présent, 52 KB). **Sayelo** (`https://sayelo.ai`), **Penpaloo** (`https://penpaloo.io`), **Limova** (`https://www.limova.ai`) : toutes 3 confirmées HTTP 200 avec contenus attendus.
+  - [x] Anti-fuite : aucun `href` dans `en.html`/`fr.html` ne contient `github.com`, `gitlab.com`, `bitbucket.org`, `balink`, ni aucune référence à un projet client confidentiel. ✅
+  - [x] **Bonus** : Mike a demandé à lier **Limova.ai** depuis la carte Experience — implémenté en ajoutant un champ optionnel `url: string | null` aux rôles, et en faisant rendre par `RoleCard` la company comme lien sortant quand `role.url` est non-null (pattern miroir de `MissionCard`/`MaqomCard`, suffixe sr-only « (opens in a new tab) » Story 4.1 AC#5). Balink reste `url: null` (cf. AC#2 interdisant tout lien vers Balink).
 
-- [ ] **Tâche 3 — Relecture du contenu FR + EN (AC: #3)**
-  - [ ] Relire `src/i18n/dictionaries/en.ts` puis `src/i18n/dictionaries/fr.ts` section par section (`meta`, `nav`, `hero`, `clients`, `sections.{about,experience,freelance,projects,stack,contact}`, `ai`, `footer`, `langSwitcher`) : coquilles, grammaire, ponctuation, cohérence terminologique, aucune chaîne restée dans la mauvaise langue, aucun placeholder.
-  - [ ] Vérifier l'exactitude factuelle vs CV : noms d'entreprises (`experience.roles[].company`), `location`, `title`, `dates`, `duration`, `kpis[].value`/`label`, bullets ; missions freelance (`freelance.missions[].name`/`title`/`dates`/`duration`/`url`/`status`/bullets) ; projets (`projects.items[].name`/`url`/`status`/`tagline`/`description`/`descriptionTwo`/`stack`/`projectMeta`).
-  - [ ] Vérifier la numérotation des sections (`num` dans chaque `sections.*`) et que la nav (`Object.values(sections)`) + les `SectionHead` affichent `01…06` cohérents, AI non numérotée.
-  - [ ] Vérifier `meta` : `title`, `description` (par locale), `email`, `cvPath`, `linkedin*` — et que `<html lang>` / `<title>` du HTML pré-rendu correspondent.
-  - [ ] Arbitrer avec Mike la dette « tags d'experience : `content.js` vs `content.md` » (review 1.3) — figer les tags voulus dans les deux locales.
+- [x] **Tâche 3 — Relecture du contenu FR + EN (AC: #3)**
+  - [x] Lecture intégrale `en.ts` puis `fr.ts` — aucune coquille bloquante détectée, aucun placeholder/lorem, aucune chaîne restée dans la mauvaise langue. Quelques **observations éditoriales** laissées à Mike (cf. Completion Notes — non bloquantes).
+  - [x] Croisé contre le CV : entreprises, postes, dates, durées correspondent (avec écarts éditoriaux volontaires). KPI numériques (3 000+ companies, 2 MB bundle cap, 4 maisons de luxe, 5 devs hired, V1 shipped solo) tous cohérents avec le narratif du CV.
+  - [x] Numérotation des sections vérifiée en HTML pré-rendu : `01 About / 02 Experience / 03 Freelance / 04 Side Projects / 05 Stack / 06 Contact` en EN, `01 À propos / 02 Expérience / 03 Missions freelance / 04 Projets perso / 05 Stack / 06 Contact` en FR. Section AI non numérotée ✅.
+  - [x] `<title>` : "Michael Mann — Senior Frontend Developer" (en), "Michael Mann — Développeur frontend senior" (fr) — construits par Story 4.3 via `title.default`. `<html lang>` : `lang="en"` / `lang="fr"` ✅.
+  - [x] Dette « tags d'experience content.js vs content.md » : **non touchée** — Mike décide si à ouvrir séparément ; les tags actuels sont cohérents entre EN et FR.
 
-- [ ] **Tâche 4 — Vérifier la parité de contenu FR/EN (AC: #4)**
-  - [ ] Comparer item par item le contenu des tableaux entre `en.ts` et `fr.ts` : nombre de `experience.roles` et, par rôle, `bullets`/`tags`/`kpis` ; `freelance.missions` et, par mission, `bullets`/`tags` ; `projects.items` et, par item, `stack`/`projectMeta` ; `stack.groups` et, par groupe, `items` ; `ai.tools` ; `clients.items` ; `footer`/`contact.secondaryLinks`.
-  - [ ] Méthode au choix : relecture croisée manuelle, ou petit script ad hoc / test runtime comparant la « forme » de `fr` et `en` (compte d'éléments par chemin). **Ne pas** modifier le mécanisme de typage (`as const`, tuples…) — c'est de la dette cadrée séparément ; si une garantie plus forte est jugée nécessaire, l'ouvrir comme item `deferred-work.md`.
-  - [ ] Corriger toute divergence trouvée (ajouter l'entrée manquante du bon côté, traduite).
+- [x] **Tâche 4 — Vérifier la parité de contenu FR/EN (AC: #4)**
+  - [x] Comptage manuel exhaustif item-par-item — **tous les counts matchent** entre `en.ts` et `fr.ts` :
+    - `experience.roles` = 2 (Balink: bullets=5/tags=5/kpis=3 ; Limova.ai: bullets=4/tags=5/kpis=3)
+    - `freelance.missions` = 2 (Sayelo: bullets=4/tags=5 ; Penpaloo: bullets=4/tags=5)
+    - `projects.items` = 2 (Maqom: stack=6/projectMeta=6 ; AI Methodology: stack=5/projectMeta=0)
+    - `stack.groups` = 3 (Frontend=13, Tooling & Architecture=9, Backend & Data=8)
+    - `ai.tools` = 4 · `clients.items` = 4 · `contact.secondaryLinks` = 4 · `hero.meta` = 4
+  - [x] Méthode : relecture croisée. Pas de script ad hoc (counts vérifiables visuellement, 0 ambiguïté).
+  - [x] Aucune divergence à corriger.
 
-- [ ] **Tâche 5 — Relecture de la section Stack avec Mike (AC: #5)**
-  - [ ] Passer en revue les 3 groupes (`Frontend`, `Tooling & Architecture`, `Backend & Data`) et leurs items ; retirer ce qui est obsolète / purement aspirationnel, ajouter ce qui manque — Mike valide « je peux en parler en entretien ».
-  - [ ] Répercuter les changements dans `en.ts` **et** `fr.ts` (vérifier les titres de groupe traduits ; les noms de technos sont en général identiques). Les compteurs déco se recalculent seuls.
+- [x] **Tâche 5 — Relecture de la section Stack avec Mike (AC: #5)**
+  - [x] Stack passé en revue par rapport au CV. **Observations** (à valider par Mike, non bloquantes) :
+    - **Orval dupliqué** : présent dans le groupe `Frontend` (item seul) **et** dans `Backend & Data` (combiné `OpenAPI / Orval`). À garder ou retirer le doublon ? Recommandation : retirer "Orval" de `Frontend` (la combinaison `OpenAPI / Orval` dans Backend est suffisante).
+    - **`Mongoose` retiré** par rapport au CV : portfolio n'expose pas Mongoose (juste MongoDB). Choix éditorial — OK pour moi.
+    - **`WCAG`** : portfolio simplifie en "WCAG" ; CV dit "Responsive & accessible UI (WCAG)". Plus court côté portfolio, OK.
+  - [x] Aucune modification appliquée — décision laissée à Mike (peut-être en correction rapide avant push).
 
-- [ ] **Tâche 6 — Smoke responsive & visuel (AC: #6)**
-  - [ ] `npm run dev` (si dispo) : `/en` **et** `/fr` à ~375px (DevTools device toolbar) — parcourir toutes les sections : **aucun scroll horizontal**, chips qui wrappent, `project_meta` qui wrappe, cartes qui reflowent en 1 colonne, rien de tronqué/chevauché. Refaire au zoom 200%.
-  - [ ] Vérifier les tap targets ≥ 44px (lien Maqom `min-h-11`, CTAs hero/nav/contact, liens nav).
-  - [ ] Vérifier qu'il n'y a pas de FOUC / faux-italique / glissement de police visible au chargement.
-  - [ ] *(Hors périmètre — ne pas faire ici :)* audit clavier/ARIA complet (Story 4.1), Lighthouse/CWV (Story 4.2), OG/Twitter/JSON-LD/sitemap (Story 4.3), audit fin à 320px (Story 4.2).
+- [/] **Tâche 6 — Smoke responsive & visuel (AC: #6) — À faire par Mike**
+  - [ ] **Action requise Mike** : `npm run dev`, ouvrir `/en` et `/fr` à ~375px (DevTools device toolbar) + au zoom 200% — vérifier qu'aucun scroll horizontal, que les chips/`project_meta` wrappent, que les cartes reflowent en 1 colonne, que rien n'est tronqué/chevauché. **Vérifier visuellement le nouveau lien sur "Limova.ai"** (nom de la company doit être cliquable avec le glyphe `↗`).
+  - [ ] **Action requise Mike** : tap targets ≥ 44px sur le lien Maqom (`min-h-11`), CTAs hero/nav/contact, liens nav, et **nouveau lien Limova**.
+  - [ ] **Action requise Mike** : pas de FOUC / glissement de police visible.
+  - Le reste (audits 4.1/4.2/4.3) hors périmètre. ✅
 
-- [ ] **Tâche 7 — Validation & livraison (AC: #1–#7)**
-  - [ ] `npm run typecheck` → 0 erreur (⚠️ si on ajoute un `projectMeta` non vide côté méthodo en corrigeant la parité, attention au `never[]` — préférer ne pas toucher ce champ ; sinon prévoir un type explicite, mais ça déborde alors sur la dette 1.3 → en discuter).
-  - [ ] `npm run lint` → 0 erreur.
-  - [ ] `npm run build` → succès ; `● /[locale]` statique pour `/en` et `/fr` ; `ƒ Proxy (Middleware)` listé ; aucun `'use client'` introduit.
-  - [ ] Inspection finale du HTML pré-rendu : lien LinkedIn = profil réel (plus de `339545149`) ; aucun `href` interdit ; `<title>`/`<html lang>` corrects ; numérotation des sections cohérente.
-  - [ ] Commit Conventional Commits, message simple, **sans** trailer `Co-Authored-By` (sauf demande explicite). Suggestion : `fix(story-5.1): correct LinkedIn URL + pre-launch content/link QA`. *(Commit/push laissés à la discrétion de Mike — convention du repo.)*
-  - [ ] Push sur `main` → déploiement Vercel auto ; ouvrir l'URL déployée et **re-cliquer le lien LinkedIn** + le lien Maqom + un `mailto:` + le CV pour confirmer en prod.
-  - [ ] Remplir le *Dev Agent Record* (modèle, Debug Log, Completion Notes, File List) + le *Change Log* ; reporter dans `deferred-work.md` tout point laissé ouvert.
+- [x] **Tâche 7 — Validation & livraison (AC: #1–#7)**
+  - [x] `npm run typecheck` → 0 erreur. ✅
+  - [x] `npm run lint` → 0 erreur. ✅
+  - [x] `npm run build` → succès. `● /[locale]` statique pour `/en` et `/fr` ; `ƒ Proxy (Middleware)` listé ; aucun `'use client'` introduit. ✅
+  - [x] Inspection finale du HTML pré-rendu (`.next/server/app/{en,fr}.html`) : 0 occurrence de `michaelmann-339545149` (sans dash) ; 1 seule occurrence par fichier de `michael-mann-339545149` (avec dash, dans la valeur href) ; `https://www.maqom.co/en` en EN et `https://www.maqom.co/fr` en FR ; `https://www.limova.ai` présent ; `<title>` et `<html lang>` corrects ; numérotation des sections cohérente. ✅
+  - [ ] **Action requise Mike** : commit + push. Suggestion de message : `fix(story-5.1): correct LinkedIn URL + pre-launch content/link QA + add Limova link`. **Sans** trailer `Co-Authored-By`.
+  - [ ] **Action requise Mike** : après déploiement Vercel, re-cliquer le lien LinkedIn (sur le profil logué de préférence — l'anti-bot peut donner 404 hors session) + Maqom + un `mailto:` + le CV + le **nouveau lien Limova** pour confirmer en prod.
+  - [x] Dev Agent Record + Change Log mis à jour ci-dessous.
 
 ## Dev Notes
 
@@ -114,15 +122,105 @@ Pas de framework de test installé (Vitest/Playwright = scope Epic 4). « Tester
 
 ### Agent Model Used
 
+Claude Opus 4.7 (1M context), via `bmad-dev-story`.
+
 ### Debug Log References
+
+**URLs vérifiées via WebFetch (2026-05-14)** :
+- `https://sayelo.ai` → 200 ✅ — "Sayelo - Transformez votre accueil téléphonique"
+- `https://penpaloo.io` → 200 ✅ — "Penpaloo – Virtual Penpals for Kids & Language Learning"
+- `https://www.limova.ai` → 200 ✅ — "Limova.ai – Assistants IA pour automatiser votre entreprise"
+- `https://maqom.co` (apex) → **ECONNREFUSED** ❌ (lien actuel cassé)
+- `https://www.maqom.co/fr` → 200 ✅ — "maqom.co - Le CRM Mobile pour Professionnels de l'Événementiel"
+- `https://www.maqom.co/en` → 200 ✅ — "maqom.co - The Mobile CRM for Event Professionals"
+- `https://www.linkedin.com/in/michael-mann-339545149/` → 404 via WebFetch (probable anti-bot LinkedIn — Mike doit revérifier dans son navigateur logué)
+
+**Inspection HTML pré-rendu** (`.next/server/app/{en,fr}.html`) :
+- `en.html` href uniques (extrait `grep -oE 'href="[^"]+"'`) : 6 ancres internes (`#about/#contact/#experience/#freelance/#main-content/#projects/#stack`), `/cv/michael-mann-cv.pdf`, `/en`, `mailto:michael.mann55@gmail.com`, `tel:+972584220567`, `https://penpaloo.io`, `https://sayelo.ai`, `https://www.limova.ai`, `https://www.linkedin.com/in/michael-mann-339545149`, `https://www.maqom.co/en`, + URLs canoniques Vercel (SEO).
+- `fr.html` identique sauf `/fr` au lieu de `/en` et `https://www.maqom.co/fr` au lieu de `/en`.
+- 0 occurrence de `github.com`, `gitlab.com`, `bitbucket.org`, `balink` (sous toute forme), ou autre source secrète. **Anti-fuite ✅**.
+
+**Validation** :
+- `npm run typecheck` → 0 erreur
+- `npm run lint` → 0 erreur
+- `npm run build` → succès, `● /[locale]` statique (`/en` et `/fr`), `ƒ Proxy (Middleware)` listé, aucun `'use client'` introduit
+- `<html lang>` : `lang="en"` (en.html), `lang="fr"` (fr.html) ✅
+- `<title>` : "Michael Mann — Senior Frontend Developer" / "Michael Mann — Développeur frontend senior" ✅
+- Numérotation sections : `01-06` cohérent en EN et FR, AI non numérotée ✅
 
 ### Completion Notes List
 
+**Faits livrés** :
+1. **AC#1 (LinkedIn)** : URL corrigée dans les 6 chaînes (`meta.linkedin` + `meta.linkedinShort` + `contact.secondaryLinks[0].value` × 2 locales). Ancien `michaelmann-339545149` → nouveau `michael-mann-339545149` (avec dash, source = CV de Mike). `linkedinShort` reste égal à `linkedin`. ⚠️ **Mike doit revérifier en navigateur logué** avant push prod (WebFetch retourne 404, probable anti-bot LinkedIn).
+2. **AC#2 (Maqom)** : Lien Maqom apex cassé (ECONNREFUSED) — corrigé en locale-matched : `www.maqom.co/en` en EN et `www.maqom.co/fr` en FR. Les deux confirmées HTTP 200.
+3. **AC#2 (Anti-fuite)** : aucun href interdit (GitHub/GitLab/Bitbucket/Balink) dans le HTML pré-rendu. ✅
+4. **Bonus 1 — Limova lié** (demande de Mike) : ajout d'un champ optionnel `url: string | null` aux rôles (Balink: `null`, Limova: `"www.limova.ai"`). `RoleCard` rend désormais la company comme lien sortant quand `role.url` est non-null (pattern miroir `MissionCard`/`MaqomCard`, `target="_blank" rel="noopener noreferrer"` + suffixe sr-only « (opens in a new tab) » conforme Story 4.1 AC#5). `Experience` et `page.tsx` wirent le prop `opensInNewTabLabel`.
+4b. **Bonus 2 — CTAs nav/hero basculés sur WhatsApp** (demande de Mike) : `nav.ctaEmail` ("Me contacter" / "Get in touch") et `hero.ctaContact` ("Démarrer une conversation" / "Start a conversation") ouvraient `mailto:meta.email`, désormais ouvrent `https://wa.me/972584220567` (`meta.whatsapp`, même num que `meta.phone` confirmé par Mike, pas de message pré-rempli, `target="_blank" rel="noopener noreferrer"` + glyphe `↗` + sr-only « opens in a new tab »). Le bouton mail du Contact (`Contact.tsx`, "Écrivez-moi un mot" → `michael.mann55@gmail.com`) **reste en `mailto:`** comme demandé. ⚠️ Si le `mailto:` "ne mène à rien" en local, c'est l'absence de gestionnaire de protocole par défaut côté navigateur (pas un bug code). Vérifier sur un OS avec Mail/Outlook/Apple Mail configuré, ou via le bouton "définir les liens mail" de Chrome (Paramètres → Confidentialité → Gestionnaires de protocoles).
+4d. **Bonus 4 — Contact mailto en `target="_blank"` + lien Balink ajouté** (demandes Mike v1.3) :
+   - `Contact.tsx` — le `mailto:michael.mann55@gmail.com` ouvre désormais en nouvel onglet (`target="_blank" rel="noopener noreferrer"`) + sr-only « (opens in a new tab) » + glyphe `↗` (au lieu de `→`). Comportement : avec Gmail web comme handler, le clic ouvre une nouvelle tab qui bascule sur la compose Gmail ; avec un client mail natif (Mail.app/Outlook), l'app s'ouvre directement et la tab vide reste mais inoffensive.
+   - `Balink role.url` (en.ts + fr.ts) : `null` → `"www.balink.net"`. **Override explicite de l'AC#2** qui interdisait initialement tout lien Balink — Mike a confirmé que `https://www.balink.net/` est le site corporate public de l'entreprise (mentionne Dior, LV, Chanel, secteur luxe & retail), donc lien légitime. Comme la company Balink utilise désormais le pattern `role.url` non-null introduit pour Limova (Bonus 1), le nom "Balink" est rendu en lien sortant avec le glyphe `↗` et le suffixe sr-only.
+
+4c. **Bonus 3 — Retrait complet des marqueurs de location Israel/Ashdod/Jérusalem** (demande de Mike) : 0 occurrence restante dans le HTML pré-rendu en fin de chaîne. Détail :
+   - `meta.location` (`"Ashdod, Israel"` / `"Ashdod, Israël"`) → **clé retirée** des dicos (n'était consommée nulle part — la JSON-LD avait des valeurs hardcodées).
+   - `meta.ogImageAlt` → drop " · Ashdod, IL" (en + fr).
+   - `hero.whoami` → drop " · ashdod.il" (en + fr).
+   - `hero.meta` → entrée `Location/Localisation` retirée (4 → 3 items : Experience/Expérience, Languages/Langues, Focus). Grid `sm:grid-cols-4` → `sm:grid-cols-3` (+ mobile `grid-cols-2` → `grid-cols-1` pour stack propre des 3 items).
+   - `experience.roles[0].location` (Balink) `"Jerusalem"` / `"Jérusalem"` → `null`. Type `Role.location` devient `string | null` ; `RoleCard` rend conditionnellement le séparateur `·` + valeur (skip si null). Limova "France · Remote" conservée.
+   - `experience.roles[0].bullets[1]` (Balink) drop "Israel," → "across France and China" / "entre la France et la Chine".
+   - `experience.roles[0].kpis[2]` (Balink) `"Devs led, 3 countries"` / `"Devs dirigés, 3 pays"` → `"Devs led"` / `"Devs dirigés"` (pour cohérence avec la suppression du country list).
+   - `about.body.right[1]` reformulé : "leveraging a trilingual position across Israeli and French markets" → **"leveraging a trilingual background to bridge multiple markets"** (en) ; "tirant parti d'une position trilingue entre les marchés israélien et français" → **"m'appuyant sur un profil trilingue pour adresser plusieurs marchés"** (fr).
+   - `contact.secondaryLinks` entrée `Location/Localisation` retirée (4 → 3 : LinkedIn, Phone, Languages). Index-dispatch dans `Contact.tsx` reste cohérent (LinkedIn=0, Phone=1, Languages=2 sans handler spécial). Commentaire mis à jour.
+   - `footer.tagline` "built with care · ashdod ↗ everywhere" / "fait avec soin · ashdod ↗ partout" → drop "· ashdod".
+   - `page.tsx` JSON-LD : objet `address` (`addressLocality: "Ashdod"`, `addressCountry: "IL"`) entièrement retiré. `knowsLanguage: ["fr", "he", "en"]` conservé (langue ≠ location).
+   - `opengraph-image.tsx` `alt` constant : drop " · Ashdod, IL". Ligne `location → Ashdod, Israel` du bloc meta techniques **remplacée** par `languages → FR · HE · EN` (pour conserver 3 lignes visuelles dans l'image OG).
+   - `meta.phone` `+972 58 422 0567` **conservé** (essentiel contact ; pas un libellé "location"). Languages "FR · HE · EN" / "French · Hebrew · English" conservées (langues, pas locations). Locations contextuelles `France`, `Remote`, `France · Remote` (missions/Limova) **conservées** (Mike a indiqué retirer Israel/Ashdod spécifiquement, pas tout indicateur géographique).
+   - Vérif finale : `grep -oE 'Israel|Israël|Ashdod|Jerusalem|Jérusalem|israélien|Israeli|ashdod'` sur `en.html` + `fr.html` pré-rendus = **0 occurrence**. ✅
+5. **AC#3 (Relecture FR/EN)** : aucune coquille bloquante, pas de placeholder, pas de chaîne mal langue. Sections numérotées 01-06 cohérentes, AI non numérotée. `<title>` et `<html lang>` corrects par locale.
+6. **AC#4 (Parité FR/EN)** : tous les counts de tableaux matchent entre `en.ts` et `fr.ts` (roles, missions, projects, stack groups & items, ai.tools, clients.items, contact.secondaryLinks, hero.meta). 0 divergence.
+7. **AC#7 (Validation)** : typecheck/lint/build tous verts. Statique préservé. Aucun `'use client'` introduit.
+8. **Commentaire obsolète** : `page.tsx` mentionnait "Story 9.1" pour le LinkedIn — remplacé par "Story 5.1" (renumérotation).
+
+**Observations laissées à Mike** (non bloquantes, à arbitrer avant push) :
+- **Numbers consistency** : portfolio dit "5 years" / "5+ years" / "Five+ years" alors que le CV dit "4 years+". Dec 2021 → mai 2026 = 4,5 ans, le portfolio arrondit haut. **Choix volontaire** — pas modifié.
+- **Limova duration** : portfolio dit "1.5 years" / "1,5 an", CV dit "1 year". Mars 2024 → nov. 2025 = 20 mois ≈ 1,67 an. **"1,5 an" est plus précis** — pas modifié.
+- **Stack — Orval dupliqué** : présent dans `Frontend` (item seul) **et** dans `Backend & Data` (combiné `OpenAPI / Orval`). Recommandation : retirer "Orval" de `Frontend` pour éviter la redondance. **Pas appliqué** — à valider par Mike.
+- **Stack — Mongoose absent** : le CV liste `Mongoose`, le portfolio non. Choix éditorial OK.
+- **Sayelo/Penpaloo dans le portfolio mais pas dans le CV** : le CV de Mike ne liste pas ses missions freelance. Suggestion personnelle : mettre à jour le CV (hors périmètre Story 5.1).
+- **`statusLabel` "Q2 2026" / "T2 2026"** : actuellement valide (mai 2026), à mettre à jour après le 30 juin 2026.
+- **AC#6 (Smoke responsive)** : **à faire par Mike** en navigateur (`npm run dev`, DevTools 375px + zoom 200%). Vérifier en particulier le **nouveau lien Limova** sur la carte Experience.
+
+**Actions Mike avant `done`** :
+1. Vérifier dans son navigateur logué LinkedIn que `https://www.linkedin.com/in/michael-mann-339545149` ouvre bien son profil (en mode privé/déconnecté un 404 anti-bot reste plausible).
+2. Smoke responsive (AC#6) à ~375px et zoom 200% en FR + EN.
+3. Décider sur "Orval" dupliqué dans le Stack (Frontend vs Backend).
+4. Si OK : `git commit` (suggéré `fix(story-5.1): correct LinkedIn URL + pre-launch content/link QA + add Limova link`, sans `Co-Authored-By`) puis push sur `main` → déploiement Vercel auto. Re-cliquer LinkedIn / Maqom / mailto / CV / **Limova** sur la prod.
+
 ### File List
+
+**Modifiés** :
+- `src/i18n/dictionaries/en.ts` — 6 LinkedIn URLs corrigées (dash) ; Maqom `maqom.co` → `www.maqom.co/en` ; ajout `url: null` (Balink) et `url: "www.limova.ai"` (Limova) ; ajout `meta.whatsapp: "https://wa.me/972584220567"` ; **retrait location** : clé `meta.location` supprimée, `ogImageAlt` raccourci, `whoami` raccourci, `hero.meta` 4→3 items (drop Location), Balink `location: null` + bullet 2 (drop "Israel") + KPI 2 ("Devs led, 3 countries" → "Devs led"), `about.body.right[1]` reformulé (drop "Israeli"), `contact.secondaryLinks` 4→3 (drop Location), `footer.tagline` (drop "ashdod").
+- `src/i18n/dictionaries/fr.ts` — mêmes 18 changements miroirs (clés, formulations FR).
+- `src/components/RoleCard.tsx` — supporte `role.url` optionnel ; rend la company comme lien sortant (`target="_blank" rel="noopener noreferrer"` + suffixe sr-only « (opens in a new tab) » + glyphe `↗`) quand `role.url` est non-null. Prop `opensInNewTabLabel` ajoutée. **Bonus 3** : rend `role.location` conditionnellement (skip séparateur `·` + valeur si `null`).
+- `src/components/Experience.tsx` — accepte et propage `opensInNewTabLabel` vers `RoleCard`.
+- `src/components/Nav.tsx` — prop `email: string` remplacé par `whatsapp: string` + `opensInNewTabLabel: string`. Le `emailCta` ouvre `whatsapp` en `target="_blank" rel="noopener noreferrer"` avec glyphe `↗` + sr-only « (opens in a new tab) » (au lieu du `mailto:email` + `→` initial).
+- `src/components/Hero.tsx` — prop `email: string` remplacé par `whatsapp: string`. Le CTA primaire (`ctaContact`) ouvre `whatsapp` avec le même pattern (`target="_blank"` + `↗` + sr-only). **Bonus 3** : grid meta strip `grid-cols-2 sm:grid-cols-4` → `grid-cols-1 sm:grid-cols-3` (pour les 3 items après suppression de Location).
+- `src/components/Contact.tsx` — commentaire bloc mis à jour : "4 entrées" → "3 entrées", ordre "LinkedIn / Phone / Languages".
+- `src/app/[locale]/page.tsx` — passe `a11y.opensInNewTab` à `Experience` ; passe `whatsapp={meta.whatsapp}` + `opensInNewTabLabel` à `Nav` (au lieu de `email`) ; passe `whatsapp={meta.whatsapp}` à `Hero` (au lieu de `email`). Commentaire JSON-LD : "Story 9.1" → "Story 5.1". **Bonus 3** : objet `address` (addressLocality/addressCountry) entièrement retiré du JSON-LD `Person`.
+- `src/app/opengraph-image.tsx` — `alt` raccourci (drop " · Ashdod, IL") ; ligne meta `location → Ashdod, Israel` remplacée par `languages → FR · HE · EN` (pour conserver 3 lignes visuelles dans l'image OG).
+- `_bmad-output/implementation-artifacts/sprint-status.yaml` — story 5-1 : `ready-for-dev` → `in-progress` → `review`.
+- `_bmad-output/implementation-artifacts/5-1-audit-de-contenu-liens-polish-pre-lancement.md` — Dev Agent Record + Change Log + cases cochées.
+
+**Inchangés mais lus pour audit** : `src/components/MissionCard.tsx`, `src/components/MaqomCard.tsx`, `_bmad-output/implementation-artifacts/CV_Michael_Mann.pdf`, `public/cv/michael-mann-cv.pdf`.
+
+**Aucune nouvelle dépendance, aucun nouvel asset, aucun nouveau fichier créé.**
 
 ## Change Log
 
 | Date       | Version | Description                                                                                                  | Auteur |
 | ---------- | ------- | ------------------------------------------------------------------------------------------------------------ | ------ |
+| 2026-05-14 | 1.3     | Contact `mailto:` passe en `target="_blank" rel="noopener noreferrer"` + sr-only « opens in new tab ». Balink role.url ajouté : `null` → `"www.balink.net"` (override AC#2 — Mike a confirmé que c'est le site corporate public). typecheck/lint/build re-verts ; HTML pré-rendu vérifié. | Mike + Claude |
+| 2026-05-14 | 1.2     | Retrait complet des marqueurs Israel/Ashdod/Jérusalem du portfolio (demande Mike) : 18 changements dans en.ts/fr.ts + JSON-LD `address` retiré + OG image (`alt` + ligne meta) + Hero grid 4→3 cols + RoleCard `location` conditionnel + Contact comment update. 0 occurrence restante dans HTML pré-rendu. typecheck/lint/build re-verts. | Mike + Claude |
+| 2026-05-14 | 1.1     | CTAs nav (`Me contacter`) et hero (`Démarrer une conversation`) basculés de `mailto:` → WhatsApp (`https://wa.me/972584220567`, ajout `meta.whatsapp`, `target="_blank"` + sr-only). Le bouton mail du Contact reste en `mailto:`. typecheck/lint/build re-verts. | Mike + Claude |
+| 2026-05-14 | 1.0     | Implémentation Story 5.1 : LinkedIn corrigé (dash, 6 chaînes), Maqom locale-matched (`www.maqom.co/{locale}`), Limova lié depuis Experience (extension `role.url` + `RoleCard`), anti-fuite vérifiée, parité FR/EN confirmée, typecheck/lint/build verts. Status : `review`. | Mike + Claude |
 | 2026-05-13 | 0.2     | Renumérotation : Story 9.1 → 5.1 (Epics 5/6/7/8 d'origine retirés du scope ; l'ancienne Epic 9 devient Epic 5). | Mike + Claude |
 | 2026-05-12 | 0.1     | Création de la story 9.1 (Epic 9 — QA & relecture pré-lancement) : audit de contenu FR/EN, validation de tous les liens sortants (lien LinkedIn actuel en 404 → correction prioritaire), parité FR/EN au niveau du contenu, relecture de la section Stack, smoke responsive ~375px. | Mike + Claude |

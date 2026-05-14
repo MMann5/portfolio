@@ -17,7 +17,7 @@ import { join } from "node:path";
 // ~140 KB, lus uniquement au build).
 
 export const alt =
-  "Michael Mann — Senior Frontend Developer · 5+ years · Ashdod, IL";
+  "Michael Mann — Senior Frontend Developer · 5+ years";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -101,8 +101,8 @@ export default async function OpenGraphImage() {
             gap: 8,
           }}
         >
-          <div style={{ display: "flex" }}>location   → Ashdod, Israel</div>
           <div style={{ display: "flex" }}>experience → 5+ years</div>
+          <div style={{ display: "flex" }}>languages  → FR · HE · EN</div>
           <div style={{ display: "flex" }}>
             focus      → React · TypeScript · Supabase
           </div>
