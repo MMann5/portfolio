@@ -232,12 +232,12 @@ const fr = {
           status: "En validation",
           tagline: "Un CRM conçu pour les professionnels de l'événementiel.",
           description:
-            "Co-fondé avec deux associés sous Maqom Software Ltd (Chypre). Un CRM ciblé pour photographes, vidéastes et wedding planners — facturation Stripe multi-devises (EUR/USD/ILS) avec géolocalisation par IP, KYC Stripe complet pour l'entité, et infrastructure email Google Workspace. Multi-langues dès la V1 (8 langues), PWA web-first.",
+            "Co-fondé avec deux associés sous Maqom Software Ltd. Un CRM ciblé pour photographes, vidéastes et wedding planners — facturation Stripe multi-devises (EUR/USD/ILS) avec géolocalisation par IP, KYC Stripe complet pour l'entité, et infrastructure email Google Workspace. Multi-langues dès la V1 (8 langues), PWA web-first.",
           descriptionTwo: null,
           stack: ["React", "TypeScript", "Tailwind CSS", "Supabase", "Stripe", "PWA"],
           featured: true,
           projectMeta: [
-            { label: "entité", value: "Maqom Software Ltd. (CY)" },
+            { label: "entité", value: "Maqom Software Ltd." },
             { label: "facturation", value: "Stripe · multi-devises" },
             { label: "marchés", value: "EUR · USD · ILS" },
             { label: "langues", value: "8 dès la V1" },
