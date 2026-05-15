@@ -17,7 +17,7 @@ const fr = {
     // Libellés SEO ajoutés en Story 4.3 — voir `en.ts` pour le détail de l'usage.
     jobTitle: "Développeur frontend senior",
     ogImageAlt:
-      "Michael Mann — Développeur frontend senior · 4.5+ ans",
+      "Michael Mann — Développeur frontend senior · 5 ans",
     email: "michael.mann55@gmail.com",
     linkedin: "https://www.linkedin.com/in/michael-mann-339545149",
     linkedinShort: "https://www.linkedin.com/in/michael-mann-339545149",
@@ -48,13 +48,13 @@ const fr = {
   hero: {
     badge: "Disponible — T2 2026",
     headline: {
-      lead: "Développeur frontend senior, 4.5+ ans, ",
+      lead: "Développeur frontend senior, 5 ans, ",
       accent: "du retail de luxe à l'IA",
       tail: " — React/TypeScript, de l'architecture à la prod.",
     },
     sub: "Applications quotidiennes pour les Sales Advisors de Louis Vuitton, Dior, Tiffany & Co. et Messika. Plateforme d'IA multi-agents pour 3 000+ entreprises. Aujourd'hui, je construis mes propres SaaS.",
     meta: [
-      { label: "Expérience", value: "4.5+ ans" },
+      { label: "Expérience", value: "5 ans" },
       { label: "Langues", value: "FR · HE · EN" },
       { label: "Focus", value: "React · TS · Supabase" },
     ],
