@@ -9,7 +9,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Michael Mann — Portfolio",
     short_name: "MM",
-    description: "Senior Frontend Developer · 5+ years · React/TypeScript",
+    description: "Senior Frontend Developer · 5 years · React/TypeScript",
     start_url: "/en",
     display: "browser",
     background_color: "#0a0a0a",
