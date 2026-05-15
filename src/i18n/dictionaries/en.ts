@@ -23,7 +23,7 @@ const en = {
     // pour la balise `og:image` et la balise `twitter:image:alt`.
     jobTitle: "Senior Frontend Developer",
     ogImageAlt:
-      "Michael Mann — Senior Frontend Developer · 4.5+ yrs",
+      "Michael Mann — Senior Frontend Developer · 5 yrs",
     email: "michael.mann55@gmail.com",
     linkedin: "https://www.linkedin.com/in/michael-mann-339545149",
     linkedinShort: "https://www.linkedin.com/in/michael-mann-339545149",
@@ -57,13 +57,13 @@ const en = {
   hero: {
     badge: "Available — Q2 2026",
     headline: {
-      lead: "Senior Frontend Developer, 4.5+ years, ",
+      lead: "Senior Frontend Developer, 5 years, ",
       accent: "from luxury retail to AI",
       tail: " — React/TypeScript, from architecture to production.",
     },
     sub: "Applications used daily by Sales Advisors at Louis Vuitton, Dior, Tiffany & Co., and Messika. A multi-agent AI platform serving 3,000+ companies. Today, I'm building my own SaaS.",
     meta: [
-      { label: "Experience", value: "4.5+ yrs" },
+      { label: "Experience", value: "5 yrs" },
       { label: "Languages", value: "FR · HE · EN" },
       { label: "Focus", value: "React · TS · Supabase" },
     ],
