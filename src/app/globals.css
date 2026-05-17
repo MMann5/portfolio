@@ -21,37 +21,47 @@
 */
 
 @theme {
+  /*
+    Refactor « dual-theme » : les valeurs concrètes de couleur vivent dans `--c-*`
+    déclarés plus bas sur `:root[data-theme=dark|light]` et permutent au runtime
+    via l'attribut `data-theme` sur `<html>` (posé par le script no-flash de
+    `layout.tsx`). Les tokens `--color-*` ici restent l'API publique de Tailwind
+    (utilitaires `bg-bg`, `text-fg-strong`, …) et ne changent PAS de nom — donc
+    aucun composant n'a besoin de bouger.
+    Le mode dark reste l'état par défaut (valeurs historiques préservées à l'identique).
+  */
+
   /* ---- Surfaces ---- */
-  --color-bg: #0a0a0a; /* fond global */
-  --color-bg-alt: #080808; /* bandes contrastées (clients, panneau méta Maqom) */
-  --color-bg-alt2: #070707; /* section AI */
-  --color-surface: #0c0c0c; /* carte fenêtre-terminal */
-  --color-surface-2: #0f0f0f; /* header de fenêtre */
-  --color-surface-3: #101010; /* chips, tuiles KPI */
+  --color-bg: var(--c-bg);
+  --color-bg-alt: var(--c-bg-alt);
+  --color-bg-alt2: var(--c-bg-alt2);
+  --color-surface: var(--c-surface);
+  --color-surface-2: var(--c-surface-2);
+  --color-surface-3: var(--c-surface-3);
 
   /* ---- Lignes / bordures ---- */
-  --color-line: #1f1f1f;
-  --color-line-soft: #1a1a1a;
+  --color-line: var(--c-line);
+  --color-line-soft: var(--c-line-soft);
 
-  /* ---- Texte (voir audit AA ci-dessus) — préfixe `fg` pour éviter la collision d'utilitaires avec `--text-*` ---- */
-  --color-fg: #ededed; /* corps fort — défaut du body */
-  --color-fg-strong: #fafafa; /* titres display */
-  --color-fg-body: #cfcfcf; /* paragraphes, bullets */
-  --color-fg-muted: #a3a3a3; /* sous-accroche, sous-titres, descriptions */
-  --color-fg-subtle: #888888; /* méta mono, libellés secondaires — plancher AA petit texte */
-  --color-fg-faint: #666666; /* DÉCO / grand texte uniquement : labels mono, méta uppercase */
-  --color-fg-faintest: #444444; /* DÉCO PURE : numéros de bullet, séparateurs → */
+  /* ---- Texte (préfixe `fg` pour éviter la collision d'utilitaires avec `--text-*`) ---- */
+  --color-fg: var(--c-fg);
+  --color-fg-strong: var(--c-fg-strong);
+  --color-fg-body: var(--c-fg-body);
+  --color-fg-muted: var(--c-fg-muted);
+  --color-fg-subtle: var(--c-fg-subtle);
+  --color-fg-faint: var(--c-fg-faint);
+  --color-fg-faintest: var(--c-fg-faintest);
 
   /* ---- Accent doré ---- */
-  --color-accent: #d4a574;
-  --color-accent-soft: rgba(212, 165, 116, 0.06); /* fond de chip accentuée */
-  --color-accent-border: rgba(212, 165, 116, 0.2);
-  --color-accent-border-strong: rgba(212, 165, 116, 0.3);
+  --color-accent: var(--c-accent);
+  --color-accent-soft: var(--c-accent-soft);
+  --color-accent-border: var(--c-accent-border);
+  --color-accent-border-strong: var(--c-accent-border-strong);
 
   /* ---- Statut / inversion ---- */
-  --color-status-available: #7eb389; /* point « available », dot terminal */
-  --color-invert-bg: #ededed; /* bouton primaire : fond clair */
-  --color-invert-fg: #0a0a0a; /* bouton primaire : texte sombre */
+  --color-status-available: var(--c-status-available);
+  --color-invert-bg: var(--c-invert-bg);
+  --color-invert-fg: var(--c-invert-fg);
 
   /* ---- Rayons ---- */
   --radius-sm: 4px;
@@ -245,8 +255,102 @@ html.cursor-none [data-cursor="hover"] {
   border-color: rgba(212, 165, 116, 0.9);
 }
 
-:root {
+/*
+  ──────────────────────────────────────────────────────────────────────────────
+  Tokens couleur dynamiques — basculent via `data-theme` sur `<html>`.
+  Le script no-flash dans `layout.tsx` positionne `data-theme` avant peint :
+    1. localStorage.theme (override utilisateur)
+    2. prefers-color-scheme (système)
+    3. fallback "dark" (historique du site)
+  Aucune valeur d'API Tailwind ne change : seuls les `--c-*` permutent.
+
+  Audit AA (texte courant 4.5:1 · grand texte/UI 3:1) — light mode (fond #f7f5f2) :
+    #1a1a1a ~16:1 ✅ · #2a2a2a ~14:1 ✅ · #555555 ~7.5:1 ✅
+    #6a6a6a ~5.5:1 ✅ corps OK · #8a8a8a ~3.6:1 → grand texte / UI uniquement
+    #b0b0b0 ~2.2:1 → DÉCO PURE (séparateurs, numéros)
+    accent #8b6536 ~5.1:1 ✅ — utilisable en petit texte mono (idx, durations, kickers)
+  ──────────────────────────────────────────────────────────────────────────────
+*/
+
+/* DARK — défaut historique du site. Valeurs identiques à l'avant-refactor. */
+:root,
+:root[data-theme="dark"] {
   color-scheme: dark;
+
+  --c-bg: #0a0a0a;
+  --c-bg-alt: #080808;
+  --c-bg-alt2: #070707;
+  --c-surface: #0c0c0c;
+  --c-surface-2: #0f0f0f;
+  --c-surface-3: #101010;
+
+  --c-line: #1f1f1f;
+  --c-line-soft: #1a1a1a;
+
+  --c-fg: #ededed;
+  --c-fg-strong: #fafafa;
+  --c-fg-body: #cfcfcf;
+  --c-fg-muted: #a3a3a3;
+  --c-fg-subtle: #888888;
+  --c-fg-faint: #666666;
+  --c-fg-faintest: #444444;
+
+  --c-accent: #d4a574;
+  --c-accent-soft: rgba(212, 165, 116, 0.06);
+  --c-accent-border: rgba(212, 165, 116, 0.2);
+  --c-accent-border-strong: rgba(212, 165, 116, 0.3);
+
+  --c-status-available: #7eb389;
+  --c-invert-bg: #ededed;
+  --c-invert-fg: #0a0a0a;
+}
+
+/* LIGHT — papier crème / encre profonde. Tous les contrastes audités AA ci-dessus. */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --c-bg: #f7f5f2;
+  --c-bg-alt: #f1eeea;
+  --c-bg-alt2: #ebe7e1;
+  --c-surface: #fffdf9;
+  --c-surface-2: #f7f3ed;
+  --c-surface-3: #efeae3;
+
+  --c-line: #d8d2c8;
+  --c-line-soft: #e5dfd5;
+
+  --c-fg: #1a1a1a;
+  --c-fg-strong: #0a0a0a;
+  --c-fg-body: #2a2a2a;
+  --c-fg-muted: #555555;
+  --c-fg-subtle: #6a6a6a;
+  --c-fg-faint: #8a8a8a;
+  --c-fg-faintest: #b0b0b0;
+
+  /* Accent doré assombri pour contraste AA sur fond clair (variante de #d4a574). */
+  --c-accent: #8b6536;
+  --c-accent-soft: rgba(139, 101, 54, 0.08);
+  --c-accent-border: rgba(139, 101, 54, 0.25);
+  --c-accent-border-strong: rgba(139, 101, 54, 0.4);
+
+  --c-status-available: #4a6f3a;
+  /* Boutons primaires : on inverse pour rester contrastés (encre sur papier). */
+  --c-invert-bg: #0a0a0a;
+  --c-invert-fg: #f7f5f2;
+}
+
+/* Smooth scroll natif pour toutes les navigations par ancre (`#about`, …) et pour
+   `window.scrollTo()` sans option `behavior`. La règle `prefers-reduced-motion`
+   ramène en `auto` (saut instantané) — alignement avec les autres animations
+   du site (cf. `.animate-marquee`, `<FadeIn>`). */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {

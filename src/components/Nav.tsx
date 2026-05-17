@@ -6,7 +6,7 @@ import type { Locale } from "@/i18n/config";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { MMLogo } from "@/components/MMLogo";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { AvailabilityBadge } from "@/components/AvailabilityBadge";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 // Barre de navigation persistante, style « terminal » (cf. design `Minimal.jsx` → `TMNav`).
 // Composant client (petit, above-the-fold) : scroll-spy (`aria-current`) + menu mobile.
@@ -25,8 +25,6 @@ type NavSection = {
 type Props = {
   locale: Locale;
   brandName: string;
-  versionBadge: string;
-  availabilityLabel: string;
   /** Libellé du CTA de contact principal (cible WhatsApp). */
   ctaEmail: string;
   /** URL WhatsApp (cible `https://wa.me/...`) — ouvre l'app native ou WhatsApp Web. */
@@ -56,6 +54,12 @@ type Props = {
   langEnglish: string;
   langFrench: string;
   langChangedTo: string;
+  // Libellés du ThemeToggle (passés tels quels).
+  themeToDark: string;
+  themeToLight: string;
+  themeLight: string;
+  themeDark: string;
+  themeChangedTo: string;
 };
 
 const NAV_SURFACE =
@@ -66,8 +70,6 @@ const FOCUS_RING =
 export function Nav({
   locale,
   brandName,
-  versionBadge,
-  availabilityLabel,
   ctaEmail,
   whatsapp,
   opensInNewTabLabel,
@@ -84,6 +86,11 @@ export function Nav({
   langEnglish,
   langFrench,
   langChangedTo,
+  themeToDark,
+  themeToLight,
+  themeLight,
+  themeDark,
+  themeChangedTo,
 }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const activeSection = useActiveSection(sections.map((s) => s.id));
@@ -235,6 +242,16 @@ export function Nav({
     />
   );
 
+  const themeToggle = (
+    <ThemeToggle
+      toDark={themeToDark}
+      toLight={themeToLight}
+      lightLabel={themeLight}
+      darkLabel={themeDark}
+      changedTo={themeChangedTo}
+    />
+  );
+
   return (
     <nav
       ref={navRef}
@@ -242,7 +259,7 @@ export function Nav({
       className={`sticky top-0 z-50 border-b border-line ${NAV_SURFACE}`}
     >
       <div className="flex items-center justify-between gap-4 px-section-x-mobile py-3 sm:px-section-x">
-        {/* Marque + badge de version (lien « accueil »). */}
+        {/* Marque (lien « accueil »). */}
         <Link
           href={`/${locale}`}
           aria-label={brandName}
@@ -250,9 +267,6 @@ export function Nav({
         >
           <MMLogo size={28} />
           <span className="font-sans text-ui font-medium text-fg">{brandName}</span>
-          <span className="hidden rounded-sm border border-line px-1.5 py-0.5 font-mono text-label-sm text-fg-subtle sm:inline">
-            {versionBadge}
-          </span>
         </Link>
 
         {/* Liens de section — barre desktop. */}
@@ -266,6 +280,7 @@ export function Nav({
         <div className="hidden items-center gap-4 lg:flex">
           {emailCta}
           {cvLink}
+          {themeToggle}
           {langSwitcher}
         </div>
 
@@ -298,11 +313,13 @@ export function Nav({
             ))}
           </ul>
           <div className="flex flex-wrap items-center gap-3">
-            <AvailabilityBadge text={availabilityLabel} />
             {emailCta}
             {cvLink}
           </div>
-          {langSwitcher}
+          <div className="flex flex-wrap items-center gap-4">
+            {themeToggle}
+            {langSwitcher}
+          </div>
         </div>
       )}
     </nav>

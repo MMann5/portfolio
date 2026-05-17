@@ -41,7 +41,6 @@ const en = {
   // ── Shell : barre de navigation persistante ────────────────────────────────
   nav: {
     brandName: "Michael Mann",
-    versionBadge: "v2026.1",
     availabilityLabel: "available — Q2 2026",
     ctaEmail: "Get in touch",
     ctaCv: "CV",
@@ -387,6 +386,7 @@ const en = {
   footer: {
     copyright: "© 2026 Michael Mann · All rights reserved",
     tagline: "built with care ↗ everywhere",
+    backToTop: "Back to top",
   },
 
   // ── Sélecteur de langue (inchangé depuis 1.2b) ─────────────────────────────
@@ -396,6 +396,18 @@ const en = {
     french: "Français",
     // `{lang}` est remplacé par le libellé de la langue choisie (annonce aria-live).
     changedTo: "Language changed to {lang}",
+  },
+
+  // ── Bascule de thème (light / dark) — Story add-on ─────────────────────────
+  themeToggle: {
+    // `aria-label` du bouton ; le verbe reflète l'action proposée (sens inverse du mode courant).
+    toDark: "Switch to dark mode",
+    toLight: "Switch to light mode",
+    // Libellés du mode pour l'annonce aria-live (substitués dans `changedTo`).
+    light: "light",
+    dark: "dark",
+    // `{mode}` est remplacé par `light` / `dark`.
+    changedTo: "Theme changed to {mode} mode",
   },
 
   // ── Libellés visually-hidden destinés aux technologies d'assistance (Story 4.1) ─
