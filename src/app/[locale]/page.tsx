@@ -33,7 +33,7 @@ export default async function Home({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const dict = await getDictionary(locale);
-  const { meta, nav, hero, clients, sections, ai, footer, langSwitcher, a11y } = dict;
+  const { meta, nav, hero, clients, sections, ai, footer, langSwitcher, themeToggle, a11y } = dict;
 
   // Ordre de nav = ordre d'insertion des clés de `sections` (préservé par JS).
   const sectionList = Object.values(sections);
@@ -85,8 +85,6 @@ export default async function Home({
       <Nav
         locale={locale}
         brandName={nav.brandName}
-        versionBadge={nav.versionBadge}
-        availabilityLabel={nav.availabilityLabel}
         ctaEmail={nav.ctaEmail}
         whatsapp={meta.whatsapp}
         opensInNewTabLabel={a11y.opensInNewTab}
@@ -103,6 +101,11 @@ export default async function Home({
         langEnglish={langSwitcher.english}
         langFrench={langSwitcher.french}
         langChangedTo={langSwitcher.changedTo}
+        themeToDark={themeToggle.toDark}
+        themeToLight={themeToggle.toLight}
+        themeLight={themeToggle.light}
+        themeDark={themeToggle.dark}
+        themeChangedTo={themeToggle.changedTo}
       />
 
       {/*
@@ -195,7 +198,11 @@ export default async function Home({
         </GridSection>
       </main>
 
-      <Footer copyright={footer.copyright} tagline={footer.tagline} />
+      <Footer
+        copyright={footer.copyright}
+        tagline={footer.tagline}
+        backToTopLabel={footer.backToTop}
+      />
     </>
   );
 }

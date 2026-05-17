@@ -32,7 +32,6 @@ const fr = {
   // ── Shell : barre de navigation persistante ────────────────────────────────
   nav: {
     brandName: "Michael Mann",
-    versionBadge: "v2026.1",
     availabilityLabel: "disponible — T2 2026",
     ctaEmail: "Me contacter",
     ctaCv: "CV",
@@ -375,6 +374,7 @@ const fr = {
   footer: {
     copyright: "© 2026 Michael Mann · Tous droits réservés",
     tagline: "fait avec soin ↗ partout",
+    backToTop: "Retour en haut",
   },
 
   // ── Sélecteur de langue ────────────────────────────────────────────────────
@@ -383,6 +383,15 @@ const fr = {
     english: "English",
     french: "Français",
     changedTo: "Langue changée pour {lang}",
+  },
+
+  // ── Bascule de thème (light / dark) — Story add-on ─────────────────────────
+  themeToggle: {
+    toDark: "Activer le mode sombre",
+    toLight: "Activer le mode clair",
+    light: "clair",
+    dark: "sombre",
+    changedTo: "Thème basculé en mode {mode}",
   },
 
   // ── Libellés visually-hidden destinés aux technologies d'assistance (Story 4.1) ─

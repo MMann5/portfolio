@@ -49,6 +49,20 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+// Script bloquant inline injecté dans <head> AVANT toute peinture.
+//
+// Contrat (cf. discussion produit) :
+//   • Défaut = système : si `localStorage.theme` est absent, on suit `prefers-color-scheme`.
+//   • Override = `localStorage.theme = 'light' | 'dark'` (écrit par le ThemeToggle au clic).
+//   • Fallback `dark` en cas d'erreur (préserve l'état historique du site).
+//
+// On enregistre AUSSI un listener `matchMedia('change')` : tant qu'aucun override n'est
+// dans `localStorage`, un changement de préférence système (ex. l'utilisateur passe son
+// OS de light à dark) se propage en direct à `<html data-theme>`. Le ThemeToggle reste
+// la seule source qui ÉCRIT dans `localStorage` ; le listener vérifie l'absence
+// d'override à chaque event pour ne jamais écraser un choix explicite.
+const THEME_INIT_SCRIPT = `(function(){try{var d=document.documentElement;var s=localStorage.getItem('theme');var t=(s==='light'||s==='dark')?s:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');d.setAttribute('data-theme',t);if(window.matchMedia){var m=window.matchMedia('(prefers-color-scheme: light)');var h=function(e){try{if(localStorage.getItem('theme'))return;}catch(_){return;}d.setAttribute('data-theme',e.matches?'light':'dark');};if(m.addEventListener){m.addEventListener('change',h);}else if(m.addListener){m.addListener(h);}}}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`;
+
 export const dynamicParams = false;
 
 // `siteUrl` est exporté depuis `@/lib/site-url` — source de vérité unique partagée
@@ -132,7 +146,15 @@ export default async function RootLayout({
     <html
       lang={locale}
       className={`${inter.variable} ${jetbrainsMono.variable} ${cormorant.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        {/* No-flash theme init — DOIT être inline et synchrone, AVANT toute peinture.
+            `suppressHydrationWarning` sur <html> car le script modifie un attribut
+            avant que React hydrate l'arbre — sinon React signale une divergence SSR/CSR
+            sur `data-theme`. Pas d'autre impact (l'attribut est posé une seule fois). */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body className="min-h-full flex flex-col">
         {/* Tout premier enfant focusable du body → garantit que `Tab` initial révèle
             le skip link AVANT la `Nav` (Story 4.1 AC#2). */}
